@@ -5,12 +5,13 @@ import { DashboardPreview } from "@/components/portal/DashboardPreview";
 import { LoginForm } from "@/components/forms/LoginForm";
 import { primaryPhone } from "@/data/site";
 import { getDictionary, href, type Locale } from "@/i18n";
+import { isSupabaseConfigured } from "@/lib/env";
 
 /**
- * Écran de connexion — préparatoire.
- * Sera branché sur Supabase Auth (courriel + mot de passe, ou lien magique).
+ * Écran de connexion — Supabase Auth (mot de passe ou lien magique).
+ * Sans configuration Supabase, affiche un message « bientôt ».
  */
-export function LoginView({ locale }: { locale: Locale }) {
+export function LoginView({ locale, next, linkError }: { locale: Locale; next?: string; linkError?: boolean }) {
   const d = getDictionary(locale);
   const t = d.loginPage;
   return (
@@ -34,18 +35,20 @@ export function LoginView({ locale }: { locale: Locale }) {
           </h1>
           <p className="mt-3 text-ink-soft">{t.lead}</p>
 
-          <div className="mt-6 rounded-[var(--radius-md)] bg-saffron-soft p-4 text-sm">
-            <p className="font-semibold">{t.soonTitle}</p>
-            <p className="mt-1 text-ink-soft">
-              {t.soonText}{" "}
-              <a className="font-semibold text-charcoal underline" href={primaryPhone.href}>
-                {primaryPhone.display}
-              </a>
-              .
-            </p>
-          </div>
-
-          <LoginForm t={t} />
+          {isSupabaseConfigured ? (
+            <LoginForm locale={locale} t={t} a={d.auth} next={next} linkError={linkError} />
+          ) : (
+            <div className="mt-6 rounded-[var(--radius-md)] bg-saffron-soft p-4 text-sm">
+              <p className="font-semibold">{t.soonTitle}</p>
+              <p className="mt-1 text-ink-soft">
+                {t.soonText}{" "}
+                <a className="font-semibold text-charcoal underline" href={primaryPhone.href}>
+                  {primaryPhone.display}
+                </a>
+                .
+              </p>
+            </div>
+          )}
 
           <p className="mt-8 text-sm text-ink-soft">
             {t.notClient}{" "}

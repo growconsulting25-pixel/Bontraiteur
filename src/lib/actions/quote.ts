@@ -1,6 +1,7 @@
 "use server";
 
 import { getPublicSupabase } from "@/lib/supabase/server";
+import { notifyTeam } from "@/lib/email";
 import type { QuoteRequest } from "@/lib/quote";
 
 export type QuoteResult = { ok: true } | { ok: false; reason: "not-configured" | "invalid" | "error" };
@@ -13,8 +14,8 @@ const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
  * - Supabase absent → « not-configured » : le formulaire bascule sur le courriel.
  * - Les contraintes sont revérifiées ici ET dans la base (checks SQL + RLS).
  *
- * Prochaine étape : notifier l'équipe par courriel (Resend / Postmark)
- * à chaque nouvelle demande.
+ * L'équipe est avertie par courriel (si RESEND_API_KEY et TEAM_NOTIFICATION_EMAIL
+ * sont configurées) et retrouve la demande dans le back-office (/admin/soumissions).
  */
 export async function submitQuoteRequest(request: QuoteRequest): Promise<QuoteResult> {
   if (request.website) return { ok: true }; // robot (champ piège rempli) : ignoré silencieusement
@@ -51,5 +52,21 @@ export async function submitQuoteRequest(request: QuoteRequest): Promise<QuoteRe
     console.error("[soumission] Échec de l'enregistrement :", error.message);
     return { ok: false, reason: "error" };
   }
+
+  await notifyTeam(
+    `Nouvelle soumission : ${request.establishmentName} (${request.city})`,
+    [
+      `${request.establishmentName} — ${request.establishmentType}`,
+      `Contact : ${request.contactName}${request.role ? ` (${request.role})` : ""}`,
+      `${email} · ${phone}`,
+      `Ville : ${request.city} · Enfants : ${request.childrenCount}`,
+      `Fréquence : ${request.frequency} · Formats : ${request.formats.join(", ") || "—"}`,
+      request.restrictions ? `Restrictions : ${request.restrictions}` : "",
+      request.message ? `\n${request.message}` : "",
+      "",
+      "Back-office : /admin/soumissions",
+    ],
+    email,
+  );
   return { ok: true };
 }

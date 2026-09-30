@@ -135,10 +135,68 @@ Ou directement dans Supabase → Table Editor → `meals` (ex. ajouter `image_ur
 Sans ces variables, le site fonctionne avec les données locales et le formulaire bascule
 sur le courriel.
 
+## Portail client (`/portail`, `/en/portal`)
+
+Accès : comptes créés par l'équipe (pas d'inscription libre). Connexion par mot de passe
+ou lien magique (`/login`). Session gérée par `@supabase/ssr` ; `src/proxy.ts` protège
+`/portail`, `/en/portal` et `/admin`.
+
+| Page | Contenu |
+|---|---|
+| Accueil | Prochaine livraison, état du menu du mois, prochaine action, dernière facture |
+| Mon menu | Garder le menu (1 clic) ou remplacer un repas — jusqu'à la date limite |
+| Commandes | Commandes ponctuelles / urgentes (lignes repas × format × portions), annulation |
+| Livraisons | À venir / passées, suspension (journée pédagogique, fermeture) |
+| Factures | Liste, PDF, **paiement en ligne Stripe** (direction et comptabilité seulement) |
+| Documents | Fichiers partagés par l'équipe (Storage privé) |
+| Support | Message à l'équipe + historique |
+| Mon compte | Rôle, organisation, changement de mot de passe |
+
+Multi-sites : un utilisateur rattaché à plusieurs établissements choisit l'établissement
+actif (cookie `bt_establishment`). Rôles : `owner`, `director`, `admin` agissent ;
+`accounting` voit les factures ; `viewer` consulte.
+
+Toutes les règles métier sont dans la base (RLS + fonctions) : `confirm_monthly_menu`,
+`replace_menu_meal` (un changement après confirmation remet le menu « à confirmer »),
+`cancel_order`, `pause_delivery`.
+
+## Back-office (`/admin`, équipe seulement)
+
+Tableau de bord · Soumissions (→ « Créer le client ») · Clients (établissements, invitations,
+rôles, documents) · Menus (générer la proposition du mois pour un ou tous les établissements,
+ajuster, publier avec avis courriel, planifier les livraisons) · Commandes · Livraisons ·
+Factures (numéro auto BT-1001…, PDF, statut) · Repas (source de vérité du site public :
+photo, formats, allergènes validés) · Support.
+
+## Paiement (Stripe)
+
+`src/lib/actions/payments.ts` crée une session Stripe Checkout (montant lu en base, jamais
+depuis le navigateur). `src/app/api/stripe/webhook/route.ts` vérifie la signature et marque
+la facture « payée » (idempotent). Moneris reste possible plus tard au même endroit.
+
+## Configuration à faire (une seule fois)
+
+1. **Variables** : voir `.env.example` — à ajouter dans Netlify → Project configuration →
+   Environment variables. Les deux variables Supabase publiques y sont déjà.
+2. **Supabase → Authentication → URL Configuration**
+   - Site URL : `https://bon-traiteur.netlify.app` (puis le domaine final)
+   - Redirect URLs : `https://bon-traiteur.netlify.app/auth/callback` (+ `http://localhost:3000/auth/callback`)
+3. **Supabase → Authentication → Sign In / Providers → Email** : laisser activé ;
+   désactiver « Allow new users to sign up » (les comptes sont créés par invitation).
+4. **Premier administrateur** : Supabase → Authentication → Users → *Invite user* (votre courriel),
+   puis dans le SQL Editor :
+   ```sql
+   insert into public.staff_members (user_id, role)
+   select id, 'admin' from auth.users where email = 'VOTRE@COURRIEL';
+   ```
+5. **Stripe** : clé secrète (mode test d'abord) + webhook vers `/api/stripe/webhook`
+   (événements `checkout.session.completed`, `checkout.session.async_payment_succeeded`).
+6. **Courriels** : compte Resend + domaine vérifié, puis `RESEND_API_KEY`, `EMAIL_FROM`,
+   `TEAM_NOTIFICATION_EMAIL`. Les courriels d'authentification (invitation, lien magique)
+   se personnalisent dans Supabase → Authentication → Email Templates (et SMTP personnalisé).
+
 ### Prochaines étapes
 
-1. Notification courriel à l'équipe à chaque soumission (Resend / Postmark).
-2. Supabase Auth (`@supabase/ssr`) : connexion par courriel / lien magique sur `/login`.
-3. Portail `(portal)` : Accueil, Mon menu (reprend `MenuPlanner` branché sur les RPC), Commandes, Livraisons, Factures.
-4. Back-office `(admin)` pour l'équipe : menus du mois, production, livraisons, factures.
-5. Paiement (Stripe ou Moneris), SMS, assistant IA.
+1. Assistant IA branché sur les mêmes fonctions (remplacer un repas, suspendre une livraison…).
+2. Génération automatique des factures à partir des livraisons.
+3. SMS (rappels de confirmation de menu).

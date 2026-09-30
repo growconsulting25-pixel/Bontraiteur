@@ -102,13 +102,35 @@ illustration par catégorie (`categoryIllustrations`).
 Le schéma, le seed et ces règles ont été validés sur Postgres (PGlite) : isolation entre
 organisations, refus anonymes, contraintes de la table des soumissions.
 
-### Mise en route
+### Projet en production
 
-1. Créer un projet Supabase **dédié** à Bon Traiteur (région Canada si possible).
-2. SQL Editor : exécuter `supabase/migrations/20261001000000_initial_schema.sql`, puis `supabase/seed.sql`.
-   (ou `supabase link` + `supabase db push` avec la CLI)
-3. Copier `.env.example` → `.env.local` et renseigner l'URL et la clé publique.
-4. Sur l'hébergeur (Vercel…), ajouter les mêmes variables.
+| | |
+|---|---|
+| Projet Supabase | **Bon Traiteur** — `daboizmggbbyzgjpwioy` (organisation « growmedia ») |
+| Région | `ca-central-1` (Montréal) |
+| URL | `https://daboizmggbbyzgjpwioy.supabase.co` |
+| Migrations appliquées | `initial_schema`, `private_auth_helpers`, `foreign_key_indexes` |
+| Données | 40 plats (`supabase/seed.sql`) |
+
+Variables à définir sur l'hébergeur (et dans `.env.local` en local) :
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://daboizmggbbyzgjpwioy.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<clé « publishable » : Supabase → Settings → API Keys>
+```
+
+La clé publishable est faite pour être publique : la sécurité repose sur les politiques RLS.
+Ne jamais mettre la clé `service_role` / secrète dans le site.
+
+Les fonctions d'autorisation internes (`is_staff`, `has_org_role`, `can_access_establishment`)
+sont dans le schéma `private`, non exposé par l'API.
+
+### Mettre à jour le menu
+
+Tant que le back-office n'existe pas : modifier `src/data/menu.ts`, lancer
+`npm run db:seed:generate`, puis exécuter `supabase/seed.sql` dans le SQL Editor
+(idempotent : met à jour les plats existants par slug).
+Ou directement dans Supabase → Table Editor → `meals` (ex. ajouter `image_url`).
 
 Sans ces variables, le site fonctionne avec les données locales et le formulaire bascule
 sur le courriel.

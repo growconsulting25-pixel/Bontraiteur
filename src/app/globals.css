@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   BON TRAITEUR — Design tokens
+   Toutes les couleurs, rayons, ombres et échelles typographiques du site
+   vivent ici. Les composants n'utilisent que ces tokens.
+   ========================================================================== */
+
+@theme {
+  /* Couleurs de marque */
+  --color-cream: #f7f1e7;
+  --color-cream-deep: #efe6d6; /* surfaces secondaires, cartes sur crème */
+  --color-paper: #fffcf7; /* cartes claires */
+  --color-olive: #4f5d1d; /* légèrement assombri pour le contraste AA */
+  --color-olive-deep: #3b4615;
+  --color-olive-soft: #e3e6cf;
+  --color-saffron: #f5b83d;
+  --color-saffron-soft: #fbe6b5;
+  --color-coral: #f05b35;
+  --color-coral-ink: #b83a17; /* corail lisible pour du texte sur crème */
+  --color-coral-soft: #fcd9cc;
+  --color-charcoal: #1d1d1b;
+  --color-ink-soft: #55534d; /* texte secondaire (7:1 sur crème) */
+  --color-line: #ded4c2; /* filets et bordures */
+
+  /* Typographie */
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+
+  /* Rayons */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 2.5rem;
+
+  /* Ombres — chaudes, jamais grises */
+  --shadow-soft: 0 1px 2px rgb(60 45 20 / 0.06), 0 8px 24px -12px rgb(60 45 20 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(60 45 20 / 0.06), 0 24px 48px -20px rgb(60 45 20 / 0.28);
+
+  /* Animation */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Échelle typographique fluide (mobile → desktop large) */
+:root {
+  --text-hero: clamp(2.5rem, 1.6rem + 4.2vw, 5.25rem);
+  --text-h2: clamp(2rem, 1.45rem + 2.4vw, 3.5rem);
+  --text-h3: clamp(1.35rem, 1.2rem + 0.6vw, 1.75rem);
+  --text-lead: clamp(1.075rem, 1rem + 0.35vw, 1.3rem);
+  --section-y: clamp(4.5rem, 3rem + 6vw, 9rem);
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    background: var(--color-cream);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-saffron);
+    color: var(--color-charcoal);
+  }
+  :focus-visible {
+    outline: 2.5px solid var(--color-coral);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* Utilitaires de marque (utilisables avec les variantes Tailwind) */
+@utility text-hero {
+  font-size: var(--text-hero);
+}
+@utility text-h2 {
+  font-size: var(--text-h2);
+}
+@utility text-h3 {
+  font-size: var(--text-h3);
+}
+@utility text-lead {
+  font-size: var(--text-lead);
+  line-height: 1.55;
+}
+@utility py-section {
+  padding-block: var(--section-y);
+}
+@utility px-gutter {
+  padding-inline: var(--gutter);
+}
+/* Accent serif éditorial dans les titres */
+@utility accent-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Apparition au scroll — subtile, désactivée si l'utilisateur préfère
+   réduire les animations. Voir components/ui/Reveal.tsx
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out-soft),
+    transform 700ms var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal][data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+.no-js [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

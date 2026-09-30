@@ -45,7 +45,10 @@ export type Availability = boolean | null;
 export interface Meal {
   id: string;
   slug: string;
+  /** Nom français (langue de référence). */
   name: string;
+  /** Nom anglais. */
+  nameEn: string;
   /** Libellé exact de la feuille Google Sheets, conservé pour la migration. */
   sourceName: string;
   category: MealCategory;

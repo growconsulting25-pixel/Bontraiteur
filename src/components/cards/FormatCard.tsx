@@ -1,12 +1,22 @@
 import { Check } from "lucide-react";
-import type { MealFormat } from "@/data/offers";
+import type { Dictionary } from "@/i18n/dictionaries/fr";
+import type { Locale } from "@/i18n/config";
+import type { MediaKey } from "@/data/media";
 import { Photo } from "@/components/ui/Photo";
 
+type Format = Dictionary["formats"][number];
+
+const formatPhotos: Record<string, MediaKey> = {
+  chauds: "formulaHot",
+  "prets-a-manger": "formulaReady",
+  congeles: "formulaFrozen",
+};
+
 /** Carte d'un format de repas (chaud, prêt-à-manger, congelé). */
-export function FormatCard({ format, index }: { format: MealFormat; index: number }) {
+export function FormatCard({ format, index, locale }: { format: Format; index: number; locale: Locale }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-xl)] bg-paper ring-1 ring-line">
-      <Photo slot={format.photo} className="aspect-[4/3]" sizes="(min-width: 1024px) 30vw, 100vw" showBrief={false} />
+      <Photo slot={formatPhotos[format.id]} locale={locale} className="aspect-[4/3]" sizes="(min-width: 768px) 30vw, 100vw" showBrief={false} />
       <div className="flex flex-1 flex-col p-6 sm:p-7">
         <p className="font-display text-sm font-bold text-coral-ink">0{index + 1}</p>
         <h3 className="mt-2 font-display text-h3 font-bold">{format.title}</h3>

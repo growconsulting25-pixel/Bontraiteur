@@ -1,18 +1,22 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { useState, useTransition, type FormEvent } from "react";
+import { CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ChoiceChip, Field, Input, Select, Textarea } from "./fields";
 import { buildQuoteMailto, type QuoteRequest } from "@/lib/quote";
-import { site } from "@/data/site";
+import { submitQuoteRequest } from "@/lib/actions/quote";
+import { site, primaryPhone } from "@/data/site";
+import type { Dictionary } from "@/i18n/dictionaries/fr";
+import type { Locale } from "@/i18n/config";
 
-const types = ["CPE", "Garderie subventionnée", "Garderie privée", "Service de garde", "Autre milieu de garde"];
-const frequencies = ["Tous les jours", "Quelques jours par semaine", "Ponctuellement", "Besoin urgent"];
-const formats = ["Repas chauds", "Prêts-à-manger", "Repas congelés", "Collations"];
+type Status = "idle" | "saved" | "mailto" | "error";
 
-export function QuoteForm() {
-  const [sent, setSent] = useState(false);
+const fill = (template: string, vars: Record<string, string>) => template.replace(/\{(\w+)\}/g, (_, k: string) => vars[k] ?? "");
+
+export function QuoteForm({ locale, t, optional }: { locale: Locale; t: Dictionary["quotePage"]["form"]; optional: string }) {
+  const [status, setStatus] = useState<Status>("idle");
+  const [pending, startTransition] = useTransition();
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,6 +25,7 @@ export function QuoteForm() {
     const data = new FormData(form);
     const get = (k: string) => String(data.get(k) ?? "").trim();
     const request: QuoteRequest = {
+      locale,
       establishmentName: get("establishmentName"),
       establishmentType: get("establishmentType"),
       contactName: get("contactName"),
@@ -34,119 +39,139 @@ export function QuoteForm() {
       startDate: get("startDate"),
       restrictions: get("restrictions"),
       message: get("message"),
+      // Champ piège anti-robots (invisible pour les humains)
+      website: get("company_website"),
     };
-    window.location.href = buildQuoteMailto(request);
-    setSent(true);
+
+    startTransition(async () => {
+      const result = await submitQuoteRequest(request).catch(() => ({ ok: false as const, reason: "error" as const }));
+      if (result.ok) {
+        setStatus("saved");
+      } else if (result.reason === "not-configured") {
+        // Backend pas encore branché : on ne perd pas la demande.
+        window.location.href = buildQuoteMailto(request, t.mail);
+        setStatus("mailto");
+      } else {
+        setStatus("error");
+      }
+    });
   }
 
-  if (sent) {
+  if (status === "saved" || status === "mailto") {
     return (
       <div role="status" className="rounded-[var(--radius-xl)] bg-paper p-8 ring-1 ring-line sm:p-10">
         <CheckCircle2 aria-hidden="true" className="size-10 text-olive" />
-        <p className="mt-5 font-display text-h3 font-bold">Votre demande est prête à être envoyée.</p>
+        <p className="mt-5 font-display text-h3 font-bold">{status === "saved" ? t.successTitle : t.mailtoTitle}</p>
         <p className="mt-3 text-ink-soft">
-          Votre logiciel de courriel s&apos;est ouvert avec votre demande : il ne reste qu&apos;à cliquer sur « Envoyer ». Rien ne
-          s&apos;est ouvert? Écrivez-nous à{" "}
-          <a className="font-semibold text-charcoal underline" href={`mailto:${site.contact.email}`}>
-            {site.contact.email}
-          </a>{" "}
-          ou appelez au{" "}
-          <a className="font-semibold text-charcoal underline" href={site.contact.phoneHref}>
-            {site.contact.phone}
-          </a>
-          .
+          {status === "saved"
+            ? fill(t.successText, { phone: primaryPhone.display })
+            : fill(t.mailtoText, { email: site.contact.email, phone: primaryPhone.display })}
         </p>
-        <button type="button" onClick={() => setSent(false)} className="mt-6 text-sm font-semibold underline underline-offset-4">
-          Modifier ma demande
+        <button type="button" onClick={() => setStatus("idle")} className="mt-6 text-sm font-semibold underline underline-offset-4">
+          {t.edit}
         </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate={false} className="grid gap-10 rounded-[var(--radius-xl)] bg-paper p-6 ring-1 ring-line sm:p-10">
+    <form onSubmit={onSubmit} className="grid gap-10 rounded-[var(--radius-xl)] bg-paper p-6 ring-1 ring-line sm:p-10">
       <fieldset className="grid gap-5">
-        <legend className="mb-5 font-display text-xl font-bold">1. Votre établissement</legend>
+        <legend className="mb-5 font-display text-xl font-bold">{t.step1}</legend>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Nom de l'établissement" required>
-            <Input name="establishmentName" required autoComplete="organization" />
+          <Field label={t.establishmentName} required>
+            <Input name="establishmentName" required autoComplete="organization" maxLength={160} />
           </Field>
-          <Field label="Type de milieu" required>
+          <Field label={t.establishmentType} required>
             <Select name="establishmentType" required defaultValue="">
               <option value="" disabled>
-                Choisir…
+                {t.choose}
               </option>
-              {types.map((t) => (
-                <option key={t}>{t}</option>
+              {t.types.map((type) => (
+                <option key={type}>{type}</option>
               ))}
             </Select>
           </Field>
-          <Field label="Ville" required>
-            <Input name="city" required autoComplete="address-level2" />
+          <Field label={t.city} required>
+            <Input name="city" required autoComplete="address-level2" maxLength={120} />
           </Field>
-          <Field label="Nombre d'enfants (approx.)" required>
-            <Input name="childrenCount" required inputMode="numeric" pattern="[0-9]*" />
+          <Field label={t.childrenCount} required>
+            <Input name="childrenCount" required inputMode="numeric" pattern="[0-9]*" maxLength={5} />
           </Field>
         </div>
       </fieldset>
 
       <fieldset className="grid gap-5">
-        <legend className="mb-5 font-display text-xl font-bold">2. Vos besoins</legend>
-        <Field label="Fréquence souhaitée" required>
+        <legend className="mb-5 font-display text-xl font-bold">{t.step2}</legend>
+        <Field label={t.frequency} required>
           <Select name="frequency" required defaultValue="">
             <option value="" disabled>
-              Choisir…
+              {t.choose}
             </option>
-            {frequencies.map((f) => (
+            {t.frequencies.map((f) => (
               <option key={f}>{f}</option>
             ))}
           </Select>
         </Field>
         <div className="grid gap-3">
           <span className="text-sm font-semibold">
-            Formats qui vous intéressent <span className="font-normal text-ink-soft">(facultatif)</span>
+            {t.formatsLabel} <span className="font-normal text-ink-soft">{optional}</span>
           </span>
           <div className="flex flex-wrap gap-2">
-            {formats.map((f) => (
+            {t.formats.map((f) => (
               <ChoiceChip key={f} type="checkbox" name="formats" value={f} label={f} />
             ))}
           </div>
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Début souhaité">
+          <Field label={t.startDate} optionalLabel={optional}>
             <Input name="startDate" type="month" />
           </Field>
-          <Field label="Allergies ou restrictions à prévoir">
-            <Input name="restrictions" placeholder="Ex. : 2 enfants allergiques aux œufs" />
+          <Field label={t.restrictions} optionalLabel={optional}>
+            <Input name="restrictions" placeholder={t.restrictionsPlaceholder} maxLength={500} />
           </Field>
         </div>
-        <Field label="Autre chose à nous dire?">
-          <Textarea name="message" placeholder="Horaire des repas, particularités, questions…" />
+        <Field label={t.message} optionalLabel={optional}>
+          <Textarea name="message" placeholder={t.messagePlaceholder} maxLength={3000} />
         </Field>
       </fieldset>
 
       <fieldset className="grid gap-5">
-        <legend className="mb-5 font-display text-xl font-bold">3. Vos coordonnées</legend>
+        <legend className="mb-5 font-display text-xl font-bold">{t.step3}</legend>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Votre nom" required>
-            <Input name="contactName" required autoComplete="name" />
+          <Field label={t.contactName} required>
+            <Input name="contactName" required autoComplete="name" maxLength={120} />
           </Field>
-          <Field label="Votre rôle">
-            <Input name="role" placeholder="Ex. : directrice, adjointe administrative" autoComplete="organization-title" />
+          <Field label={t.role} optionalLabel={optional}>
+            <Input name="role" placeholder={t.rolePlaceholder} autoComplete="organization-title" maxLength={120} />
           </Field>
-          <Field label="Courriel" required>
-            <Input name="email" type="email" required autoComplete="email" />
+          <Field label={t.email} required>
+            <Input name="email" type="email" required autoComplete="email" maxLength={200} />
           </Field>
-          <Field label="Téléphone" required>
-            <Input name="phone" type="tel" required autoComplete="tel" />
+          <Field label={t.phone} required>
+            <Input name="phone" type="tel" required autoComplete="tel" maxLength={40} />
           </Field>
+        </div>
+        {/* Champ piège anti-spam : masqué aux humains et aux lecteurs d'écran */}
+        <div aria-hidden="true" className="absolute -left-[9999px]">
+          <label>
+            Website
+            <input type="text" name="company_website" tabIndex={-1} autoComplete="off" />
+          </label>
         </div>
       </fieldset>
 
+      {status === "error" && (
+        <p role="alert" className="flex items-start gap-2 rounded-[var(--radius-md)] bg-coral-soft p-4 text-sm text-coral-ink">
+          <AlertCircle aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+          {fill(t.errorText, { phone: primaryPhone.display })}
+        </p>
+      )}
+
       <div className="flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-ink-soft">Aucun engagement. On vous revient avec une formule adaptée.</p>
-        <Button type="submit" size="lg" arrow>
-          Envoyer ma demande
+        <p className="text-sm text-ink-soft">{t.noCommitment}</p>
+        <Button type="submit" size="lg" arrow disabled={pending}>
+          {pending ? t.sending : t.submit}
         </Button>
       </div>
     </form>

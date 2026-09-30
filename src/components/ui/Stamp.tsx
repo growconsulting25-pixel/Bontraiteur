@@ -8,8 +8,10 @@ export function Stamp({ text, center, className }: { text: string; center: strin
         <defs>
           <path id="stamp-circle" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" />
         </defs>
-        <text className="fill-current text-[9.2px] font-bold tracking-[0.18em] uppercase">
-          <textPath href="#stamp-circle">{text}</textPath>
+        <text className="fill-current text-[8.6px] font-bold uppercase">
+          <textPath href="#stamp-circle" textLength="228" lengthAdjust="spacing">
+            {text}
+          </textPath>
         </text>
       </svg>
       <span className="font-display text-2xl font-extrabold text-saffron sm:text-3xl">{center}</span>

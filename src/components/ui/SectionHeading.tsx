@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { rich } from "@/i18n";
 
 /**
  * Titre de section éditorial : sur-titre + gros titre display
@@ -17,6 +18,7 @@ export function SectionHeading({
 }: {
   id?: string;
   eyebrow?: string;
+  /** Chaîne avec `*accent*` ou nœud React. */
   title: ReactNode;
   lead?: ReactNode;
   align?: "left" | "center";
@@ -35,11 +37,11 @@ export function SectionHeading({
       <Tag
         id={id}
         className={cn(
-          "font-bold [&_em]:accent-serif [&_em]:font-normal",
+          "font-bold [&_em]:accent-serif [&_em]:font-normal", tone === "dark" ? "[&_em]:text-olive" : "[&_em]:text-saffron",
           Tag === "h1" ? "text-hero" : "text-h2",
         )}
       >
-        {title}
+        {typeof title === "string" ? rich(title) : title}
       </Tag>
       {lead && (
         <p className={cn("text-lead mt-6", tone === "dark" ? "text-ink-soft" : "text-cream/85", align === "center" && "mx-auto max-w-2xl")}>

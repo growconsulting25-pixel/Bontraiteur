@@ -1,5 +1,6 @@
 import { Home, CalendarDays, ShoppingBag, Truck, Receipt, FolderOpen, LifeBuoy, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { getDictionary, type Locale } from "@/i18n";
 
 /**
  * Aperçu statique du futur portail client (écran « Accueil »).
@@ -7,21 +8,16 @@ import { cn } from "@/lib/cn";
  * Garderie et données fictives — affichées comme « Exemple ».
  */
 
-const sidebar = [
-  { label: "Accueil", icon: Home, active: true },
-  { label: "Mon menu", icon: CalendarDays },
-  { label: "Commandes", icon: ShoppingBag },
-  { label: "Livraisons", icon: Truck },
-  { label: "Factures", icon: Receipt },
-  { label: "Documents", icon: FolderOpen },
-  { label: "Support", icon: LifeBuoy },
-];
+const sidebarIcons = [Home, CalendarDays, ShoppingBag, Truck, Receipt, FolderOpen, LifeBuoy];
 
-export function DashboardPreview({ className }: { className?: string }) {
+export function DashboardPreview({ locale, className }: { locale: Locale; className?: string }) {
+  const d = getDictionary(locale);
+  const t = d.dashboard;
+  const sidebar = t.sidebar.map((label, i) => ({ label, icon: sidebarIcons[i], active: i === 0 }));
   return (
     <div
       className={cn("overflow-hidden rounded-[var(--radius-xl)] bg-paper text-charcoal shadow-[var(--shadow-lift)] ring-1 ring-black/5", className)}
-      aria-label="Aperçu du futur portail client Bon Traiteur (exemple)"
+      aria-label={t.aria}
       role="img"
     >
       {/* Barre de fenêtre */}
@@ -48,35 +44,35 @@ export function DashboardPreview({ className }: { className?: string }) {
         </nav>
 
         <div className="p-4 sm:p-6">
-          <p className="text-[0.7rem] font-bold tracking-[0.12em] text-coral-ink uppercase">Exemple</p>
+          <p className="text-[0.7rem] font-bold tracking-[0.12em] text-coral-ink uppercase">{d.common.example}</p>
           <p className="mt-1 font-display text-xl leading-tight font-bold sm:text-2xl">
-            Bonjour, Garderie Les Petits Explorateurs
+            {t.greeting}
           </p>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <Tile label="Prochaine livraison" value="Jeudi 8 octobre" sub="Repas chauds · 42 portions" />
+            <Tile label={t.nextDelivery} value={t.nextDeliveryValue} sub={t.nextDeliverySub} />
             <Tile
-              label="Menu d'octobre"
+              label={t.monthMenu}
               value={
                 <span className="inline-flex items-center gap-1.5 text-olive">
-                  <Check className="size-4" strokeWidth={3} /> Confirmé
+                  <Check className="size-4" strokeWidth={3} /> {t.monthMenuValue}
                 </span>
               }
-              sub="Aucune action requise"
+              sub={t.monthMenuSub}
             />
             <div className="rounded-[var(--radius-md)] bg-saffron p-4 sm:col-span-2">
-              <p className="text-[0.7rem] font-bold tracking-[0.1em] uppercase">Prochaine action</p>
+              <p className="text-[0.7rem] font-bold tracking-[0.1em] uppercase">{t.nextAction}</p>
               <div className="mt-1 flex items-center justify-between gap-3">
-                <p className="leading-snug font-semibold">Menu de novembre à confirmer avant le 16 octobre</p>
+                <p className="leading-snug font-semibold">{t.nextActionValue}</p>
                 <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-charcoal text-cream">
                   <ArrowRight className="size-4" />
                 </span>
               </div>
             </div>
             <Tile
-              label="Facture BT-1094"
-              value={<span className="inline-flex items-center gap-1.5 rounded-full bg-olive-soft px-2 py-0.5 text-sm text-olive-deep">Payée</span>}
-              sub="Septembre"
+              label={t.invoice}
+              value={<span className="inline-flex items-center gap-1.5 rounded-full bg-olive-soft px-2 py-0.5 text-sm text-olive-deep">{t.paid}</span>}
+              sub={t.invoiceSub}
               className="sm:col-span-2"
               inline
             />

@@ -1,0 +1,571 @@
+/**
+ * DICTIONNAIRE FRANÇAIS — source de vérité de tous les textes du site.
+ *
+ * Convention : dans les titres, `*texte*` = accent serif italique (voir `rich()`).
+ * Le dictionnaire anglais (en.ts) doit avoir exactement la même forme :
+ * TypeScript refuse la compilation s'il manque une clé.
+ *
+ * ⚠️ Les éléments « [À confirmer] » et les témoignages « [Exemple] » sont des
+ * placeholders à remplacer.
+ */
+
+const fr = {
+  meta: {
+    siteTitle: "Bon Traiteur — Repas pour CPE et garderies au Québec",
+    siteDescription:
+      "Service de repas pour CPE, garderies et services de garde au Québec. Menus mensuels flexibles, repas chauds, prêts-à-manger ou congelés, livraisons régulières, ponctuelles ou urgentes.",
+    home: {
+      title: "Bon Traiteur — Repas pour CPE, garderies et services de garde au Québec",
+      description:
+        "Des repas qui plaisent aux enfants, un service qui simplifie vos journées. Menus mensuels flexibles, repas chauds, prêts-à-manger ou congelés, livraison régulière ou urgente.",
+    },
+    menu: {
+      title: "Menu complet pour CPE et garderies",
+      description:
+        "Consultez le menu Bon Traiteur : volaille, bœuf, pâtes, poisson, plats végétariens, desserts et collations. Menu mensuel flexible pour les milieux de garde du Québec.",
+    },
+    meals: {
+      title: "Nos repas et formules pour garderies",
+      description:
+        "Repas chauds, prêts-à-manger ou congelés pour CPE et garderies. Livraison régulière, commande ponctuelle ou service urgent selon disponibilité. Sans abonnement obligatoire.",
+    },
+    daycares: {
+      title: "Service de repas pour garderies et CPE",
+      description:
+        "Service de repas conçu pour les CPE, garderies subventionnées, garderies privées et services de garde du Québec. Menu mensuel flexible, quantités ajustables, dépannage rapide.",
+    },
+    howItWorks: {
+      title: "Comment ça fonctionne",
+      description:
+        "Soumission, menu mensuel à garder ou modifier, confirmation et livraison : voici comment Bon Traiteur simplifie les repas de votre CPE ou garderie.",
+    },
+    about: {
+      title: "À propos",
+      description: "Depuis plus de 15 ans, Bon Traiteur prépare et livre des repas pour les CPE, garderies et services de garde du Québec.",
+    },
+    faq: {
+      title: "Questions fréquentes",
+      description:
+        "Menu mensuel, modifications, livraisons urgentes, allergies, soumission : les réponses aux questions des CPE et garderies sur le service Bon Traiteur.",
+    },
+    contact: {
+      title: "Nous joindre",
+      description: "Communiquez avec l'équipe Bon Traiteur pour toute question sur nos repas et nos livraisons pour CPE et garderies.",
+    },
+    quote: {
+      title: "Demander une soumission",
+      description:
+        "Obtenez une soumission pour les repas de votre CPE, garderie ou service de garde. Formule adaptée à votre nombre d'enfants, votre fréquence et vos besoins.",
+    },
+    login: {
+      title: "Connexion au portail client",
+      description: "Accédez à votre portail client Bon Traiteur : menu, livraisons, factures.",
+    },
+    serviceType: "Service de repas pour milieux de garde",
+    audienceType: "CPE, garderies et services de garde",
+  },
+
+  nav: {
+    items: [
+      { key: "home", label: "Accueil" },
+      { key: "meals", label: "Nos repas" },
+      { key: "menu", label: "Menu" },
+      { key: "howItWorks", label: "Comment ça fonctionne" },
+      { key: "about", label: "À propos" },
+      { key: "faq", label: "FAQ" },
+    ],
+    login: "Connexion",
+    loginLong: "Connexion client",
+    quote: "Demander une soumission",
+    skipToContent: "Aller au contenu",
+    homeAria: "Bon Traiteur — accueil",
+    mainAria: "Navigation principale",
+    mobileAria: "Navigation mobile",
+    open: "Ouvrir le menu",
+    close: "Fermer le menu",
+    switchLanguage: "English",
+    switchLanguageAria: "Voir le site en anglais",
+  },
+
+  footer: {
+    tagline: "Le service de repas pensé pour les CPE, les garderies et les services de garde du Québec.",
+    phoneLabel: "Téléphone",
+    emailLabel: "Courriel",
+    hoursLabel: "Heures",
+    groups: [
+      {
+        title: "Nos repas",
+        items: [
+          { key: "menu", label: "Menu complet" },
+          { key: "meals", label: "Repas et formules" },
+          { key: "daycares", label: "Pour les garderies et CPE" },
+        ],
+      },
+      {
+        title: "Service",
+        items: [
+          { key: "howItWorks", label: "Comment ça fonctionne" },
+          { key: "quote", label: "Demander une soumission" },
+          { key: "faq", label: "FAQ" },
+        ],
+      },
+      {
+        title: "Bon Traiteur",
+        items: [
+          { key: "about", label: "À propos" },
+          { key: "contact", label: "Contact" },
+          { key: "login", label: "Connexion client" },
+        ],
+      },
+    ],
+    rights: "Tous droits réservés.",
+    bottomNote: "Service en français et en anglais · Québec",
+  },
+
+  contact: {
+    hours: "Lundi au vendredi, 7 h à 16 h [À confirmer]",
+    serviceArea: "Grand Montréal et environs [À confirmer]",
+  },
+
+  common: {
+    photoComing: "Photo à venir",
+    photoComingAria: "Photo à venir :",
+    example: "Exemple",
+    optional: "(facultatif)",
+    orCall: "Ou appelez-nous :",
+  },
+
+  support: {
+    open: "Besoin d'aide?",
+    close: "Fermer",
+    dialogAria: "Nous joindre",
+    title: "Bonjour! Comment peut-on aider?",
+    subtitle: "Une vraie personne vous répond.",
+    call: "Appeler l'équipe",
+    email: "Écrire un courriel",
+    quote: "Demander une soumission",
+    quoteSub: "Réponse personnalisée",
+    footer: "Bientôt : gérez votre menu et vos livraisons directement ici, avec l'assistant Bon Traiteur.",
+  },
+
+  home: {
+    hero: {
+      eyebrow: "Pour les CPE, garderies et services de garde",
+      titleLine1: "Des repas qui plaisent aux enfants.",
+      titleLine2: "Un service qui simplifie vos journées.",
+      lead: "Menus flexibles et service de livraison conçus pour les milieux de garde. Repas chauds, prêts-à-manger ou congelés. Commandes régulières, ponctuelles ou urgentes.",
+      ctaMenu: "Voir notre menu",
+      ctaQuote: "Demander une soumission",
+      statusTitle: "Menu de novembre",
+      statusSub: "Confirmé en 1 clic",
+      stamp: "Au service des garderies · 15 ans et plus · ",
+      trust: ["15+ ans d'expérience", "Menus flexibles", "Livraison adaptée", "Service humain"],
+    },
+    situations: {
+      eyebrow: "Conçu pour les garderies",
+      title: "Les repas ne sont qu'une des *100 choses* à gérer aujourd'hui.",
+      lead: "Ratios, horaires, absences, parents, dossiers. On le sait. Notre rôle, c'est que les repas ne soient plus une source de gestion.",
+      items: [
+        { question: "Un enfant de plus cette semaine?", answer: "Ajustez vos portions. On livre la bonne quantité." },
+        { question: "Une journée pédagogique?", answer: "Avisez-nous et on suspend la livraison du jour." },
+        { question: "Besoin de modifier un repas?", answer: "Choisissez simplement une alternative dans le menu complet." },
+        { question: "Une livraison supplémentaire?", answer: "Ajoutez-la à votre commande. On s'organise." },
+        { question: "Un changement de dernière minute?", answer: "Appelez-nous. Une vraie personne vous répond et trouve une solution." },
+      ],
+      closing: "On s'adapte.",
+    },
+    yourMenu: {
+      eyebrow: "Votre menu, votre façon",
+      title: "Un menu chaque mois. *Vous gardez le contrôle.*",
+      lead: "Chaque mois, Bon Traiteur vous propose un menu varié. Vous le gardez tel quel, ou vous remplacez les repas que vous voulez.",
+      steps: [
+        { title: "Vous gardez le menu?", text: "Un clic suffit. C'est confirmé." },
+        { title: "Vous voulez changer un repas?", text: "Choisissez simplement une alternative dans le menu complet." },
+        { title: "Vous confirmez.", text: "Normalement jusqu'à 2 semaines avant la période concernée." },
+      ],
+      cta: "Voir notre menu",
+      tryIt: "Essayez-le : cliquez sur « Modifier mon menu »",
+    },
+    formulas: {
+      eyebrow: "Nos formules",
+      title: "Choisissez ce qui fonctionne *pour votre garderie.*",
+      lead: "Trois formats de repas, trois façons de commander. Vous pouvez les combiner. Aucun abonnement obligatoire.",
+      modesTitle: "Et vous commandez comme ça vous arrange.",
+    },
+    simplify: {
+      eyebrow: "Simplifiez votre quotidien",
+      title: "Moins de courriels. Moins d'appels. *Moins de gestion.*",
+      lead: "Gérez vos repas et vos livraisons à partir d'un seul endroit.",
+      badge: "Portail client · bientôt disponible",
+      actions: [
+        { label: "Confirmez votre menu", detail: "Vous gardez le menu? Un clic suffit." },
+        { label: "Changez un repas", detail: "Choisissez une alternative dans le menu complet." },
+        { label: "Ajoutez des portions", detail: "Un groupe plus grand vendredi? Ajustez en quelques secondes." },
+        { label: "Consultez vos livraisons", detail: "Sans chercher dans vos courriels." },
+        { label: "Suspendez une livraison", detail: "Journée pédagogique, fermeture, congé." },
+        { label: "Accédez à vos factures", detail: "Toutes au même endroit, prêtes pour la comptabilité." },
+        { label: "Contactez Bon Traiteur", detail: "Une question? On vous répond rapidement." },
+      ],
+    },
+    menuTeaser: {
+      eyebrow: "Le menu",
+      title: "Des plats que les enfants *reconnaissent.*",
+      lead: "Poulet, pâtes, bœuf, poisson, végétarien : {count} plats en rotation, plus des desserts et des collations.",
+      cta: "Voir le menu complet",
+    },
+    audience: {
+      eyebrow: "Pour qui",
+      title: "Conçu pour les *milieux de garde.* Seulement.",
+      lead: "Notre service est pensé pour une seule chose : nourrir des enfants, tous les jours, en milieu de garde. Chaque détail part de votre réalité.",
+      cta: "Notre service pour les garderies",
+    },
+    trust: {
+      eyebrow: "Notre équipe",
+      title: "Une cuisine, une équipe, *des engagements simples.*",
+      lead: "Derrière chaque livraison, il y a des gens qui préparent, portionnent, étiquettent et livrent. Et qui connaissent votre garderie par son nom.",
+    },
+    testimonials: {
+      eyebrow: "Ils nous font confiance",
+      title: "Ce que disent *les directions.*",
+      placeholderBadge: "Témoignage à venir — exemple",
+    },
+  },
+
+  audienceProfiles: [
+    { id: "cpe", title: "CPE", summary: "Des menus mensuels stables, faciles à confirmer, et une facturation claire pour votre conseil d'administration." },
+    { id: "garderies", title: "Garderies", summary: "Subventionnées ou privées : un service régulier qui s'ajuste à vos groupes, sans engagement compliqué." },
+    { id: "services-de-garde", title: "Services de garde", summary: "Des quantités qui suivent vos présences et un dépannage possible quand l'horaire change." },
+  ],
+
+  commitments: [
+    { title: "Constance", text: "Les mêmes standards d'une livraison à l'autre. Vos équipes savent à quoi s'attendre." },
+    { title: "Ponctualité", text: "Des livraisons planifiées selon l'horaire de votre garderie, pas le nôtre." },
+    { title: "Flexibilité", text: "Menu, quantités, jours de livraison : tout peut s'ajuster." },
+    { title: "Service humain", text: "Une équipe qui connaît votre garderie et qui répond au téléphone." },
+    { title: "Qualité", text: "Des repas préparés en cuisine, pensés pour les tout-petits." },
+    { title: "Expérience", text: "Plus de 15 ans à nourrir des enfants en milieu de garde." },
+  ],
+
+  /** PLACEHOLDERS — à remplacer par de vrais témoignages autorisés. */
+  testimonials: [
+    {
+      id: "placeholder-1",
+      quote: "[Exemple] Avant, je passais du temps chaque semaine à gérer les repas. Maintenant, je confirme le menu et c'est réglé.",
+      author: "Nom de la directrice",
+      role: "Directrice, CPE (à confirmer)",
+    },
+    {
+      id: "placeholder-2",
+      quote: "[Exemple] Les enfants mangent bien et quand on a un imprévu, l'équipe trouve toujours une solution.",
+      author: "Nom de la responsable",
+      role: "Responsable alimentaire, garderie (à confirmer)",
+    },
+    {
+      id: "placeholder-3",
+      quote: "[Exemple] On peut changer un repas sans échanger dix courriels. C'est exactement ce dont on avait besoin.",
+      author: "Nom de l'adjointe",
+      role: "Adjointe administrative, service de garde (à confirmer)",
+    },
+  ],
+
+  formats: [
+    { id: "chauds", title: "Repas chauds", summary: "Livrés chauds, prêts à servir à l'heure du dîner.", details: ["Livraison planifiée selon votre horaire", "Quantités ajustées à vos groupes"] },
+    { id: "prets-a-manger", title: "Prêts-à-manger", summary: "Des portions prêtes à réchauffer ou à servir, selon votre organisation.", details: ["Pratique pour les petites équipes", "Simple à ranger et à servir"] },
+    { id: "congeles", title: "Repas congelés", summary: "Une réserve au congélateur pour garder de la flexibilité.", details: ["Idéal comme dépannage", "Vous servez selon vos besoins"] },
+  ],
+
+  serviceModes: [
+    { id: "reguliere", title: "Livraison régulière", summary: "Vos repas arrivent aux jours convenus, semaine après semaine. Vous n'avez plus à y penser.", highlight: false },
+    { id: "ponctuelle", title: "Commande ponctuelle", summary: "Une sortie, une journée spéciale, un besoin temporaire? Commandez seulement quand vous en avez besoin.", highlight: false },
+    { id: "urgente", title: "Service urgent", summary: "Un imprévu? Une livraison urgente peut être organisée sous 48 h, selon les disponibilités et votre zone de livraison.", highlight: true },
+  ],
+
+  urgentNote: "Livraison urgente possible sous 48 h, selon les disponibilités et la zone de livraison.",
+
+  cta: {
+    title: "Prêt à simplifier *vos repas?*",
+    text: "Parlez-nous de votre garderie. Nous vous proposerons une formule adaptée à votre nombre d'enfants, votre fréquence et vos besoins.",
+    button: "Obtenir une soumission",
+  },
+
+  planner: {
+    monthTitle: "Menu de {month}",
+    subtitle: "Semaine 1 · Exemple de démonstration",
+    toConfirm: "À confirmer avant le {date}",
+    confirmed: "Confirmé",
+    replaced: "Repas remplacé",
+    replace: "Remplacer",
+    cancel: "Annuler",
+    chooseAlternative: "Choisissez une alternative :",
+    keep: "Garder mon menu",
+    modify: "Modifier mon menu",
+    confirmMenu: "Confirmer le menu",
+    confirmChanges: "Confirmer ({count} changement{plural})",
+    done: "C'est confirmé. Vous n'avez rien d'autre à faire.",
+    restart: "Recommencer la démo",
+    month: "novembre",
+    deadline: "16 octobre",
+    days: [
+      { label: "Lundi", date: "2 nov." },
+      { label: "Mardi", date: "3 nov." },
+      { label: "Mercredi", date: "4 nov." },
+      { label: "Jeudi", date: "5 nov." },
+      { label: "Vendredi", date: "6 nov." },
+    ],
+  },
+
+  dashboard: {
+    aria: "Aperçu du futur portail client Bon Traiteur (exemple)",
+    sidebar: ["Accueil", "Mon menu", "Commandes", "Livraisons", "Factures", "Documents", "Support"],
+    greeting: "Bonjour, Garderie Les Petits Explorateurs",
+    nextDelivery: "Prochaine livraison",
+    nextDeliveryValue: "Jeudi 8 octobre",
+    nextDeliverySub: "Repas chauds · 42 portions",
+    monthMenu: "Menu d'octobre",
+    monthMenuValue: "Confirmé",
+    monthMenuSub: "Aucune action requise",
+    nextAction: "Prochaine action",
+    nextActionValue: "Menu de novembre à confirmer avant le 16 octobre",
+    invoice: "Facture BT-1094",
+    invoiceSub: "Septembre",
+    paid: "Payée",
+  },
+
+  menu: {
+    eyebrow: "Menu complet",
+    title: "Le menu. *Et toutes vos alternatives.*",
+    lead: "Chaque mois, on vous propose un menu à partir de ces plats. Vous pouvez le garder, ou remplacer n'importe quel repas par une alternative de cette liste.",
+    monthlyTitle: "Rotation mensuelle",
+    monthlyNote:
+      "Notre menu principal comprend une rotation mensuelle d'une vingtaine de plats. Les repas varient chaque mois pour offrir diversité et équilibre aux tout-petits.",
+    occasionalTitle: "Rotation ponctuelle",
+    occasionalNote:
+      "D'autres plats sont disponibles en rotation ponctuelle. Vous pouvez les intégrer à votre menu mensuel en nous en informant au moins 2 semaines à l'avance.",
+    filterAria: "Filtrer par catégorie",
+    rotationAria: "Filtrer par rotation",
+    rotationAll: "Tous les plats",
+    rotationMonthly: "Mensuelle",
+    rotationOccasional: "Ponctuelle",
+    search: "Rechercher un plat",
+    searchPlaceholder: "Rechercher un plat…",
+    countOne: "plat",
+    countMany: "plats",
+    empty: "Aucun plat ne correspond.",
+    reset: "Réinitialiser les filtres",
+    formatsNote: "Les formats offerts (chaud, prêt-à-manger, congelé) peuvent varier selon le plat : confirmez avec notre équipe.",
+    ctaTitle: "Envie de voir votre *premier menu?*",
+    allergenDisclaimer:
+      "Les informations sur les allergènes sont fournies à titre informatif et doivent être confirmées auprès de notre équipe selon vos besoins particuliers.",
+    allergensDeclared: "Allergènes déclarés :",
+    allergensLabel: "Allergènes :",
+    allergensToConfirm: "à confirmer avec notre équipe",
+    categories: {
+      tous: "Tous",
+      volaille: "Volaille",
+      boeuf: "Bœuf",
+      pates: "Pâtes",
+      poisson: "Poisson",
+      vegetarien: "Végétarien",
+      autres: "Autres plats",
+      desserts: "Desserts",
+      collations: "Collations",
+    },
+    allergens: { lait: "Lait", oeufs: "Œufs", poisson: "Poisson" },
+    rotations: { mensuelle: "Rotation mensuelle", ponctuelle: "Rotation ponctuelle" },
+  },
+
+  mealsPage: {
+    eyebrow: "Nos repas",
+    title: "Des repas simples, bons, *et adaptés à votre garderie.*",
+    lead: "Choisissez le format et la fréquence qui fonctionnent pour vous. Vous pouvez les combiner et les changer en cours de route.",
+    approachEyebrow: "Notre approche",
+    approachTitle: "Des repas pensés *pour les tout-petits.*",
+    principles: [
+      { title: "Des plats familiers", text: "Pâté chinois, macaroni, poulet, tourtière : des repas que les enfants reconnaissent et qu'ils mangent." },
+      { title: "Des portions pour les tout-petits", text: "Les quantités sont pensées pour vos groupes, et ajustées selon le nombre d'enfants." },
+      { title: "De la variété", text: "Une rotation mensuelle et des plats ponctuels, pour que le menu ne tourne pas en rond." },
+    ],
+  },
+
+  daycaresPage: {
+    eyebrow: "Pour les garderies et CPE",
+    title: "Le service de repas qui *s'adapte à votre garderie.*",
+    lead: "CPE, garderies subventionnées ou privées, services de garde : vous avez un point en commun. Des enfants à nourrir tous les jours, et déjà beaucoup trop de choses à gérer.",
+    ctaHow: "Comment ça fonctionne",
+    profilesEyebrow: "Une clientèle, trois réalités",
+    profilesTitle: "Pensé pour *votre type de milieu.*",
+    reasonsEyebrow: "Pourquoi Bon Traiteur",
+    reasonsTitle: "Un service régulier. *Sans perdre votre flexibilité.*",
+    reasons: [
+      { title: "Vous gardez de la flexibilité", text: "Service régulier, sans perdre la possibilité de changer un repas, des quantités ou une date." },
+      { title: "Vous gérez moins", text: "Un menu à confirmer, des livraisons planifiées, une personne à appeler. C'est tout." },
+      { title: "On vous dépanne", text: "Un imprévu? Une livraison urgente peut être organisée sous 48 h, selon les disponibilités et la zone." },
+      { title: "Vous parlez à des gens", text: "Une équipe qui connaît les milieux de garde et qui vous répond directement." },
+    ],
+  },
+
+  howPage: {
+    eyebrow: "Comment ça fonctionne",
+    title: "Quatre étapes. *Puis, presque rien à gérer.*",
+    lead: "Une fois votre service en place, la seule chose à faire chaque mois, c'est confirmer votre menu.",
+    stepsTitle: "Les étapes",
+    steps: [
+      { step: "01", title: "On apprend à connaître votre garderie", text: "Nombre d'enfants, groupes d'âge, jours de service, contraintes alimentaires. Une soumission adaptée suit." },
+      { step: "02", title: "Vous recevez votre menu du mois", text: "Chaque mois, Bon Traiteur prépare un menu. Vous le gardez tel quel ou vous remplacez les repas de votre choix." },
+      { step: "03", title: "Vous confirmez", text: "Les changements se font normalement jusqu'à 2 semaines avant la période concernée. Après, on regarde ce qui est possible." },
+      { step: "04", title: "On prépare et on livre", text: "Repas chauds, prêts-à-manger ou congelés, livrés aux jours convenus. Vous servez, c'est tout." },
+    ],
+    flexEyebrow: "En cours de route",
+    flexTitle: "Ça change? *On s'ajuste.*",
+    flexibility: [
+      { q: "Vous gardez le menu?", a: "Un clic suffit." },
+      { q: "Vous voulez changer un repas?", a: "Choisissez simplement une alternative." },
+      { q: "Besoin de repas supplémentaires?", a: "Ajoutez-les à votre commande." },
+      { q: "Un imprévu?", a: "Communiquez rapidement avec notre équipe." },
+      { q: "Une modification tardive?", a: "Elle peut devenir une demande urgente, selon les disponibilités." },
+    ],
+  },
+
+  aboutPage: {
+    eyebrow: "À propos",
+    title: "Plus de 15 ans à nourrir *des enfants en garderie.*",
+    lead: "Bon Traiteur, c'est une cuisine, une équipe de livraison et des gens qui comprennent la réalité des milieux de garde.",
+    storyEyebrow: "Notre histoire",
+    storyTitle: "Une seule mission : *bien nourrir, simplement.*",
+    storyPlaceholder:
+      "[Texte à venir] Histoire de Bon Traiteur : année de fondation, fondateurs, emplacement de la cuisine, région desservie, anecdote marquante.",
+    story: [
+      "Depuis plus de 15 ans, nous préparons des repas pour les milieux de garde. Avec le temps, on a compris une chose : une direction de garderie n'a pas besoin d'un fournisseur de plus à gérer. Elle a besoin qu'on lui enlève quelque chose de sa liste.",
+      "C'est pour ça qu'on travaille avec un menu mensuel simple à confirmer, des quantités qui s'ajustent et une équipe qui répond quand il y a un imprévu.",
+    ],
+  },
+
+  faqPage: {
+    eyebrow: "FAQ",
+    title: "Vos questions. *Nos réponses, simplement.*",
+    lead: "Vous ne trouvez pas votre réponse? Appelez-nous ou écrivez-nous : une vraie personne vous répondra.",
+    contactCta: "Nous joindre",
+    groups: {
+      menu: "Le menu",
+      commandes: "Commandes et flexibilité",
+      livraison: "Livraison",
+      allergies: "Allergies et restrictions",
+      facturation: "Soumission et facturation",
+    },
+    items: [
+      { group: "menu", question: "Comment fonctionne le menu mensuel?", answer: "Chaque mois, nous préparons un menu à partir de notre rotation de plats. Vous pouvez le garder tel quel ou remplacer certains repas par des alternatives de notre menu complet." },
+      { group: "menu", question: "Jusqu'à quand puis-je modifier mon menu?", answer: "Normalement jusqu'à 2 semaines avant la période concernée. Une modification plus tardive est parfois possible : communiquez avec nous et nous regarderons ce qui peut être fait." },
+      { group: "menu", question: "Qu'est-ce que la rotation ponctuelle?", answer: "En plus du cycle mensuel, d'autres plats sont disponibles en rotation ponctuelle. Vous pouvez les intégrer à votre menu en nous en informant au moins 2 semaines à l'avance." },
+      { group: "commandes", question: "Dois-je signer un contrat ou un abonnement?", answer: "Non, ce n'est pas obligatoire. Vous pouvez commander de façon ponctuelle, avoir des livraisons régulières ou convenir d'une entente à plus long terme. On choisit ensemble ce qui convient à votre garderie." },
+      { group: "commandes", question: "Puis-je ajuster les quantités d'une semaine à l'autre?", answer: "Oui. Un enfant de plus, un groupe absent : dites-le-nous et nous ajustons les portions. [À confirmer : délai minimal de modification des quantités]" },
+      { group: "commandes", question: "Que se passe-t-il lors d'une journée pédagogique ou d'une fermeture?", answer: "Vous pouvez suspendre la livraison prévue. Avisez-nous à l'avance et nous ajustons votre commande." },
+      { group: "livraison", question: "Offrez-vous des livraisons urgentes?", answer: "Oui. Une livraison urgente peut être organisée sous 48 h, selon les disponibilités et votre zone de livraison. Appelez-nous pour valider rapidement." },
+      { group: "livraison", question: "Quelles régions desservez-vous?", answer: "[À confirmer : zones de livraison exactes] Écrivez-nous avec l'adresse de votre garderie et nous vous confirmerons rapidement." },
+      { group: "livraison", question: "Sous quelle forme les repas sont-ils livrés?", answer: "Selon vos besoins : repas chauds prêts à servir, repas prêts-à-manger ou repas congelés. Plusieurs garderies combinent les formats." },
+      { group: "allergies", question: "Comment gérez-vous les allergies?", answer: "Les allergènes connus sont indiqués dans notre menu à titre informatif. Ces informations doivent être confirmées avec notre équipe selon les besoins particuliers de vos enfants. Parlez-nous de vos restrictions dès la soumission." },
+      { group: "facturation", question: "Combien coûtent vos repas?", answer: "Le prix dépend du nombre d'enfants, de la fréquence de livraison et des formats choisis. Demandez une soumission : nous vous proposons une formule adaptée à votre garderie." },
+      { group: "facturation", question: "Comment se fait la facturation?", answer: "[À confirmer : fréquence et modes de paiement] Bientôt, vos factures seront aussi accessibles dans votre portail client." },
+    ],
+  },
+
+  contactPage: {
+    eyebrow: "Contact",
+    title: "Une question? *Parlons-en.*",
+    lead: "Une vraie personne vous répond. Pour une nouvelle garderie, la demande de soumission est le chemin le plus rapide.",
+    phones: "Téléphone",
+    email: "Courriel",
+    hours: "Heures",
+    area: "Zone desservie",
+    newTitle: "Vous êtes une nouvelle garderie?",
+    newText: "Dites-nous combien d'enfants vous accueillez, à quelle fréquence et vos besoins particuliers. On vous revient avec une formule adaptée.",
+  },
+
+  quotePage: {
+    eyebrow: "Soumission",
+    title: "Parlez-nous de *votre garderie.*",
+    lead: "Quelques questions pour vous proposer une formule adaptée à votre nombre d'enfants, votre fréquence et vos besoins. Environ 2 minutes.",
+    nextTitle: "Et ensuite?",
+    next: [
+      { title: "On lit votre demande", text: "Et on vous appelle si on a besoin de précisions." },
+      { title: "On vous propose une formule", text: "Adaptée à vos groupes, votre fréquence et vos formats." },
+      { title: "On planifie le départ", text: "Premier menu, premières livraisons. Vous n'avez qu'à confirmer." },
+    ],
+    preferCall: "Vous préférez en parler?",
+    form: {
+      step1: "1. Votre établissement",
+      step2: "2. Vos besoins",
+      step3: "3. Vos coordonnées",
+      establishmentName: "Nom de l'établissement",
+      establishmentType: "Type de milieu",
+      choose: "Choisir…",
+      types: ["CPE", "Garderie subventionnée", "Garderie privée", "Service de garde", "Autre milieu de garde"],
+      city: "Ville",
+      childrenCount: "Nombre d'enfants (approx.)",
+      frequency: "Fréquence souhaitée",
+      frequencies: ["Tous les jours", "Quelques jours par semaine", "Ponctuellement", "Besoin urgent"],
+      formatsLabel: "Formats qui vous intéressent",
+      formats: ["Repas chauds", "Prêts-à-manger", "Repas congelés", "Collations"],
+      startDate: "Début souhaité",
+      restrictions: "Allergies ou restrictions à prévoir",
+      restrictionsPlaceholder: "Ex. : 2 enfants allergiques aux œufs",
+      message: "Autre chose à nous dire?",
+      messagePlaceholder: "Horaire des repas, particularités, questions…",
+      contactName: "Votre nom",
+      role: "Votre rôle",
+      rolePlaceholder: "Ex. : directrice, adjointe administrative",
+      email: "Courriel",
+      phone: "Téléphone",
+      noCommitment: "Aucun engagement. On vous revient avec une formule adaptée.",
+      submit: "Envoyer ma demande",
+      sending: "Envoi en cours…",
+      successTitle: "Merci! Votre demande est bien reçue.",
+      successText: "Notre équipe vous revient rapidement. Pour une question urgente, appelez-nous au {phone}.",
+      mailtoTitle: "Votre demande est prête à être envoyée.",
+      mailtoText: "Votre logiciel de courriel s'est ouvert avec votre demande : il ne reste qu'à cliquer sur « Envoyer ». Rien ne s'est ouvert? Écrivez-nous à {email} ou appelez au {phone}.",
+      errorText: "Une erreur est survenue. Réessayez ou appelez-nous au {phone}.",
+      edit: "Modifier ma demande",
+      mail: {
+        subject: "Demande de soumission — {name}",
+        establishment: "Établissement",
+        contact: "Personne-ressource",
+        city: "Ville",
+        children: "Nombre d'enfants",
+        frequency: "Fréquence souhaitée",
+        formats: "Formats",
+        start: "Début souhaité",
+        restrictions: "Allergies / restrictions",
+        toDiscuss: "À discuter",
+      },
+    },
+  },
+
+  loginPage: {
+    back: "Retour au site",
+    eyebrow: "Portail client",
+    title: "Bon retour",
+    titleAccent: "parmi nous.",
+    lead: "Votre menu, vos livraisons et vos factures, au même endroit.",
+    soonTitle: "Le portail client ouvre bientôt.",
+    soonText: "En attendant, notre équipe s'occupe de tout :",
+    email: "Courriel",
+    password: "Mot de passe",
+    submit: "Se connecter",
+    status: "Connexion disponible à l'ouverture du portail.",
+    notClient: "Pas encore client?",
+    sideTitle: "Confirmez votre menu.",
+    sideAccent: "En un clic.",
+  },
+
+  notFound: {
+    eyebrow: "Erreur 404",
+    title: "Cette page *n'est pas au menu.*",
+    lead: "Elle a peut-être été déplacée. Voici où aller :",
+    home: "Retour à l'accueil",
+    menu: "Voir le menu",
+  },
+};
+
+export default fr;
+
+/** Forme du dictionnaire (toutes les valeurs typées en `string`). */
+export type Dictionary = typeof fr;

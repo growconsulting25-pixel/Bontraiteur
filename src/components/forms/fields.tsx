@@ -4,12 +4,27 @@ import { cn } from "@/lib/cn";
 const control =
   "w-full rounded-[var(--radius-md)] bg-paper px-4 text-base ring-1 ring-line outline-none ring-inset transition-shadow placeholder:text-ink-soft/70 focus:ring-2 focus:ring-charcoal aria-[invalid=true]:ring-coral";
 
-export function Field({ label, hint, required, children, className }: { label: string; hint?: string; required?: boolean; children: ReactNode; className?: string }) {
+export function Field({
+  label,
+  hint,
+  required,
+  optionalLabel,
+  children,
+  className,
+}: {
+  label: string;
+  hint?: string;
+  required?: boolean;
+  /** Mention « (facultatif) » traduite. */
+  optionalLabel?: string;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <label className={cn("grid gap-2", className)}>
       <span className="text-sm font-semibold">
         {label}
-        {required ? <span className="text-coral-ink"> *</span> : <span className="font-normal text-ink-soft"> (facultatif)</span>}
+        {required ? <span className="text-coral-ink"> *</span> : optionalLabel && <span className="font-normal text-ink-soft"> {optionalLabel}</span>}
       </span>
       {children}
       {hint && <span className="text-xs text-ink-soft">{hint}</span>}

@@ -4,18 +4,19 @@ export function TestimonialCard({
   quote,
   author,
   role,
-  isPlaceholder,
+  placeholderBadge,
 }: {
   quote: string;
   author: string;
   role: string;
-  isPlaceholder?: boolean;
+  /** Affiché tant que le témoignage est un exemple à remplacer. */
+  placeholderBadge?: string;
 }) {
   return (
     <figure className="flex h-full flex-col rounded-[var(--radius-lg)] bg-paper p-7 ring-1 ring-line sm:p-8">
-      {isPlaceholder && (
+      {placeholderBadge && (
         <Badge tone="coral" className="mb-6 w-fit">
-          Témoignage à venir — exemple
+          {placeholderBadge}
         </Badge>
       )}
       <span aria-hidden="true" className="accent-serif text-6xl leading-[0.5] text-coral">

@@ -1,0 +1,565 @@
+import type { Dictionary } from "./fr";
+
+/**
+ * ENGLISH DICTIONARY — Canadian English.
+ * Must mirror fr.ts exactly (enforced by the `Dictionary` type).
+ * "CPE" is kept as-is (Centre de la petite enfance), as Quebec daycare
+ * directors use the term in both languages.
+ */
+
+const en: Dictionary = {
+  meta: {
+    siteTitle: "Bon Traiteur — Meals for CPEs and daycares in Quebec",
+    siteDescription:
+      "Meal service for CPEs, daycares and childcare services in Quebec. Flexible monthly menus, hot, ready-to-eat or frozen meals, regular, one-time or urgent deliveries.",
+    home: {
+      title: "Bon Traiteur — Meals for CPEs, daycares and childcare services in Quebec",
+      description:
+        "Meals kids love, a service that makes your days easier. Flexible monthly menus, hot, ready-to-eat or frozen meals, regular or urgent delivery.",
+    },
+    menu: {
+      title: "Full menu for CPEs and daycares",
+      description:
+        "Browse the Bon Traiteur menu: poultry, beef, pasta, fish, vegetarian dishes, desserts and snacks. A flexible monthly menu for Quebec childcare centres.",
+    },
+    meals: {
+      title: "Our meals and options for daycares",
+      description:
+        "Hot, ready-to-eat or frozen meals for CPEs and daycares. Regular delivery, one-time orders or urgent service based on availability. No subscription required.",
+    },
+    daycares: {
+      title: "Meal service for daycares and CPEs",
+      description:
+        "A meal service built for CPEs, subsidized and private daycares, and childcare services in Quebec. Flexible monthly menu, adjustable quantities, fast backup.",
+    },
+    howItWorks: {
+      title: "How it works",
+      description:
+        "Quote, a monthly menu you keep or change, confirmation and delivery: here's how Bon Traiteur simplifies meals for your CPE or daycare.",
+    },
+    about: {
+      title: "About us",
+      description: "For more than 15 years, Bon Traiteur has been preparing and delivering meals for CPEs, daycares and childcare services in Quebec.",
+    },
+    faq: {
+      title: "Frequently asked questions",
+      description:
+        "Monthly menu, changes, urgent deliveries, allergies, quotes: answers to the questions CPEs and daycares ask about Bon Traiteur.",
+    },
+    contact: {
+      title: "Contact us",
+      description: "Get in touch with the Bon Traiteur team about our meals and deliveries for CPEs and daycares.",
+    },
+    quote: {
+      title: "Request a quote",
+      description:
+        "Get a quote for your CPE, daycare or childcare service's meals. A plan tailored to your number of children, frequency and needs.",
+    },
+    login: {
+      title: "Client portal login",
+      description: "Access your Bon Traiteur client portal: menu, deliveries, invoices.",
+    },
+    serviceType: "Meal service for childcare centres",
+    audienceType: "CPEs, daycares and childcare services",
+  },
+
+  nav: {
+    items: [
+      { key: "home", label: "Home" },
+      { key: "meals", label: "Our meals" },
+      { key: "menu", label: "Menu" },
+      { key: "howItWorks", label: "How it works" },
+      { key: "about", label: "About" },
+      { key: "faq", label: "FAQ" },
+    ],
+    login: "Log in",
+    loginLong: "Client login",
+    quote: "Request a quote",
+    skipToContent: "Skip to content",
+    homeAria: "Bon Traiteur — home",
+    mainAria: "Main navigation",
+    mobileAria: "Mobile navigation",
+    open: "Open menu",
+    close: "Close menu",
+    switchLanguage: "Français",
+    switchLanguageAria: "Voir le site en français",
+  },
+
+  footer: {
+    tagline: "The meal service built for CPEs, daycares and childcare services in Quebec.",
+    phoneLabel: "Phone",
+    emailLabel: "Email",
+    hoursLabel: "Hours",
+    groups: [
+      {
+        title: "Our meals",
+        items: [
+          { key: "menu", label: "Full menu" },
+          { key: "meals", label: "Meals and options" },
+          { key: "daycares", label: "For daycares and CPEs" },
+        ],
+      },
+      {
+        title: "Service",
+        items: [
+          { key: "howItWorks", label: "How it works" },
+          { key: "quote", label: "Request a quote" },
+          { key: "faq", label: "FAQ" },
+        ],
+      },
+      {
+        title: "Bon Traiteur",
+        items: [
+          { key: "about", label: "About" },
+          { key: "contact", label: "Contact" },
+          { key: "login", label: "Client login" },
+        ],
+      },
+    ],
+    rights: "All rights reserved.",
+    bottomNote: "Service in French and English · Quebec",
+  },
+
+  contact: {
+    hours: "Monday to Friday, 7 a.m. to 4 p.m. [To be confirmed]",
+    serviceArea: "Greater Montreal area [To be confirmed]",
+  },
+
+  common: {
+    photoComing: "Photo coming soon",
+    photoComingAria: "Photo coming soon:",
+    example: "Example",
+    optional: "(optional)",
+    orCall: "Or call us:",
+  },
+
+  support: {
+    open: "Need help?",
+    close: "Close",
+    dialogAria: "Contact us",
+    title: "Hi! How can we help?",
+    subtitle: "A real person will answer.",
+    call: "Call the team",
+    email: "Send an email",
+    quote: "Request a quote",
+    quoteSub: "Personalized answer",
+    footer: "Coming soon: manage your menu and deliveries right here, with the Bon Traiteur assistant.",
+  },
+
+  home: {
+    hero: {
+      eyebrow: "For CPEs, daycares and childcare services",
+      titleLine1: "Meals kids love.",
+      titleLine2: "A service that makes your days easier.",
+      lead: "Flexible menus and a delivery service designed for childcare centres. Hot, ready-to-eat or frozen meals. Regular, one-time or urgent orders.",
+      ctaMenu: "See our menu",
+      ctaQuote: "Request a quote",
+      statusTitle: "November menu",
+      statusSub: "Confirmed in 1 click",
+      stamp: "Serving daycares for over 15 years · ",
+      trust: ["15+ years of experience", "Flexible menus", "Delivery that fits", "Real people"],
+    },
+    situations: {
+      eyebrow: "Built for daycares",
+      title: "Meals are just one of the *100 things* you'll handle today.",
+      lead: "Ratios, schedules, absences, parents, paperwork. We know. Our job is to make sure meals stop being something you have to manage.",
+      items: [
+        { question: "One more child this week?", answer: "Adjust your portions. We deliver the right amount." },
+        { question: "A pedagogical day?", answer: "Let us know and we'll skip that day's delivery." },
+        { question: "Need to change a meal?", answer: "Simply pick an alternative from the full menu." },
+        { question: "An extra delivery?", answer: "Add it to your order. We'll take care of it." },
+        { question: "A last-minute change?", answer: "Call us. A real person answers and finds a solution." },
+      ],
+      closing: "We adapt.",
+    },
+    yourMenu: {
+      eyebrow: "Your menu, your way",
+      title: "A new menu every month. *You stay in control.*",
+      lead: "Every month, Bon Traiteur suggests a varied menu. Keep it as is, or swap any meals you want.",
+      steps: [
+        { title: "Keeping the menu?", text: "One click and it's confirmed." },
+        { title: "Want to change a meal?", text: "Simply pick an alternative from the full menu." },
+        { title: "You confirm.", text: "Usually up to 2 weeks before the period in question." },
+      ],
+      cta: "See our menu",
+      tryIt: "Try it: click “Change my menu”",
+    },
+    formulas: {
+      eyebrow: "Our options",
+      title: "Choose what works *for your daycare.*",
+      lead: "Three meal formats, three ways to order. Mix and match. No subscription required.",
+      modesTitle: "And you order the way that suits you.",
+    },
+    simplify: {
+      eyebrow: "Make your days easier",
+      title: "Fewer emails. Fewer calls. *Less to manage.*",
+      lead: "Manage your meals and deliveries from one place.",
+      badge: "Client portal · coming soon",
+      actions: [
+        { label: "Confirm your menu", detail: "Keeping the menu? One click is all it takes." },
+        { label: "Change a meal", detail: "Pick an alternative from the full menu." },
+        { label: "Add portions", detail: "Bigger group on Friday? Adjust in seconds." },
+        { label: "Check your deliveries", detail: "No digging through your inbox." },
+        { label: "Pause a delivery", detail: "Pedagogical day, closure, holiday." },
+        { label: "Access your invoices", detail: "All in one place, ready for accounting." },
+        { label: "Contact Bon Traiteur", detail: "A question? We'll get back to you quickly." },
+      ],
+    },
+    menuTeaser: {
+      eyebrow: "The menu",
+      title: "Dishes kids *recognize.*",
+      lead: "Chicken, pasta, beef, fish, vegetarian: {count} dishes in rotation, plus desserts and snacks.",
+      cta: "See the full menu",
+    },
+    audience: {
+      eyebrow: "Who it's for",
+      title: "Built for *childcare centres.* Only.",
+      lead: "Our service is designed for one thing: feeding children, every day, in childcare. Every detail starts from your reality.",
+      cta: "Our service for daycares",
+    },
+    trust: {
+      eyebrow: "Our team",
+      title: "One kitchen, one team, *simple commitments.*",
+      lead: "Behind every delivery are people who cook, portion, label and deliver. And who know your daycare by name.",
+    },
+    testimonials: {
+      eyebrow: "They trust us",
+      title: "What *directors say.*",
+      placeholderBadge: "Testimonial coming soon — example",
+    },
+  },
+
+  audienceProfiles: [
+    { id: "cpe", title: "CPEs", summary: "Stable monthly menus that are easy to confirm, and clear invoicing for your board of directors." },
+    { id: "garderies", title: "Daycares", summary: "Subsidized or private: a regular service that adjusts to your groups, with no complicated commitment." },
+    { id: "services-de-garde", title: "Childcare services", summary: "Quantities that follow your attendance, and backup when the schedule changes." },
+  ],
+
+  commitments: [
+    { title: "Consistency", text: "The same standards from one delivery to the next. Your staff know what to expect." },
+    { title: "Punctuality", text: "Deliveries scheduled around your daycare's timetable, not ours." },
+    { title: "Flexibility", text: "Menu, quantities, delivery days: everything can be adjusted." },
+    { title: "Real people", text: "A team that knows your daycare and picks up the phone." },
+    { title: "Quality", text: "Meals prepared in our kitchen, designed for little ones." },
+    { title: "Experience", text: "More than 15 years feeding children in childcare." },
+  ],
+
+  testimonials: [
+    {
+      id: "placeholder-1",
+      quote: "[Example] I used to spend time every week managing meals. Now I confirm the menu and that's it.",
+      author: "Director's name",
+      role: "Director, CPE (to be confirmed)",
+    },
+    {
+      id: "placeholder-2",
+      quote: "[Example] The kids eat well, and when something comes up, the team always finds a solution.",
+      author: "Coordinator's name",
+      role: "Food coordinator, daycare (to be confirmed)",
+    },
+    {
+      id: "placeholder-3",
+      quote: "[Example] We can change a meal without trading ten emails. That's exactly what we needed.",
+      author: "Assistant's name",
+      role: "Administrative assistant, childcare service (to be confirmed)",
+    },
+  ],
+
+  formats: [
+    { id: "chauds", title: "Hot meals", summary: "Delivered hot, ready to serve at lunchtime.", details: ["Delivery scheduled around your timetable", "Quantities adjusted to your groups"] },
+    { id: "prets-a-manger", title: "Ready-to-eat", summary: "Portions ready to reheat or serve, depending on how you work.", details: ["Handy for small teams", "Easy to store and serve"] },
+    { id: "congeles", title: "Frozen meals", summary: "A freezer stock to keep your options open.", details: ["Ideal as a backup", "Serve when you need to"] },
+  ],
+
+  serviceModes: [
+    { id: "reguliere", title: "Regular delivery", summary: "Your meals arrive on the agreed days, week after week. You don't have to think about it anymore.", highlight: false },
+    { id: "ponctuelle", title: "One-time order", summary: "An outing, a special day, a temporary need? Order only when you need to.", highlight: false },
+    { id: "urgente", title: "Urgent service", summary: "Something came up? An urgent delivery can be arranged within 48 hours, depending on availability and your delivery area.", highlight: true },
+  ],
+
+  urgentNote: "Urgent delivery possible within 48 hours, depending on availability and delivery area.",
+
+  cta: {
+    title: "Ready to simplify *your meals?*",
+    text: "Tell us about your daycare. We'll suggest a plan tailored to your number of children, your frequency and your needs.",
+    button: "Get a quote",
+  },
+
+  planner: {
+    monthTitle: "{month} menu",
+    subtitle: "Week 1 · Demo example",
+    toConfirm: "Confirm by {date}",
+    confirmed: "Confirmed",
+    replaced: "Meal replaced",
+    replace: "Replace",
+    cancel: "Cancel",
+    chooseAlternative: "Choose an alternative:",
+    keep: "Keep my menu",
+    modify: "Change my menu",
+    confirmMenu: "Confirm the menu",
+    confirmChanges: "Confirm ({count} change{plural})",
+    done: "It's confirmed. There's nothing else to do.",
+    restart: "Restart the demo",
+    month: "November",
+    deadline: "October 16",
+    days: [
+      { label: "Monday", date: "Nov. 2" },
+      { label: "Tuesday", date: "Nov. 3" },
+      { label: "Wednesday", date: "Nov. 4" },
+      { label: "Thursday", date: "Nov. 5" },
+      { label: "Friday", date: "Nov. 6" },
+    ],
+  },
+
+  dashboard: {
+    aria: "Preview of the future Bon Traiteur client portal (example)",
+    sidebar: ["Home", "My menu", "Orders", "Deliveries", "Invoices", "Documents", "Support"],
+    greeting: "Hello, Les Petits Explorateurs Daycare",
+    nextDelivery: "Next delivery",
+    nextDeliveryValue: "Thursday, October 8",
+    nextDeliverySub: "Hot meals · 42 portions",
+    monthMenu: "October menu",
+    monthMenuValue: "Confirmed",
+    monthMenuSub: "No action needed",
+    nextAction: "Next step",
+    nextActionValue: "Confirm the November menu by October 16",
+    invoice: "Invoice BT-1094",
+    invoiceSub: "September",
+    paid: "Paid",
+  },
+
+  menu: {
+    eyebrow: "Full menu",
+    title: "The menu. *And all your alternatives.*",
+    lead: "Every month, we suggest a menu based on these dishes. Keep it, or replace any meal with an alternative from this list.",
+    monthlyTitle: "Monthly rotation",
+    monthlyNote:
+      "Our main menu includes a monthly rotation of about twenty dishes. Meals change every month to give little ones variety and balance.",
+    occasionalTitle: "Occasional rotation",
+    occasionalNote:
+      "More dishes are available in our occasional rotation. You can add them to your monthly menu by letting us know at least 2 weeks in advance.",
+    filterAria: "Filter by category",
+    rotationAria: "Filter by rotation",
+    rotationAll: "All dishes",
+    rotationMonthly: "Monthly",
+    rotationOccasional: "Occasional",
+    search: "Search for a dish",
+    searchPlaceholder: "Search for a dish…",
+    countOne: "dish",
+    countMany: "dishes",
+    empty: "No dishes match.",
+    reset: "Reset filters",
+    formatsNote: "Available formats (hot, ready-to-eat, frozen) may vary by dish: please confirm with our team.",
+    ctaTitle: "Want to see *your first menu?*",
+    allergenDisclaimer:
+      "Allergen information is provided for reference only and must be confirmed with our team based on your specific needs.",
+    allergensDeclared: "Declared allergens:",
+    allergensLabel: "Allergens:",
+    allergensToConfirm: "to be confirmed with our team",
+    categories: {
+      tous: "All",
+      volaille: "Poultry",
+      boeuf: "Beef",
+      pates: "Pasta",
+      poisson: "Fish",
+      vegetarien: "Vegetarian",
+      autres: "Other dishes",
+      desserts: "Desserts",
+      collations: "Snacks",
+    },
+    allergens: { lait: "Milk", oeufs: "Eggs", poisson: "Fish" },
+    rotations: { mensuelle: "Monthly rotation", ponctuelle: "Occasional rotation" },
+  },
+
+  mealsPage: {
+    eyebrow: "Our meals",
+    title: "Simple, good meals, *suited to your daycare.*",
+    lead: "Choose the format and frequency that work for you. You can combine them and change them along the way.",
+    approachEyebrow: "Our approach",
+    approachTitle: "Meals designed *for little ones.*",
+    principles: [
+      { title: "Familiar dishes", text: "Shepherd's pie, macaroni, chicken, meat pie: meals kids recognize and actually eat." },
+      { title: "Portions for little ones", text: "Quantities are planned for your groups and adjusted to the number of children." },
+      { title: "Variety", text: "A monthly rotation plus occasional dishes, so the menu never feels repetitive." },
+    ],
+  },
+
+  daycaresPage: {
+    eyebrow: "For daycares and CPEs",
+    title: "The meal service that *adapts to your daycare.*",
+    lead: "CPEs, subsidized or private daycares, childcare services: you have one thing in common. Children to feed every day, and already far too much to manage.",
+    ctaHow: "How it works",
+    profilesEyebrow: "One clientele, three realities",
+    profilesTitle: "Designed for *your type of centre.*",
+    reasonsEyebrow: "Why Bon Traiteur",
+    reasonsTitle: "A regular service. *Without losing your flexibility.*",
+    reasons: [
+      { title: "You stay flexible", text: "A regular service, while keeping the option to change a meal, quantities or a date." },
+      { title: "You manage less", text: "A menu to confirm, scheduled deliveries, one person to call. That's it." },
+      { title: "We've got your back", text: "Something came up? An urgent delivery can be arranged within 48 hours, depending on availability and area." },
+      { title: "You talk to people", text: "A team that knows childcare and answers you directly." },
+    ],
+  },
+
+  howPage: {
+    eyebrow: "How it works",
+    title: "Four steps. *Then almost nothing to manage.*",
+    lead: "Once your service is set up, the only thing to do each month is confirm your menu.",
+    stepsTitle: "The steps",
+    steps: [
+      { step: "01", title: "We get to know your daycare", text: "Number of children, age groups, service days, dietary constraints. A tailored quote follows." },
+      { step: "02", title: "You receive your monthly menu", text: "Every month, Bon Traiteur prepares a menu. Keep it as is or replace the meals you choose." },
+      { step: "03", title: "You confirm", text: "Changes are usually possible up to 2 weeks before the period in question. After that, we'll see what we can do." },
+      { step: "04", title: "We cook and deliver", text: "Hot, ready-to-eat or frozen meals, delivered on the agreed days. You just serve." },
+    ],
+    flexEyebrow: "Along the way",
+    flexTitle: "Things change? *We adjust.*",
+    flexibility: [
+      { q: "Keeping the menu?", a: "One click is all it takes." },
+      { q: "Want to change a meal?", a: "Simply pick an alternative." },
+      { q: "Need extra meals?", a: "Add them to your order." },
+      { q: "Something unexpected?", a: "Reach our team quickly." },
+      { q: "A late change?", a: "It can become an urgent request, depending on availability." },
+    ],
+  },
+
+  aboutPage: {
+    eyebrow: "About",
+    title: "More than 15 years feeding *children in daycare.*",
+    lead: "Bon Traiteur is a kitchen, a delivery team and people who understand the reality of childcare.",
+    storyEyebrow: "Our story",
+    storyTitle: "One mission: *feed kids well, simply.*",
+    storyPlaceholder:
+      "[Text coming soon] Bon Traiteur's story: founding year, founders, kitchen location, area served, a memorable anecdote.",
+    story: [
+      "For more than 15 years, we've been preparing meals for childcare centres. Over time, we learned one thing: a daycare director doesn't need one more supplier to manage. They need something taken off their list.",
+      "That's why we work with a monthly menu that's easy to confirm, quantities that adjust, and a team that answers when something comes up.",
+    ],
+  },
+
+  faqPage: {
+    eyebrow: "FAQ",
+    title: "Your questions. *Our answers, simply.*",
+    lead: "Can't find your answer? Call or write to us: a real person will reply.",
+    contactCta: "Contact us",
+    groups: {
+      menu: "The menu",
+      commandes: "Orders and flexibility",
+      livraison: "Delivery",
+      allergies: "Allergies and restrictions",
+      facturation: "Quotes and billing",
+    },
+    items: [
+      { group: "menu", question: "How does the monthly menu work?", answer: "Every month, we prepare a menu from our rotation of dishes. You can keep it as is or replace some meals with alternatives from our full menu." },
+      { group: "menu", question: "Until when can I change my menu?", answer: "Usually up to 2 weeks before the period in question. A later change is sometimes possible: get in touch and we'll see what can be done." },
+      { group: "menu", question: "What is the occasional rotation?", answer: "In addition to the monthly cycle, more dishes are available in an occasional rotation. You can add them to your menu by letting us know at least 2 weeks in advance." },
+      { group: "commandes", question: "Do I need to sign a contract or subscription?", answer: "No, it's not required. You can order on a one-time basis, have regular deliveries or set up a longer-term agreement. We'll choose together what works for your daycare." },
+      { group: "commandes", question: "Can I adjust quantities from week to week?", answer: "Yes. One more child, a group away: tell us and we'll adjust the portions. [To be confirmed: minimum notice for quantity changes]" },
+      { group: "commandes", question: "What happens on a pedagogical day or closure?", answer: "You can pause the scheduled delivery. Let us know in advance and we'll adjust your order." },
+      { group: "livraison", question: "Do you offer urgent deliveries?", answer: "Yes. An urgent delivery can be arranged within 48 hours, depending on availability and your delivery area. Call us to confirm quickly." },
+      { group: "livraison", question: "Which areas do you serve?", answer: "[To be confirmed: exact delivery areas] Send us your daycare's address and we'll confirm quickly." },
+      { group: "livraison", question: "How are the meals delivered?", answer: "Depending on your needs: hot meals ready to serve, ready-to-eat meals or frozen meals. Many daycares combine formats." },
+      { group: "allergies", question: "How do you handle allergies?", answer: "Known allergens are listed in our menu for reference only. This information must be confirmed with our team based on your children's specific needs. Tell us about your restrictions when you request a quote." },
+      { group: "facturation", question: "How much do your meals cost?", answer: "The price depends on the number of children, delivery frequency and formats chosen. Request a quote and we'll suggest a plan tailored to your daycare." },
+      { group: "facturation", question: "How does billing work?", answer: "[To be confirmed: billing frequency and payment methods] Soon, your invoices will also be available in your client portal." },
+    ],
+  },
+
+  contactPage: {
+    eyebrow: "Contact",
+    title: "A question? *Let's talk.*",
+    lead: "A real person will answer. For a new daycare, a quote request is the fastest way to get started.",
+    phones: "Phone",
+    email: "Email",
+    hours: "Hours",
+    area: "Area served",
+    newTitle: "New daycare?",
+    newText: "Tell us how many children you care for, how often you need meals and any special needs. We'll get back to you with a tailored plan.",
+  },
+
+  quotePage: {
+    eyebrow: "Quote",
+    title: "Tell us about *your daycare.*",
+    lead: "A few questions so we can suggest a plan tailored to your number of children, frequency and needs. About 2 minutes.",
+    nextTitle: "What's next?",
+    next: [
+      { title: "We read your request", text: "And call you if we need more details." },
+      { title: "We suggest a plan", text: "Tailored to your groups, frequency and formats." },
+      { title: "We plan the start", text: "First menu, first deliveries. All you do is confirm." },
+    ],
+    preferCall: "Rather talk it through?",
+    form: {
+      step1: "1. Your centre",
+      step2: "2. Your needs",
+      step3: "3. Your contact details",
+      establishmentName: "Name of your centre",
+      establishmentType: "Type of centre",
+      choose: "Choose…",
+      types: ["CPE", "Subsidized daycare", "Private daycare", "Childcare service", "Other childcare centre"],
+      city: "City",
+      childrenCount: "Number of children (approx.)",
+      frequency: "Preferred frequency",
+      frequencies: ["Every day", "A few days a week", "Occasionally", "Urgent need"],
+      formatsLabel: "Formats you're interested in",
+      formats: ["Hot meals", "Ready-to-eat", "Frozen meals", "Snacks"],
+      startDate: "Preferred start",
+      restrictions: "Allergies or restrictions to plan for",
+      restrictionsPlaceholder: "E.g. 2 children allergic to eggs",
+      message: "Anything else we should know?",
+      messagePlaceholder: "Meal times, special requirements, questions…",
+      contactName: "Your name",
+      role: "Your role",
+      rolePlaceholder: "E.g. director, administrative assistant",
+      email: "Email",
+      phone: "Phone",
+      noCommitment: "No commitment. We'll get back to you with a tailored plan.",
+      submit: "Send my request",
+      sending: "Sending…",
+      successTitle: "Thank you! We've received your request.",
+      successText: "Our team will get back to you shortly. For anything urgent, call us at {phone}.",
+      mailtoTitle: "Your request is ready to send.",
+      mailtoText: "Your email app opened with your request: just click “Send”. Nothing opened? Write to us at {email} or call {phone}.",
+      errorText: "Something went wrong. Please try again or call us at {phone}.",
+      edit: "Edit my request",
+      mail: {
+        subject: "Quote request — {name}",
+        establishment: "Centre",
+        contact: "Contact person",
+        city: "City",
+        children: "Number of children",
+        frequency: "Preferred frequency",
+        formats: "Formats",
+        start: "Preferred start",
+        restrictions: "Allergies / restrictions",
+        toDiscuss: "To be discussed",
+      },
+    },
+  },
+
+  loginPage: {
+    back: "Back to site",
+    eyebrow: "Client portal",
+    title: "Welcome",
+    titleAccent: "back.",
+    lead: "Your menu, deliveries and invoices, all in one place.",
+    soonTitle: "The client portal opens soon.",
+    soonText: "In the meantime, our team takes care of everything:",
+    email: "Email",
+    password: "Password",
+    submit: "Log in",
+    status: "Login will be available when the portal opens.",
+    notClient: "Not a client yet?",
+    sideTitle: "Confirm your menu.",
+    sideAccent: "In one click.",
+  },
+
+  notFound: {
+    eyebrow: "Error 404",
+    title: "This page *isn't on the menu.*",
+    lead: "It may have moved. Here's where to go:",
+    home: "Back to home",
+    menu: "See the menu",
+  },
+};
+
+export default en;

@@ -1,7 +1,10 @@
-import Image from "next/image";
 import type { Meal, MealCategory } from "@/lib/types";
-import { allergenLabels, categoryLabels, rotationLabels } from "@/data/menu";
+import { categoryIllustrations } from "@/data/media";
+import { mealName } from "@/lib/menu-repository";
+import type { Dictionary } from "@/i18n/dictionaries/fr";
+import type { Locale } from "@/i18n/config";
 import { Badge } from "@/components/ui/Badge";
+import { SmartImage } from "@/components/ui/SmartImage";
 import { cn } from "@/lib/cn";
 
 const plateTone: Record<MealCategory, { bg: string; rim: string; dot: string }> = {
@@ -16,7 +19,7 @@ const plateTone: Record<MealCategory, { bg: string; rim: string; dot: string }> 
 };
 
 /** Visuel de remplacement : l'assiette de la marque, teintée par catégorie. */
-function PlatePlaceholder({ category }: { category: MealCategory }) {
+function PlatePlaceholder({ category, label }: { category: MealCategory; label: string }) {
   const tone = plateTone[category];
   return (
     <div className={cn("absolute inset-0 flex items-center justify-center", tone.bg)} aria-hidden="true">
@@ -26,52 +29,62 @@ function PlatePlaceholder({ category }: { category: MealCategory }) {
         <div className={cn("absolute top-[14%] right-[20%] size-3 rounded-full", tone.dot)} />
       </div>
       <span className="absolute bottom-3 left-3 rounded-full bg-paper/85 px-2 py-0.5 text-[0.65rem] font-bold tracking-[0.1em] text-ink-soft uppercase">
-        Photo à venir
+        {label}
       </span>
     </div>
   );
 }
 
-export function MealCard({ meal, compact = false }: { meal: Meal; compact?: boolean }) {
+export type MealCardLabels = Pick<
+  Dictionary["menu"],
+  "categories" | "allergens" | "rotations" | "allergensDeclared" | "allergensLabel" | "allergensToConfirm"
+> & { photoComing: string };
+
+export function MealCard({ meal, locale, t, compact = false }: { meal: Meal; locale: Locale; t: MealCardLabels; compact?: boolean }) {
+  const name = mealName(meal, locale);
+  // Vraie photo du plat en priorité, sinon illustration temporaire par catégorie.
+  const src = meal.image ?? categoryIllustrations[meal.category];
+  const placeholder = <PlatePlaceholder category={meal.category} label={t.photoComing} />;
+
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-lg)] bg-paper ring-1 ring-line transition-[box-shadow,transform] duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1 hover:shadow-[var(--shadow-lift)]">
-      <div className={cn("relative overflow-hidden", compact ? "aspect-[5/3]" : "aspect-[4/3]")}>
-        {meal.image ? (
-          <Image
-            src={meal.image}
-            alt={meal.name}
-            fill
-            sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-          />
+      <div className={cn("relative overflow-hidden", plateTone[meal.category].bg, compact ? "aspect-[5/3]" : "aspect-[4/3]")}>
+        {src ? (
+          <SmartImage src={src} alt="" sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw" fallback={placeholder} />
         ) : (
-          <PlatePlaceholder category={meal.category} />
+          placeholder
         )}
         {meal.rotationType && (
           <div className="absolute top-3 left-3">
-            <Badge tone={meal.rotationType === "mensuelle" ? "dark" : "saffron"}>{rotationLabels[meal.rotationType]}</Badge>
+            <Badge tone={meal.rotationType === "mensuelle" ? "dark" : "saffron"}>{t.rotations[meal.rotationType]}</Badge>
           </div>
         )}
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <p className="eyebrow text-[0.7rem] text-coral-ink">{categoryLabels[meal.category]}</p>
-        <h3 className="font-display text-[1.15rem] leading-tight font-bold tracking-tight">{meal.name}</h3>
+        <p className="eyebrow text-[0.7rem] text-coral-ink">{t.categories[meal.category]}</p>
+        <h3 className="font-display text-[1.15rem] leading-tight font-bold tracking-tight">{name}</h3>
         {meal.description && <p className="text-sm text-ink-soft">{meal.description}</p>}
 
         <p className="mt-auto border-t border-line pt-3 text-[0.8rem] text-ink-soft">
           {meal.allergens.length > 0 ? (
             <>
-              <span className="font-semibold text-charcoal">Allergènes déclarés :</span>{" "}
-              {meal.allergens.map((a) => allergenLabels[a]).join(", ")}
+              <span className="font-semibold text-charcoal">{t.allergensDeclared}</span>{" "}
+              {meal.allergens.map((a) => t.allergens[a]).join(", ")}
             </>
           ) : (
             <>
-              <span className="font-semibold text-charcoal">Allergènes :</span> à confirmer avec notre équipe
+              <span className="font-semibold text-charcoal">{t.allergensLabel}</span> {t.allergensToConfirm}
             </>
           )}
         </p>
       </div>
     </article>
   );
+}
+
+/** Extrait les libellés nécessaires (sérialisables vers les composants client). */
+export function mealCardLabels(d: Dictionary): MealCardLabels {
+  const { categories, allergens, rotations, allergensDeclared, allergensLabel, allergensToConfirm } = d.menu;
+  return { categories, allergens, rotations, allergensDeclared, allergensLabel, allergensToConfirm, photoComing: d.common.photoComing };
 }

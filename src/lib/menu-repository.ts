@@ -1,5 +1,6 @@
 import { meals } from "@/data/menu";
 import type { Meal, MealCategory } from "@/lib/types";
+import type { Locale } from "@/i18n/config";
 
 /**
  * Point d'accès UNIQUE aux données du menu.
@@ -24,3 +25,6 @@ export async function getMainMeals(): Promise<Meal[]> {
 export async function getMealBySlug(slug: string): Promise<Meal | undefined> {
   return (await getMeals()).find((meal) => meal.slug === slug);
 }
+
+/** Nom du plat dans la langue demandée. */
+export const mealName = (meal: Pick<Meal, "name" | "nameEn">, locale: Locale) => (locale === "en" ? meal.nameEn : meal.name);

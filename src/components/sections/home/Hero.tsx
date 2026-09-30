@@ -3,10 +3,10 @@ import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Photo } from "@/components/ui/Photo";
 import { Stamp } from "@/components/ui/Stamp";
+import { getDictionary, href, type Locale } from "@/i18n";
 
-const trust = ["15+ ans d'expérience", "Menus flexibles", "Livraison adaptée", "Service humain"];
-
-export function Hero() {
+export function Hero({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).home.hero;
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden pt-8 pb-16 sm:pt-12 lg:pt-16 lg:pb-24">
       <Container>
@@ -14,22 +14,18 @@ export function Hero() {
           <div>
             <p className="eyebrow flex items-center gap-3 text-coral-ink">
               <span aria-hidden="true" className="inline-block h-px w-8 bg-current" />
-              Pour les CPE, garderies et services de garde
+              {t.eyebrow}
             </p>
             <h1 id="hero-title" className="mt-6 text-[clamp(2.4rem,1.5rem+3.6vw,4.6rem)] font-extrabold">
-              Des repas qui plaisent aux enfants.{" "}
-              <span className="accent-serif block pt-1 text-[1.04em] text-olive">Un service qui simplifie vos journées.</span>
+              {t.titleLine1} <span className="accent-serif block pt-1 text-[1.04em] text-olive">{t.titleLine2}</span>
             </h1>
-            <p className="text-lead mt-7 max-w-xl text-ink-soft">
-              Menus flexibles et service de livraison conçus pour les milieux de garde. Repas chauds, prêts-à-manger ou
-              congelés. Commandes régulières, ponctuelles ou urgentes.
-            </p>
+            <p className="text-lead mt-7 max-w-xl text-ink-soft">{t.lead}</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/menu" size="lg" arrow>
-                Voir notre menu
+              <ButtonLink href={href("menu", locale)} size="lg" arrow>
+                {t.ctaMenu}
               </ButtonLink>
-              <ButtonLink href="/soumission" size="lg" variant="secondary">
-                Demander une soumission
+              <ButtonLink href={href("quote", locale)} size="lg" variant="secondary">
+                {t.ctaQuote}
               </ButtonLink>
             </div>
           </div>
@@ -38,6 +34,7 @@ export function Hero() {
           <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
             <Photo
               slot="heroMain"
+              locale={locale}
               priority
               className="aspect-[1/1] rounded-[var(--radius-2xl)] sm:aspect-[5/5.2]"
               sizes="(min-width: 1024px) 45vw, 90vw"
@@ -45,6 +42,7 @@ export function Hero() {
             <div className="absolute -bottom-8 -left-3 w-[46%] sm:-left-8">
               <Photo
                 slot="heroMeal"
+                locale={locale}
                 className="aspect-square rounded-[var(--radius-xl)] ring-[6px] ring-cream"
                 sizes="(min-width: 1024px) 20vw, 45vw"
                 showBrief={false}
@@ -56,18 +54,18 @@ export function Hero() {
                 <Check aria-hidden="true" className="size-4" strokeWidth={3} />
               </span>
               <span className="text-sm leading-tight">
-                <span className="block font-semibold">Menu de novembre</span>
-                <span className="block text-ink-soft">Confirmé en 1 clic</span>
+                <span className="block font-semibold">{t.statusTitle}</span>
+                <span className="block text-ink-soft">{t.statusSub}</span>
               </span>
             </div>
             <div className="absolute -right-4 -bottom-12 hidden sm:block lg:-right-6">
-              <Stamp text="Au service des garderies · Depuis plus de 15 ans · " center="15+" />
+              <Stamp text={t.stamp} center="15+" />
             </div>
           </div>
         </div>
 
         <ul className="mt-20 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-8 sm:mt-24 lg:grid-cols-4">
-          {trust.map((item) => (
+          {t.trust.map((item) => (
             <li key={item} className="flex items-center gap-2.5 font-semibold">
               <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-coral" />
               {item}

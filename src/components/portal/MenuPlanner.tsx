@@ -2,9 +2,12 @@
 
 import { useId, useState } from "react";
 import { Check, RefreshCw, Pencil, X, CalendarDays } from "lucide-react";
-import type { Meal } from "@/lib/types";
-import { categoryLabels } from "@/data/menu";
+import type { Meal, MealCategory } from "@/lib/types";
+import type { Dictionary } from "@/i18n/dictionaries/fr";
 import { cn } from "@/lib/cn";
+
+const fill = (template: string, vars: Record<string, string | number>) =>
+  template.replace(/\{(\w+)\}/g, (_, k: string) => String(vars[k] ?? ""));
 
 /**
  * Démonstration interactive du flux « Garder / Modifier mon menu ».
@@ -25,13 +28,14 @@ type Mode = "review" | "edit" | "confirmed";
 export function MenuPlanner({
   meals,
   initialDays,
-  monthLabel,
-  deadlineLabel,
+  t,
+  categories,
 }: {
+  /** `name` est déjà traduit par le serveur. */
   meals: Pick<Meal, "id" | "name" | "category">[];
   initialDays: PlannerDay[];
-  monthLabel: string;
-  deadlineLabel: string;
+  t: Dictionary["planner"];
+  categories: Record<MealCategory, string>;
 }) {
   const [days, setDays] = useState(initialDays);
   const [mode, setMode] = useState<Mode>("review");
@@ -64,8 +68,8 @@ export function MenuPlanner({
             <CalendarDays aria-hidden="true" className="size-5" />
           </span>
           <div>
-            <p className="font-display text-lg leading-tight font-bold">Menu de {monthLabel}</p>
-            <p className="text-xs text-ink-soft">Semaine 1 · Exemple de démonstration</p>
+            <p className="font-display text-lg leading-tight font-bold">{fill(t.monthTitle, { month: t.month })}</p>
+            <p className="text-xs text-ink-soft">{t.subtitle}</p>
           </div>
         </div>
         <span
@@ -75,7 +79,7 @@ export function MenuPlanner({
           )}
           aria-live="polite"
         >
-          {mode === "confirmed" ? "Confirmé" : `À confirmer avant le ${deadlineLabel}`}
+          {mode === "confirmed" ? t.confirmed : fill(t.toConfirm, { date: t.deadline })}
         </span>
       </div>
 
@@ -95,7 +99,7 @@ export function MenuPlanner({
                   <p className="leading-snug font-semibold">{meal?.name}</p>
                   {changed.has(i) && (
                     <p className="mt-0.5 inline-flex items-center gap-1 text-xs font-semibold text-olive">
-                      <RefreshCw aria-hidden="true" className="size-3" /> Repas remplacé
+                      <RefreshCw aria-hidden="true" className="size-3" /> {t.replaced}
                     </p>
                   )}
                 </div>
@@ -110,15 +114,15 @@ export function MenuPlanner({
                       isPicking ? "bg-charcoal text-cream" : "bg-cream-deep hover:bg-saffron",
                     )}
                   >
-                    {isPicking ? "Annuler" : "Remplacer"}
+                    {isPicking ? t.cancel : t.replace}
                   </button>
                 )}
-                {mode === "confirmed" && <Check aria-label="Confirmé" className="size-5 shrink-0 text-olive" strokeWidth={2.5} />}
+                {mode === "confirmed" && <Check aria-label={t.confirmed} className="size-5 shrink-0 text-olive" strokeWidth={2.5} />}
               </div>
 
               {isPicking && (
                 <div id={listId} className="px-5 pb-5 sm:px-6">
-                  <p className="mb-2 text-xs font-semibold text-ink-soft">Choisissez une alternative :</p>
+                  <p className="mb-2 text-xs font-semibold text-ink-soft">{t.chooseAlternative}</p>
                   <ul className="grid max-h-56 gap-1.5 overflow-y-auto pr-1 sm:grid-cols-2">
                     {alternatives.map((alt) => (
                       <li key={alt.id}>
@@ -128,7 +132,7 @@ export function MenuPlanner({
                           className="flex w-full flex-col items-start rounded-[var(--radius-sm)] bg-paper px-3 py-2.5 text-left ring-1 ring-line transition-colors hover:ring-olive focus-visible:ring-olive"
                         >
                           <span className="text-sm leading-snug font-semibold">{alt.name}</span>
-                          <span className="text-[0.7rem] text-ink-soft">{categoryLabels[alt.category]}</span>
+                          <span className="text-[0.7rem] text-ink-soft">{categories[alt.category]}</span>
                         </button>
                       </li>
                     ))}
@@ -149,14 +153,14 @@ export function MenuPlanner({
               onClick={() => setMode("confirmed")}
               className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-olive font-semibold text-cream transition-colors hover:bg-olive-deep"
             >
-              <Check aria-hidden="true" className="size-4" strokeWidth={2.5} /> Garder mon menu
+              <Check aria-hidden="true" className="size-4" strokeWidth={2.5} /> {t.keep}
             </button>
             <button
               type="button"
               onClick={() => setMode("edit")}
               className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-paper font-semibold ring-1 ring-line ring-inset transition-colors hover:ring-charcoal"
             >
-              <Pencil aria-hidden="true" className="size-4" /> Modifier mon menu
+              <Pencil aria-hidden="true" className="size-4" /> {t.modify}
             </button>
           </>
         )}
@@ -171,24 +175,24 @@ export function MenuPlanner({
               className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-olive font-semibold text-cream transition-colors hover:bg-olive-deep"
             >
               <Check aria-hidden="true" className="size-4" strokeWidth={2.5} />
-              Confirmer {changed.size > 0 ? `(${changed.size} changement${changed.size > 1 ? "s" : ""})` : "le menu"}
+              {changed.size > 0 ? fill(t.confirmChanges, { count: changed.size, plural: changed.size > 1 ? "s" : "" }) : t.confirmMenu}
             </button>
             <button
               type="button"
               onClick={reset}
               className="inline-flex h-12 items-center justify-center gap-2 rounded-full px-5 font-semibold text-ink-soft hover:text-charcoal"
             >
-              <X aria-hidden="true" className="size-4" /> Annuler
+              <X aria-hidden="true" className="size-4" /> {t.cancel}
             </button>
           </>
         )}
         {mode === "confirmed" && (
           <div className="flex w-full flex-col items-center justify-between gap-3 sm:flex-row">
             <p className="text-sm font-semibold text-olive" role="status">
-              C&apos;est confirmé. Vous n&apos;avez rien d&apos;autre à faire.
+              {t.done}
             </p>
             <button type="button" onClick={reset} className="text-sm font-semibold text-ink-soft underline underline-offset-4 hover:text-charcoal">
-              Recommencer la démo
+              {t.restart}
             </button>
           </div>
         )}

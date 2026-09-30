@@ -1,6 +1,6 @@
 import type { Meal, MealCategory } from "@/lib/types";
 import { categoryIllustrations } from "@/data/media";
-import { mealName } from "@/lib/menu-repository";
+import { mealName } from "@/lib/meal-name";
 import type { Dictionary } from "@/i18n/dictionaries/fr";
 import type { Locale } from "@/i18n/config";
 import { Badge } from "@/components/ui/Badge";

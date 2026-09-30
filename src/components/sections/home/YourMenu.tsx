@@ -3,10 +3,12 @@ import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { MenuPlanner, type PlannerDay } from "@/components/portal/MenuPlanner";
-import { getMainMeals, mealName } from "@/lib/menu-repository";
+import { getMainMeals } from "@/lib/menu-repository";
+import { mealName } from "@/lib/meal-name";
 import { getDictionary, href, rich, type Locale } from "@/i18n";
 
-const demoMealIds = [
+/** Semaine de démonstration (par slug : identique en local et dans Supabase). */
+const demoMealSlugs = [
   "poulet-au-pesto-sur-riz-et-legumes",
   "macaroni-sauce-bolognaise",
   "curry-de-pois-chiches-et-chou-fleur-sur-riz",
@@ -17,8 +19,11 @@ const demoMealIds = [
 export async function YourMenu({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
   const t = d.home.yourMenu;
-  const meals = (await getMainMeals()).map((m) => ({ id: m.id, name: mealName(m, locale), category: m.category }));
-  const days: PlannerDay[] = d.planner.days.map((day, i) => ({ ...day, mealId: demoMealIds[i] }));
+  const mainMeals = await getMainMeals();
+  const meals = mainMeals.map((m) => ({ id: m.id, name: mealName(m, locale), category: m.category }));
+  const days: PlannerDay[] = d.planner.days
+    .map((day, i) => ({ ...day, mealId: mainMeals.find((m) => m.slug === demoMealSlugs[i])?.id ?? "" }))
+    .filter((day) => day.mealId);
 
   return (
     <Section labelledBy="your-menu-title">

@@ -3,85 +3,120 @@
 ## Stack
 
 - **Next.js 16 (App Router)**, React 19, TypeScript strict
-- **Tailwind CSS v4** : tous les tokens de marque sont dans `src/app/globals.css` (`@theme`)
-- Polices via `next/font` (auto-hébergées, aucune requête à Google au runtime) :
-  Bricolage Grotesque (titres), Hanken Grotesk (texte), Instrument Serif (accents italiques)
-- Dépendance UI unique : `lucide-react` (icônes, tree-shaken). Pas de librairie d'animation.
+- **Tailwind CSS v4** : tokens de marque dans `src/app/globals.css` (`@theme`)
+- **Supabase** (Postgres + RLS) : `@supabase/supabase-js`
+- Polices auto-hébergées via `next/font` : Bricolage Grotesque, Hanken Grotesk, Instrument Serif
+- Icônes : `lucide-react`. Aucune librairie d'animation.
+
+## Langues (FR / EN)
+
+| | Français | English |
+|---|---|---|
+| Racine | `/` | `/en` |
+| Mise en page racine | `src/app/(fr)/layout.tsx` (`lang="fr-CA"`) | `src/app/(en)/layout.tsx` (`lang="en-CA"`) |
+| Slugs | `/nos-repas`, `/garderies`, `/soumission`… | `/en/our-meals`, `/en/daycares`, `/en/quote`… |
+
+- **Tous les textes** : `src/i18n/dictionaries/fr.ts` (référence) et `en.ts`.
+  Le type `Dictionary` oblige l'anglais à avoir exactement les mêmes clés.
+  Dans les titres, `*texte*` = accent serif italique.
+- **Toutes les URL** : `src/i18n/routes.ts` → `href("quote", locale)`.
+- Les pages sont écrites une seule fois dans `src/views/*View.tsx` ; les fichiers
+  `src/app/(fr)/…/page.tsx` et `src/app/(en)/en/…/page.tsx` ne font que les appeler.
+- Le sélecteur de langue renvoie vers la page équivalente ; hreflang et sitemap bilingues.
+- 404 globale : `src/app/global-not-found.tsx` (nécessaire avec deux racines).
 
 ## Arborescence
 
 ```
 src/
   app/
-    (site)/            Site public — layout avec Navbar, Footer, SupportWidget
-      page.tsx         Accueil
-      menu/  nos-repas/  garderies/  comment-ca-fonctionne/
-      a-propos/  faq/  contact/  soumission/
-    (auth)/login/      Connexion (sans navigation du site)
-    (portal)/          ← FUTUR portail client (Mon menu, Commandes, Livraisons, Factures…)
-    (admin)/           ← FUTUR back-office interne
-    sitemap.ts  robots.ts  icon.svg  not-found.tsx
+    (fr)/(site)/…          Pages publiques FR          (fr)/(auth)/login
+    (en)/en/(site)/…       Pages publiques EN          (en)/en/(auth)/login
+    global-not-found.tsx  sitemap.ts  robots.ts  icon.svg  globals.css
+  views/                   Une vue par page, paramétrée par la langue
   components/
-    ui/                Primitives : Button, Container, Section, SectionHeading, Badge, Photo, Logo, Reveal, Stamp
-    layout/            Navbar, Footer
-    cards/             MealCard, FormatCard, FeatureCard, TestimonialCard
-    sections/          Sections réutilisables (CTASection, PageHero) + home/*
-    menu/              MenuExplorer, MenuFilters
-    portal/            Aperçus du portail : MenuPlanner (interactif), DashboardPreview
-    forms/             Champs de formulaire, QuoteForm
-    support/           SupportWidget (futur assistant IA)
-  data/                Contenu et données locales (remplaçables)
-    menu.ts            ← Menu complet (source : Google Sheets)
-    media.ts           ← Registre de TOUTES les photos du site
-    site.ts            Coordonnées, navigation
-    content.ts  offers.ts  faq.ts
+    ui/                    Button, Container, Section, SectionHeading, Badge, Photo, SmartImage, Logo, Reveal, Stamp
+    layout/                RootDocument, SiteShell, Navbar, Footer
+    cards/                 MealCard, FormatCard, TestimonialCard
+    sections/              CTASection, PageHero, home/*
+    menu/                  MenuExplorer, MenuFilters
+    portal/                MenuPlanner (démo interactive), DashboardPreview
+    forms/                 fields, QuoteForm, LoginForm
+    support/               SupportWidget (futur assistant IA)
+  data/
+    menu.ts                Menu local (repli) + source du seed SQL
+    media.ts               Registre de TOUTES les photos
+    site.ts                Téléphones, courriel
+  i18n/                    config, routes, dictionnaires
   lib/
-    types.ts           Modèle de domaine (Meal, Organization, Establishment, MonthlyMenu, rôles…)
-    menu-repository.ts ← SEUL point d'accès aux repas (à brancher sur Supabase)
-    seo.ts             Métadonnées + JSON-LD (Organization/LocalBusiness, Service, FAQPage)
-    quote.ts           Demande de soumission (V1 : mailto ; V2 : server action)
+    types.ts               Modèle de domaine
+    menu-repository.ts     SEUL point d'accès aux repas (Supabase → repli local)
+    actions/quote.ts       Server action : demande de soumission → Supabase
+    supabase/              Client serveur + mapping des lignes
+    seo.ts                 Métadonnées, hreflang, JSON-LD
+supabase/
+  migrations/…_initial_schema.sql   Schéma complet + RLS + fonctions RPC
+  seed.sql                          Menu (généré : npm run db:seed:generate)
+scripts/generate-meals-seed.mts
 ```
 
-## Règles
+## Photos
 
-1. **Aucune donnée en dur dans les composants.** Les textes réutilisés sont dans `src/data/*`,
-   les repas passent par `src/lib/menu-repository.ts`.
-2. **Photos** : tout emplacement est déclaré dans `src/data/media.ts`. Mettre une vraie photo =
-   déposer le fichier dans `public/images/` et renseigner `src`. Le composant `<Photo>` bascule
-   automatiquement du placeholder vers `next/image` optimisée.
-3. **Allergènes** : jamais présentés comme une garantie. `allergensVerified: false` partout
-   tant que l'équipe n'a pas validé. Le disclaimer accompagne chaque affichage du menu.
-4. **Placeholders** : identifiés visuellement (« Photo à venir », « Témoignage à venir — exemple »,
-   « [À confirmer] ») et dans le code (`// PLACEHOLDER`).
+`src/data/media.ts` déclare chaque emplacement photo (alt FR/EN, consigne de prise de vue, `src`).
+- `src: "/images/xxx.jpg"` → vraie photo (déposer dans `public/images/`).
+- URL Unsplash → illustration **temporaire** (nourriture / ingrédients).
+- `null` ou image qui ne charge pas → placeholder de marque « Photo à venir ».
 
-## Passage à Supabase (phase suivante)
+Les cartes du menu utilisent `meal.image` (colonne `image_url`) en priorité, sinon une
+illustration par catégorie (`categoryIllustrations`).
 
-Tables proposées (1:1 avec `src/lib/types.ts`) :
+## Supabase
+
+### Modèle de données
 
 | Table | Rôle |
 |---|---|
-| `meals` | Source de vérité unique de chaque plat |
+| `meals` | Source de vérité de chaque plat (FR/EN, catégorie, rotation, allergènes déclarés, formats) |
 | `organizations` | Ex. « Organisation ABC » |
-| `establishments` | Garderie Laval, Garderie Terrebonne… (`organization_id`) |
-| `memberships` | `user_id`, `organization_id`, `role` (owner, director, admin, accounting, viewer), `establishment_ids` |
-| `monthly_menus` + `menu_days` | Menu du mois par établissement, statut, date limite (≈ 2 semaines avant) |
-| `orders`, `order_items` | Commandes régulières, ponctuelles, urgentes, portions ajoutées |
+| `establishments` | Garderie Laval, Garderie Terrebonne… |
+| `memberships` | Utilisateur × organisation × rôle (`owner`, `director`, `admin`, `accounting`, `viewer`), limité à certains établissements si besoin |
+| `staff_members` | Équipe interne Bon Traiteur (back-office) |
+| `monthly_menus`, `menu_days` | Menu du mois par établissement, date limite de modification, repas d'origine conservé si remplacé |
+| `orders`, `order_items` | Commandes régulières, ponctuelles, urgentes ; portions par format |
 | `deliveries` | Planifiée / en route / livrée / suspendue |
-| `invoices` | Paiement Stripe ou Moneris |
+| `invoices` | Numéro (BT-1094), montant, statut, PDF (Storage), référence Stripe/Moneris |
 | `quote_requests` | Demandes de soumission du site |
 
-Sécurité : Row Level Security par `organization_id` via `memberships`.
+### Sécurité (RLS sur toutes les tables)
 
-Étapes :
-1. `menu-repository.ts` : remplacer la lecture locale par `supabase.from("meals")` (les composants ne changent pas).
-2. `lib/quote.ts` : server action → `quote_requests` + courriel transactionnel.
-3. `(auth)/login` : Supabase Auth (mot de passe ou lien magique).
-4. `(portal)` : reprendre `MenuPlanner` et `DashboardPreview` comme base des écrans « Mon menu » et « Accueil ».
-5. Assistant : `SupportWidget` → conversation IA avec function calling sur des server actions
-   (`replaceMeal`, `addPortions`, `suspendDelivery`, `getInvoiceStatus`), confirmation obligatoire avant toute action importante.
+- **Public** : lit les plats offerts ; peut *déposer* une soumission (jamais la relire).
+- **Clients** : ne voient que les données de leurs organisations / établissements ;
+  factures visibles pour `owner`, `director`, `accounting` seulement.
+- **Équipe** (`staff_members`) : accès complet pour le futur back-office.
+- Les clients ne modifient pas les menus directement : ils passent par des fonctions
+  qui vérifient rôle, date limite et validité du repas :
+  - `confirm_monthly_menu(menu_id)` — « Garder mon menu »
+  - `replace_menu_meal(menu_day_id, meal_id)` — « Remplacer » (refusé après la date limite)
+  Ces fonctions serviront aussi d'outils à l'assistant IA (function calling).
 
-## Anglais (phase 2)
+Le schéma, le seed et ces règles ont été validés sur Postgres (PGlite) : isolation entre
+organisations, refus anonymes, contraintes de la table des soumissions.
 
-Le site est en français (fr-CA). Pour l'anglais : `next-intl` ou dictionnaires maison, routes
-`/en/...`, et migration des textes de `src/data/*` vers des fichiers `fr.ts` / `en.ts`.
-Les contenus sont déjà centralisés pour faciliter cette étape.
+### Mise en route
+
+1. Créer un projet Supabase **dédié** à Bon Traiteur (région Canada si possible).
+2. SQL Editor : exécuter `supabase/migrations/20261001000000_initial_schema.sql`, puis `supabase/seed.sql`.
+   (ou `supabase link` + `supabase db push` avec la CLI)
+3. Copier `.env.example` → `.env.local` et renseigner l'URL et la clé publique.
+4. Sur l'hébergeur (Vercel…), ajouter les mêmes variables.
+
+Sans ces variables, le site fonctionne avec les données locales et le formulaire bascule
+sur le courriel.
+
+### Prochaines étapes
+
+1. Notification courriel à l'équipe à chaque soumission (Resend / Postmark).
+2. Supabase Auth (`@supabase/ssr`) : connexion par courriel / lien magique sur `/login`.
+3. Portail `(portal)` : Accueil, Mon menu (reprend `MenuPlanner` branché sur les RPC), Commandes, Livraisons, Factures.
+4. Back-office `(admin)` pour l'équipe : menus du mois, production, livraisons, factures.
+5. Paiement (Stripe ou Moneris), SMS, assistant IA.

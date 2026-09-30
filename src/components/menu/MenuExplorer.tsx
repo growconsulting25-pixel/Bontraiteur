@@ -6,7 +6,7 @@ import type { Meal, RotationType } from "@/lib/types";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/fr";
 import { menuFilterOrder } from "@/data/menu";
-import { mealName } from "@/lib/menu-repository";
+import { mealName } from "@/lib/meal-name";
 import { MealCard, type MealCardLabels } from "@/components/cards/MealCard";
 import { MenuFilters, type FilterValue } from "./MenuFilters";
 import { cn } from "@/lib/cn";

@@ -67,16 +67,17 @@ export const media = {
     kind: "nourriture",
   },
   formulaReady: {
-    alt: { fr: "Plats de pâtes, lasagne et poulet en contenants, prêts à réchauffer", en: "Pasta, lasagna and chicken dishes in containers, ready to reheat" },
+    alt: { fr: "Portion individuelle de repas équilibré", en: "Individual portion of a balanced meal" },
     brief: "Portions individuelles scellées, étiquetées",
-    src: "/images/plats-familiaux-congeles.webp",
+    // Temporaire : sera remplacée par la photo des portions de pâtes bolognaise
+    src: unsplash("photo-1546069901-ba9599a7e63c"),
     tone: "saffron",
     kind: "nourriture",
   },
   formulaFrozen: {
-    alt: { fr: "Portions de repas congelées rangées dans un congélateur", en: "Frozen meal portions stored in a freezer" },
+    alt: { fr: "Lasagne, pâtes gratinées et pâté au poulet congelés en grands contenants", en: "Frozen lasagna, baked pasta and chicken pie in large containers" },
     brief: "Contenants congelés, étiquettes lisibles, rangement propre",
-    src: "/images/repas-congeles-portions.webp",
+    src: "/images/plats-familiaux-congeles.webp",
     tone: "olive",
     kind: "nourriture",
   },

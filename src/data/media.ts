@@ -52,30 +52,31 @@ export const media = {
     kind: "nourriture",
   },
   situationsTable: {
-    alt: { fr: "Légumes frais disposés sur une table", en: "Fresh vegetables laid out on a table" },
+    alt: { fr: "Des enfants dînent ensemble à une petite table de garderie", en: "Children having lunch together at a small daycare table" },
     brief: "Table basse de garderie, petites chaises, assiettes servies, ambiance calme",
-    src: unsplash("photo-1498837167922-ddd27525d352"),
+    src: "/images/enfants-table-garderie.webp",
+    focus: "50% 40%",
     tone: "coral",
     kind: "enfants",
   },
   formulaHot: {
-    alt: { fr: "Repas chaud avec viande et légumes", en: "Hot meal with meat and vegetables" },
+    alt: { fr: "Riz aux légumes et poulet sauté chauds, dans des bacs de service", en: "Hot vegetable rice and sautéed chicken in serving pans" },
     brief: "Repas chauds livrés en bacs, vapeur visible",
-    src: unsplash("photo-1504674900247-0877df9cc836"),
+    src: "/images/riz-poulet-legumes.webp",
     tone: "coral",
     kind: "nourriture",
   },
   formulaReady: {
-    alt: { fr: "Portion individuelle de repas équilibré", en: "Individual portion of a balanced meal" },
+    alt: { fr: "Plats de pâtes, lasagne et poulet en contenants, prêts à réchauffer", en: "Pasta, lasagna and chicken dishes in containers, ready to reheat" },
     brief: "Portions individuelles scellées, étiquetées",
-    src: unsplash("photo-1546069901-ba9599a7e63c"),
+    src: "/images/plats-familiaux-congeles.webp",
     tone: "saffron",
     kind: "nourriture",
   },
   formulaFrozen: {
-    alt: { fr: "Repas préparé prêt à être conservé", en: "Prepared meal ready to be stored" },
+    alt: { fr: "Portions de repas congelées rangées dans un congélateur", en: "Frozen meal portions stored in a freezer" },
     brief: "Contenants congelés, étiquettes lisibles, rangement propre",
-    src: unsplash("photo-1540189549336-e6e99c3679fe"),
+    src: "/images/repas-congeles-portions.webp",
     tone: "olive",
     kind: "nourriture",
   },
@@ -119,9 +120,9 @@ export const media = {
     kind: "cuisine",
   },
   ctaFinal: {
-    alt: { fr: "Repas maison fraîchement préparé", en: "Freshly prepared home-style meal" },
+    alt: { fr: "Une lasagne gratinée tout juste sortie du four", en: "A golden baked lasagna fresh out of the oven" },
     brief: "Directrice et éducatrice qui regardent une tablette/feuille de menu, sourire, bureau de CPE",
-    src: unsplash("photo-1543339308-43e59d6b73a6"),
+    src: "/images/lasagne.webp",
     tone: "saffron",
     kind: "enfants",
   },
@@ -142,4 +143,13 @@ export const categoryIllustrations: Record<MealCategory, string> = {
   autres: unsplash("photo-1512058564366-18510be2db19"),
   desserts: unsplash("photo-1488477181946-6428a0291777"),
   collations: unsplash("photo-1558961363-fa8fdf82db35"),
+};
+
+/**
+ * Photos Bon Traiteur qui correspondent à un plat précis (par slug), utilisées
+ * tant que le plat n'a pas sa propre photo (`meal.image`).
+ */
+export const mealIllustrations: Partial<Record<string, string>> = {
+  "poulet-au-pesto-sur-riz-et-legumes": "/images/riz-poulet-legumes.webp",
+  "poulet-barbecue-sur-riz-aux-legumes": "/images/riz-poulet-legumes.webp",
 };

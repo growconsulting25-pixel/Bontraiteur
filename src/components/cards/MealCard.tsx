@@ -1,5 +1,5 @@
 import type { Meal, MealCategory } from "@/lib/types";
-import { categoryIllustrations } from "@/data/media";
+import { categoryIllustrations, mealIllustrations } from "@/data/media";
 import { mealName } from "@/lib/meal-name";
 import type { Dictionary } from "@/i18n/dictionaries/fr";
 import type { Locale } from "@/i18n/config";
@@ -42,8 +42,8 @@ export type MealCardLabels = Pick<
 
 export function MealCard({ meal, locale, t, compact = false }: { meal: Meal; locale: Locale; t: MealCardLabels; compact?: boolean }) {
   const name = mealName(meal, locale);
-  // Vraie photo du plat en priorité, sinon illustration temporaire par catégorie.
-  const src = meal.image ?? categoryIllustrations[meal.category];
+  // Vraie photo du plat en priorité, puis photo Bon Traiteur correspondante, sinon illustration par catégorie.
+  const src = meal.image ?? mealIllustrations[meal.slug] ?? categoryIllustrations[meal.category];
   const placeholder = <PlatePlaceholder category={meal.category} label={t.photoComing} />;
 
   return (

@@ -34,25 +34,26 @@ const unsplash = (id: string) => `https://images.unsplash.com/${id}`;
 
 export const media = {
   heroMain: {
-    alt: { fr: "Des enfants dînent ensemble à une petite table de garderie", en: "Children having lunch together at a small daycare table" },
+    alt: { fr: "Deux cuisiniers portionnent riz, poulet et légumes dans des contenants individuels", en: "Two cooks portioning rice, chicken and vegetables into individual containers" },
     brief: "Éducatrice qui sert le repas, 3-4 enfants attablés, lumière naturelle, portions enfants",
-    src: "/images/enfants-table-garderie.webp",
-    focus: "28% 50%",
+    src: "/images/equipe-portionnement.webp",
+    focus: "52% 40%",
     tone: "saffron",
     kind: "enfants",
   },
   heroMeal: {
-    alt: { fr: "Riz aux légumes et poulet sauté dans des bacs de service", en: "Vegetable rice and sautéed chicken in serving pans" },
+    alt: { fr: "Le camion réfrigéré Bon Traiteur stationné devant une garderie", en: "The refrigerated Bon Traiteur truck parked in front of a daycare" },
     brief: "Plat réel en portion enfant, vue plongée, contenant Bon Traiteur",
-    src: "/images/riz-poulet-legumes.webp",
-    focus: "70% 60%",
+    src: "/images/camion-bon-traiteur.webp",
+    focus: "55% 50%",
     tone: "olive",
     kind: "nourriture",
   },
   situationsTable: {
-    alt: { fr: "Légumes frais disposés sur une table", en: "Fresh vegetables laid out on a table" },
+    alt: { fr: "Des enfants dînent ensemble à une petite table de garderie", en: "Children having lunch together at a small daycare table" },
     brief: "Table basse de garderie, petites chaises, assiettes servies, ambiance calme",
-    src: unsplash("photo-1498837167922-ddd27525d352"),
+    src: "/images/enfants-table-garderie.webp",
+    focus: "40% 50%",
     tone: "coral",
     kind: "enfants",
   },
@@ -89,6 +90,14 @@ export const media = {
     tone: "olive",
     kind: "cuisine",
   },
+  kitchenBanner: {
+    alt: { fr: "Une lasagne gratinée tout juste sortie du four, en cuisine", en: "A golden baked lasagna fresh out of the oven, in the kitchen" },
+    brief: "Plat qui sort du four en cuisine, plan large",
+    src: "/images/lasagne.webp",
+    focus: "50% 45%",
+    tone: "olive",
+    kind: "cuisine",
+  },
   delivery: {
     alt: {
       fr: "Le camion réfrigéré Bon Traiteur stationné devant une garderie",
@@ -115,9 +124,9 @@ export const media = {
     kind: "cuisine",
   },
   ctaFinal: {
-    alt: { fr: "Une lasagne gratinée tout juste sortie du four", en: "A golden baked lasagna fresh out of the oven" },
+    alt: { fr: "Repas maison fraîchement préparé", en: "Freshly prepared home-style meal" },
     brief: "Directrice et éducatrice qui regardent une tablette/feuille de menu, sourire, bureau de CPE",
-    src: "/images/lasagne.webp",
+    src: unsplash("photo-1543339308-43e59d6b73a6"),
     tone: "saffron",
     kind: "enfants",
   },

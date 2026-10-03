@@ -647,6 +647,27 @@ function Palette({
   const [query, setQuery] = useState("");
   const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   const list = meals.filter((m) => m.type === tab && (!query || norm(m.name).includes(norm(query))));
+  const [expanded, setExpanded] = useState(false);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [edges, setEdges] = useState({ left: false, right: false });
+  const updateEdges = useCallback(() => {
+    const el = listRef.current;
+    if (!el) return;
+    setEdges({ left: el.scrollLeft > 4, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 4 });
+  }, []);
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    el.scrollLeft = 0;
+    updateEdges();
+    const ro = new ResizeObserver(updateEdges);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [tab, query, expanded, updateEdges]);
+  const scrollList = (dir: 1 | -1) => {
+    const el = listRef.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: "smooth" });
+  };
 
   return (
     <div
@@ -680,37 +701,102 @@ function Palette({
           />
         </label>
       </div>
-      <ul className="mt-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:thin]">
-        {list.map((m) => {
-          const tone = allergenTone(m.allergens);
-          const selected = placing?.id === m.id;
-          return (
-            <li key={m.id} className="shrink-0">
-              <button
-                type="button"
-                draggable
-                onDragStart={(e) => {
-                  e.dataTransfer.setData("text/plain", m.id);
-                  e.dataTransfer.effectAllowed = "copy";
-                  onDragStart(m);
-                }}
-                onDragEnd={onDragEnd}
-                onClick={() => onPlace(m)}
-                aria-pressed={selected}
-                className={cn(
-                  "flex max-w-56 cursor-grab items-center gap-2 rounded-full py-2 pr-3.5 pl-2 text-left text-sm font-semibold ring-1 transition-colors active:cursor-grabbing",
-                  selected ? "bg-charcoal text-cream ring-charcoal" : "bg-paper ring-line hover:ring-charcoal",
-                )}
-              >
-                <span aria-hidden="true" className={cn("size-3 shrink-0 rounded-full ring-1", tone ? toneClass[tone] : "bg-cream-deep ring-line")} />
-                <span className="truncate">{m.name}</span>
-                {m.allergens.some((a) => watched.includes(a)) && <AlertTriangle aria-label="!" className="size-3.5 shrink-0 text-coral-ink" />}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="mt-1 text-xs text-ink-soft">{coarse ? t.paletteHelpTouch : t.paletteHelpDesktop}</p>
+      {/* Mode d'emploi en 2 étapes, toujours visible */}
+      <ol className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink">
+        <li className="flex items-center gap-2">
+          <span aria-hidden="true" className="grid size-5 place-items-center rounded-full bg-saffron text-xs font-bold text-charcoal">1</span>
+          {t.paletteStep1}
+        </li>
+        <li className="flex items-center gap-2">
+          <span aria-hidden="true" className="grid size-5 place-items-center rounded-full bg-saffron text-xs font-bold text-charcoal">2</span>
+          {coarse ? t.paletteStep2Touch : t.paletteStep2Desktop}
+        </li>
+      </ol>
+
+      <div className="relative mt-3">
+        <ul
+          ref={listRef}
+          onScroll={updateEdges}
+          className={cn(
+            "flex gap-2.5",
+            expanded
+              ? "max-h-72 flex-wrap overflow-y-auto pr-1"
+              : "snap-x snap-mandatory scroll-px-1 overflow-x-auto px-1 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          )}
+        >
+          {list.length === 0 && <li className="py-2 text-sm text-ink-soft">{t.paletteNoResult}</li>}
+          {list.map((m) => {
+            const tone = allergenTone(m.allergens);
+            const selected = placing?.id === m.id;
+            return (
+              <li key={m.id} className={cn(!expanded && "shrink-0 snap-start")}>
+                <button
+                  type="button"
+                  draggable
+                  title={m.name}
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData("text/plain", m.id);
+                    e.dataTransfer.effectAllowed = "copy";
+                    onDragStart(m);
+                  }}
+                  onDragEnd={onDragEnd}
+                  onClick={() => onPlace(m)}
+                  aria-pressed={selected}
+                  className={cn(
+                    "flex min-h-11 cursor-grab items-center gap-2.5 rounded-[var(--radius-md)] py-2 pr-4 pl-3 text-left text-sm font-semibold shadow-sm ring-1 transition-[box-shadow,background-color] active:cursor-grabbing",
+                    expanded ? "max-w-full" : "w-60",
+                    selected ? "bg-charcoal text-cream ring-charcoal" : "bg-paper ring-line hover:shadow-md hover:ring-charcoal",
+                  )}
+                >
+                  <span aria-hidden="true" className={cn("size-3 shrink-0 rounded-full ring-1", tone ? toneClass[tone] : "bg-cream-deep ring-line")} />
+                  <span className={cn("leading-snug", !expanded && "line-clamp-2")}>{m.name}</span>
+                  {m.allergens.some((a) => watched.includes(a)) && <AlertTriangle aria-label="!" className="size-3.5 shrink-0 text-coral-ink" />}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Flèches + fondus : on voit qu'il y a d'autres plats à côté */}
+        {!expanded && edges.left && (
+          <>
+            <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-cream to-transparent" />
+            <button
+              type="button"
+              onClick={() => scrollList(-1)}
+              aria-label={t.palettePrev}
+              className="absolute top-1/2 left-0 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-charcoal text-cream shadow-md"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
+          </>
+        )}
+        {!expanded && edges.right && (
+          <>
+            <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-cream to-transparent" />
+            <button
+              type="button"
+              onClick={() => scrollList(1)}
+              aria-label={t.paletteNext}
+              className="absolute top-1/2 right-0 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-charcoal text-cream shadow-md"
+            >
+              <ChevronRight className="size-5" />
+            </button>
+          </>
+        )}
+      </div>
+
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-soft">
+        <span>
+          {t.paletteCount.replace("{n}", String(list.length))}
+          {!expanded && (edges.left || edges.right) && <> · {coarse ? t.paletteSwipeTouch : t.paletteSwipeDesktop}</>}
+        </span>
+        {list.length > 0 && (
+          <button type="button" onClick={() => setExpanded((v) => !v)} className="font-semibold text-ink underline underline-offset-4 hover:text-charcoal">
+            {expanded ? t.paletteShowLess : t.paletteShowAll}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

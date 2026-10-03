@@ -92,12 +92,12 @@ export const media = {
   },
   delivery: {
     alt: {
-      fr: "Repas équilibré fraîchement préparé",
-      en: "Freshly prepared balanced meal",
+      fr: "Le camion réfrigéré Bon Traiteur stationné devant une garderie",
+      en: "The refrigerated Bon Traiteur truck parked in front of a daycare",
     },
     brief: "Livreur Bon Traiteur remettant les bacs à une éducatrice, entrée de garderie",
-    // Temporaire : sera remplacée par une photo du lot 2
-    src: unsplash("photo-1512058564366-18510be2db19"),
+    src: "/images/camion-bon-traiteur.webp",
+    focus: "45% 55%",
     tone: "charcoal",
     kind: "livraison",
   },

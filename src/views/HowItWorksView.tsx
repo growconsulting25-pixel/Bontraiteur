@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { Photo } from "@/components/ui/Photo";
 import { PageHero } from "@/components/sections/PageHero";
 import { YourMenu } from "@/components/sections/home/YourMenu";
 import { SimplifyDaily } from "@/components/sections/home/SimplifyDaily";
@@ -29,6 +30,7 @@ export function HowItWorksView({ locale }: { locale: Locale }) {
               </Reveal>
             ))}
           </ol>
+          <Photo slot="delivery" locale={locale} showBrief={false} className="mt-10 aspect-[4/3] rounded-[var(--radius-xl)] sm:aspect-[16/9] lg:aspect-[2/1]" sizes="(min-width: 1280px) 1200px, 100vw" />
         </Container>
       </Section>
 

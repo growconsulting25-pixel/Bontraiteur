@@ -81,12 +81,12 @@ export const media = {
   },
   kitchenTeam: {
     alt: {
-      fr: "Préparation de repas en cuisine",
-      en: "Meals being prepared in the kitchen",
+      fr: "Deux cuisiniers portionnent riz, poulet et légumes dans des contenants individuels",
+      en: "Two cooks portioning rice, chicken and vegetables into individual containers",
     },
     brief: "Vraie équipe en cuisine, tabliers de marque, préparation en cours",
-    // Temporaire : sera remplacée par la photo de l'équipe qui portionne les repas
-    src: unsplash("photo-1556909114-f6e7ad7d3136"),
+    src: "/images/equipe-portionnement.webp",
+    focus: "50% 25%",
     tone: "olive",
     kind: "cuisine",
   },

@@ -56,8 +56,15 @@ export interface MenuDayRow {
   date: string;
   meal_id: string;
   dessert_id: string | null;
+  snack_am_id: string | null;
+  snack_pm_id: string | null;
   original_meal_id: string | null;
+  /** Plats proposés à l'origine, par case modifiée par le client. */
+  original_slots: Partial<Record<MenuSlot, string | null>>;
 }
+
+/** Les 4 cases d'une journée de menu. */
+export type MenuSlot = "collation_am" | "repas" | "dessert" | "collation_pm";
 
 export interface OrderRow {
   id: string;

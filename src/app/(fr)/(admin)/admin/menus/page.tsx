@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, EmptyState, PageTitle, StatusPill } from "@/components/portal/ui/PortalUI";
-import { AutoSubmitSelect, Flash, Label, SubmitButton, inputClass } from "@/components/admin/AdminUI";
+import { Flash, Label, SubmitButton, inputClass } from "@/components/admin/AdminUI";
+import { MenuCalendar } from "@/components/portal/calendar/MenuCalendar";
 import { ConfirmSubmit } from "@/components/portal/ui/ConfirmSubmit";
 import { createSessionClient } from "@/lib/supabase/session";
 import { getMeals } from "@/lib/menu-repository";
@@ -10,13 +11,12 @@ import {
   generateMenusForAll,
   publishMenu,
   scheduleMenuDeliveries,
-  updateMenuDay,
   updateMenuDeadline,
 } from "@/lib/actions/admin";
 import { formatDate, formatMonth, monthStart } from "@/lib/format";
 import { menuTone } from "@/lib/portal/status";
 import { getDictionary } from "@/i18n";
-import type { EstablishmentRow, MenuDayRow, MonthlyMenuRow } from "@/lib/supabase/types";
+import type { EstablishmentRow, MenuDayRow, MenuSlot, MonthlyMenuRow } from "@/lib/supabase/types";
 
 export const metadata = { title: "Menus" };
 
@@ -36,8 +36,6 @@ export default async function MenusPage({ searchParams }: { searchParams: Promis
   const selected = ests.find((e) => e.id === etablissement);
   const menu = selected ? menuByEst.get(selected.id) : undefined;
   const days = menu ? (((await supabase.from("menu_days").select("*").eq("monthly_menu_id", menu.id).order("date")).data ?? []) as MenuDayRow[]) : [];
-  const mains = meals.filter((m) => m.mealType === "repas");
-  const desserts = meals.filter((m) => m.mealType === "dessert");
   const months = [-1, 0, 1, 2].map((o) => monthStart(o));
   const self = `/admin/menus?mois=${month.slice(0, 7)}${selected ? `&etablissement=${selected.id}` : ""}`;
 
@@ -109,7 +107,7 @@ export default async function MenusPage({ searchParams }: { searchParams: Promis
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-ink-soft">
                     <StatusPill tone={menuTone[menu.status]}>{d.portal.menuStatus[menu.status]}</StatusPill>
                     {menu.confirmed_at && <span>confirmé le {formatDate(menu.confirmed_at.slice(0, 10), "fr")}</span>}
-                    <span>· {days.filter((x) => x.original_meal_id).length} repas remplacé(s) par le client</span>
+                    <span>· {days.reduce((n, x) => n + Object.keys(x.original_slots ?? {}).length, 0)} case(s) modifiée(s) par le client</span>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-end gap-2">
@@ -138,48 +136,40 @@ export default async function MenusPage({ searchParams }: { searchParams: Promis
                 </div>
               </Card>
 
-              <div className="overflow-x-auto rounded-[var(--radius-lg)] bg-paper ring-1 ring-line">
-                <table className="w-full text-left text-sm">
-                  <thead className="border-b border-line text-xs tracking-[0.06em] text-ink-soft uppercase">
-                    <tr>
-                      <th className="px-4 py-3">Jour</th>
-                      <th className="px-4 py-3">Repas</th>
-                      <th className="px-4 py-3">Dessert</th>
-                      <th className="px-4 py-3" />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-line">
-                    {days.map((day) => (
-                      <tr key={day.id}>
-                        <td className="px-4 py-2 font-semibold whitespace-nowrap">{formatDate(day.date, "fr", "weekday")}</td>
-                        <td className="px-4 py-2" colSpan={2}>
-                          <form action={updateMenuDay} className="grid gap-2 sm:grid-cols-2">
-                            <input type="hidden" name="dayId" value={day.id} />
-                            <AutoSubmitSelect name="mealId" defaultValue={day.meal_id} aria-label="Repas" className={inputClass}>
-                              {mains.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
-                            </AutoSubmitSelect>
-                            <AutoSubmitSelect name="dessertId" defaultValue={day.dessert_id ?? ""} aria-label="Dessert" className={inputClass}>
-                              <option value="">—</option>
-                              {desserts.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
-                            </AutoSubmitSelect>
-                          </form>
-                          {day.original_meal_id && (
-                            <p className="mt-1 text-xs font-semibold text-olive">
-                              Remplacé par le client (proposé : {meals.find((m) => m.id === day.original_meal_id)?.name})
-                            </p>
-                          )}
-                        </td>
-                        <td className="px-4 py-2 text-right">
-                          <form action={deleteMenuDay}>
-                            <input type="hidden" name="dayId" value={day.id} />
-                            <ConfirmSubmit label="Retirer" confirm="Retirer ce jour (congé, fermeture)?" />
-                          </form>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <MenuCalendar
+                key={menu.id}
+                locale="fr"
+                menuId={menu.id}
+                status={menu.status}
+                initialDays={days.map((day) => ({
+                  id: day.id,
+                  date: day.date,
+                  slots: { collation_am: day.snack_am_id, repas: day.meal_id, dessert: day.dessert_id, collation_pm: day.snack_pm_id },
+                  originals: (day.original_slots ?? {}) as Partial<Record<MenuSlot, string | null>>,
+                }))}
+                meals={meals.map((m) => ({ id: m.id, name: m.name, category: d.menu.categories[m.category], type: m.mealType, allergens: m.allergens }))}
+                editable
+                mode="staff"
+                t={d.calendar}
+                statusLabels={d.portal.menuStatus}
+                monthLabel={formatMonth(month, "fr")}
+                establishmentName={selected.name}
+              />
+
+              {/* Congés, journées pédagogiques : retirer un jour du menu */}
+              <details className="mt-6 rounded-[var(--radius-lg)] bg-paper p-4 ring-1 ring-line">
+                <summary className="cursor-pointer text-sm font-semibold">Retirer un jour (congé, fermeture)</summary>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {days.map((day) => (
+                    <li key={day.id}>
+                      <form action={deleteMenuDay}>
+                        <input type="hidden" name="dayId" value={day.id} />
+                        <ConfirmSubmit label={formatDate(day.date, "fr", "short")} confirm={`Retirer le ${formatDate(day.date, "fr", "weekday")} du menu?`} />
+                      </form>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </>
           )}
         </div>

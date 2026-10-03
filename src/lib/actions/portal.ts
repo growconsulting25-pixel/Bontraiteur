@@ -9,7 +9,7 @@ import { notifyTeam } from "@/lib/email";
 import { todayISO } from "@/lib/format";
 import { portalHref } from "@/i18n/portal-routes";
 import type { Locale } from "@/i18n/config";
-import type { MealFormat, OrderKind } from "@/lib/supabase/types";
+import type { MealFormat, MenuSlot, OrderKind } from "@/lib/supabase/types";
 
 /**
  * Actions du portail client. Les règles métier (rôle, date limite, statut)
@@ -47,6 +47,21 @@ export async function replaceMeal(menuDayId: string, mealId: string): Promise<Ac
   if (error) return { ok: false, error: error.message };
   revalidatePath("/portail", "layout");
   revalidatePath("/en/portal", "layout");
+  return { ok: true };
+}
+
+/**
+ * Change une case du calendrier (repas, dessert, collations).
+ * mealId = null : remettre le plat proposé à l'origine.
+ * Utilisé par le portail client ET le back-office (la base distingue les droits).
+ */
+export async function setMenuSlot(menuDayId: string, slot: MenuSlot, mealId: string | null): Promise<ActionResult> {
+  const supabase = await createSessionClient();
+  const { error } = await supabase.rpc("set_menu_slot", { p_menu_day_id: menuDayId, p_slot: slot, p_meal_id: mealId });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/portail", "layout");
+  revalidatePath("/en/portal", "layout");
+  revalidatePath("/admin/menus");
   return { ok: true };
 }
 

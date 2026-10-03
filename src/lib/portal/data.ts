@@ -32,7 +32,7 @@ export async function getMenuDays(menuId: string) {
   const supabase = await createSessionClient();
   const { data } = await supabase
     .from("menu_days")
-    .select("id, monthly_menu_id, date, meal_id, dessert_id, original_meal_id")
+    .select("id, monthly_menu_id, date, meal_id, dessert_id, snack_am_id, snack_pm_id, original_meal_id, original_slots")
     .eq("monthly_menu_id", menuId)
     .order("date");
   return (data ?? []) as MenuDayRow[];

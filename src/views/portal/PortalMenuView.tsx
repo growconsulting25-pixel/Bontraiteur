@@ -1,22 +1,15 @@
 import Link from "next/link";
 import { EmptyState, Notice, PageTitle } from "@/components/portal/ui/PortalUI";
-import { MonthlyMenuEditor, type EditorDay } from "@/components/portal/MonthlyMenuEditor";
+import { MenuCalendar, type CalendarDay, type CalendarMeal } from "@/components/portal/calendar/MenuCalendar";
 import { requireClient } from "@/lib/auth";
 import { getMenuDays, getPublishedMenus } from "@/lib/portal/data";
 import { getMeals } from "@/lib/menu-repository";
 import { mealName } from "@/lib/meal-name";
 import { formatDate, formatMonth, monthStart, todayISO } from "@/lib/format";
+import type { MenuSlot } from "@/lib/supabase/types";
 import { format, getDictionary, type Locale } from "@/i18n";
 import { portalHref } from "@/i18n/portal-routes";
 import { cn } from "@/lib/cn";
-
-/** Lundi de la semaine d'une date (YYYY-MM-DD). */
-function weekStart(date: string) {
-  const d = new Date(`${date}T12:00:00Z`);
-  const day = (d.getUTCDay() + 6) % 7;
-  d.setUTCDate(d.getUTCDate() - day);
-  return d.toISOString().slice(0, 10);
-}
 
 export async function PortalMenuView({ locale, month }: { locale: Locale; month?: string }) {
   const ctx = await requireClient(locale);
@@ -42,22 +35,15 @@ export async function PortalMenuView({ locale, month }: { locale: Locale; month?
     menus[0];
 
   const [days, meals] = await Promise.all([getMenuDays(selected.id), getMeals()]);
-  const byId = new Map(meals.map((m) => [m.id, m]));
-  const name = (id: string | null) => (id && byId.get(id) ? mealName(byId.get(id)!, locale) : null);
-
-  const editorDays: EditorDay[] = days.map((day) => ({
+  const calendarDays: CalendarDay[] = days.map((day) => ({
     id: day.id,
-    dateLabel: formatDate(day.date, locale, "weekday"),
-    weekLabel: format(t.week, { date: formatDate(weekStart(day.date), locale, "short") }),
-    mealId: day.meal_id,
-    mealName: name(day.meal_id) ?? "—",
-    dessertName: name(day.dessert_id),
-    originalMealName: name(day.original_meal_id),
+    date: day.date,
+    slots: { collation_am: day.snack_am_id, repas: day.meal_id, dessert: day.dessert_id, collation_pm: day.snack_pm_id },
+    originals: (day.original_slots ?? {}) as Partial<Record<MenuSlot, string | null>>,
   }));
-
-  const alternatives = meals
-    .filter((m) => m.mealType === "repas" && m.status === "disponible")
-    .map((m) => ({ id: m.id, name: mealName(m, locale), category: d.menu.categories[m.category] }));
+  const calendarMeals: CalendarMeal[] = meals
+    .filter((m) => m.status !== "indisponible")
+    .map((m) => ({ id: m.id, name: mealName(m, locale), category: d.menu.categories[m.category], type: m.mealType, allergens: m.allergens }));
 
   const beforeDeadline = today <= selected.change_deadline;
   const editable = ctx.canAct && beforeDeadline;
@@ -97,15 +83,19 @@ export async function PortalMenuView({ locale, month }: { locale: Locale; month?
           ))}
       </div>
 
-      <MonthlyMenuEditor
+      <MenuCalendar
+        key={selected.id}
+        locale={locale}
         menuId={selected.id}
         status={selected.status}
-        days={editorDays}
-        alternatives={alternatives}
+        initialDays={calendarDays}
+        meals={calendarMeals}
         editable={editable}
-        confirmedLabel={selected.confirmed_at ? format(t.confirmed, { date: formatDate(selected.confirmed_at.slice(0, 10), locale) }) : null}
-        t={t}
+        mode="client"
+        t={d.calendar}
         statusLabels={d.portal.menuStatus}
+        monthLabel={formatMonth(selected.month, locale)}
+        establishmentName={ctx.establishment.name}
       />
     </>
   );

@@ -6,6 +6,7 @@
 
 export interface GeneratorMeal {
   id: string;
+  slug: string;
   mealType: "repas" | "dessert" | "collation";
   rotationType: "mensuelle" | "ponctuelle" | null;
 }
@@ -28,15 +29,24 @@ export function defaultDeadline(month: string) {
   return d.toISOString().slice(0, 10);
 }
 
+/** Collation du matin par défaut : fruits de saison (comme sur le menu affiché). */
+const MORNING_SNACK_SLUG = "fruits-de-saison-collation";
+
 export function generateMenuDays(month: string, meals: GeneratorMeal[]) {
   const mains = meals.filter((m) => m.mealType === "repas" && m.rotationType === "mensuelle");
   const pool = mains.length ? mains : meals.filter((m) => m.mealType === "repas");
   const desserts = meals.filter((m) => m.mealType === "dessert");
+  const snacks = meals.filter((m) => m.mealType === "collation");
+  const morning = snacks.find((m) => m.slug === MORNING_SNACK_SLUG) ?? snacks[0];
+  const afternoon = snacks.filter((m) => m.id !== morning?.id);
   const [y, mo] = month.split("-").map(Number);
   const offset = (y * 12 + mo) * 3; // décalage différent chaque mois
+  const pick = <T,>(list: T[], i: number) => (list.length ? list[(i + offset) % list.length] : undefined);
   return weekdaysOf(month).map((date, i) => ({
     date,
     meal_id: pool[(i + offset) % pool.length].id,
-    dessert_id: desserts.length ? desserts[(i + offset) % desserts.length].id : null,
+    dessert_id: pick(desserts, i)?.id ?? null,
+    snack_am_id: morning?.id ?? null,
+    snack_pm_id: pick(afternoon, i)?.id ?? null,
   }));
 }

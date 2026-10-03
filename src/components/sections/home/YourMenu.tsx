@@ -76,6 +76,7 @@ export async function YourMenu({ locale }: { locale: Locale }) {
             statusLabels={d.portal.menuStatus}
             monthLabel={formatMonth(DEMO_MONTH, locale)}
             establishmentName="Bon Traiteur"
+            canEditWatched
           />
         </Reveal>
 

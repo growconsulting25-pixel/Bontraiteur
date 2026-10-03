@@ -31,6 +31,8 @@ export interface EstablishmentRow {
   city: string | null;
   children_count: number | null;
   delivery_notes: string | null;
+  /** Allergènes présents dans les groupes (signalés dans le calendrier). */
+  watched_allergens: Array<"lait" | "oeufs" | "poisson">;
 }
 
 export interface MembershipRow {

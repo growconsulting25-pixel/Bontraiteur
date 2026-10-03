@@ -65,6 +65,20 @@ export async function setMenuSlot(menuDayId: string, slot: MenuSlot, mealId: str
   return { ok: true };
 }
 
+/** Allergènes présents dans les groupes de l'établissement. */
+export async function setWatchedAllergens(establishmentId: string, allergens: string[]): Promise<ActionResult> {
+  const allowed = ["lait", "oeufs", "poisson"];
+  const supabase = await createSessionClient();
+  const { error } = await supabase.rpc("set_watched_allergens", {
+    p_establishment_id: establishmentId,
+    p_allergens: allergens.filter((a) => allowed.includes(a)),
+  });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/portail", "layout");
+  revalidatePath("/en/portal", "layout");
+  return { ok: true };
+}
+
 export async function cancelOrder(formData: FormData) {
   const supabase = await createSessionClient();
   await supabase.rpc("cancel_order", { p_order_id: String(formData.get("id")) });

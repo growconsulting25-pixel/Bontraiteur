@@ -27,11 +27,11 @@ export default async function MenusPage({ searchParams }: { searchParams: Promis
   const supabase = await createSessionClient();
 
   const [{ data: establishments }, { data: menus }, meals] = await Promise.all([
-    supabase.from("establishments").select("id, organization_id, name").order("name"),
+    supabase.from("establishments").select("id, organization_id, name, watched_allergens").order("name"),
     supabase.from("monthly_menus").select("*").eq("month", month),
     getMeals(),
   ]);
-  const ests = (establishments ?? []) as Pick<EstablishmentRow, "id" | "organization_id" | "name">[];
+  const ests = (establishments ?? []) as Pick<EstablishmentRow, "id" | "organization_id" | "name" | "watched_allergens">[];
   const menuByEst = new Map(((menus ?? []) as MonthlyMenuRow[]).map((m) => [m.establishment_id, m]));
   const selected = ests.find((e) => e.id === etablissement);
   const menu = selected ? menuByEst.get(selected.id) : undefined;
@@ -154,6 +154,9 @@ export default async function MenusPage({ searchParams }: { searchParams: Promis
                 statusLabels={d.portal.menuStatus}
                 monthLabel={formatMonth(month, "fr")}
                 establishmentName={selected.name}
+                establishmentId={selected.id}
+                initialWatched={selected.watched_allergens ?? []}
+                canEditWatched
               />
 
               {/* Congés, journées pédagogiques : retirer un jour du menu */}

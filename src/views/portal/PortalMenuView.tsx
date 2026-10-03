@@ -96,6 +96,9 @@ export async function PortalMenuView({ locale, month }: { locale: Locale; month?
         statusLabels={d.portal.menuStatus}
         monthLabel={formatMonth(selected.month, locale)}
         establishmentName={ctx.establishment.name}
+        establishmentId={ctx.establishment.id}
+        initialWatched={ctx.establishment.watched_allergens ?? []}
+        canEditWatched={ctx.canAct}
       />
     </>
   );

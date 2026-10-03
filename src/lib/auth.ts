@@ -36,7 +36,7 @@ export const getAccount = cache(async (): Promise<Account | null> => {
     supabase.from("staff_members").select("user_id").eq("user_id", user.id).maybeSingle(),
     supabase.from("memberships").select("user_id, organization_id, role, establishment_ids").eq("user_id", user.id),
     supabase.from("organizations").select("id, name, preferred_locale, created_at").order("name"),
-    supabase.from("establishments").select("id, organization_id, name, kind, address, city, children_count, delivery_notes").order("name"),
+    supabase.from("establishments").select("id, organization_id, name, kind, address, city, children_count, delivery_notes, watched_allergens").order("name"),
   ]);
   return {
     user,

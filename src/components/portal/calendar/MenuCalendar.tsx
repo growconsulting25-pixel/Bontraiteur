@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Check, ChevronLeft, ChevronRight, Printer, RotateCcw, Search, X, Hand } from "lucide-react";
-import { confirmMenu, setMenuSlot } from "@/lib/actions/portal";
+import { AlertTriangle, Check, ChevronLeft, ChevronRight, Printer, RotateCcw, Search, X, Hand } from "lucide-react";
+import { confirmMenu, setMenuSlot, setWatchedAllergens } from "@/lib/actions/portal";
 import type { Dictionary } from "@/i18n/dictionaries/fr";
 import type { Locale } from "@/i18n/config";
 import type { MenuSlot, MonthlyMenuStatus } from "@/lib/supabase/types";
@@ -84,6 +84,9 @@ export function MenuCalendar({
   monthLabel,
   establishmentName,
   demo = false,
+  establishmentId,
+  initialWatched = [],
+  canEditWatched = false,
 }: {
   locale: Locale;
   menuId: string;
@@ -98,6 +101,10 @@ export function MenuCalendar({
   establishmentName: string;
   /** Démonstration (site public) : rien n'est enregistré. */
   demo?: boolean;
+  /** Allergènes présents dans les groupes de la garderie. */
+  establishmentId?: string;
+  initialWatched?: Allergen[];
+  canEditWatched?: boolean;
 }) {
   const router = useRouter();
   const [days, setDays] = useState(initialDays);
@@ -109,6 +116,22 @@ export function MenuCalendar({
   const [toast, setToast] = useState<{ text: string; undo?: () => void; error?: boolean } | null>(null);
   const [confirming, startConfirm] = useTransition();
   const [coarse, setCoarse] = useState(false);
+  const [watched, setWatched] = useState<Allergen[]>(initialWatched);
+  const allergenLabel: Record<Allergen, string> = { lait: t.legendMilk, oeufs: t.legendEggs, poisson: t.legendFish };
+  const flagged = (m: CalendarMeal | undefined) => (m ? m.allergens.filter((a) => watched.includes(a)) : []);
+
+  const toggleWatched = (a: Allergen) => {
+    const next = watched.includes(a) ? watched.filter((x) => x !== a) : [...watched, a];
+    const before = watched;
+    setWatched(next);
+    if (!demo && establishmentId)
+      setWatchedAllergens(establishmentId, next).then((res) => {
+        if (!res.ok) {
+          setWatched(before);
+          setToast({ text: t.error, error: true });
+        }
+      });
+  };
 
   // Référence toujours à jour (les boutons « Annuler » sont créés avant le changement suivant)
   const daysRef = useRef(days);
@@ -208,6 +231,19 @@ export function MenuCalendar({
       } else setToast({ text: t.error, error: true });
     });
 
+  /** Remplace un plat dans plusieurs jours d'un coup (« Remplacer partout ce mois-ci »). */
+  const applyMany = (targets: Array<{ dayId: string; slot: MenuSlot }>, mealId: string) => {
+    const snapshot = targets.map(({ dayId, slot }) => {
+      const day = daysRef.current.find((d) => d.id === dayId)!;
+      return { dayId, slot, previous: day.slots[slot], hasOriginal: slot in day.originals };
+    });
+    targets.forEach(({ dayId, slot }) => apply(dayId, slot, mealId, { silent: true }));
+    setToast({
+      text: fill(t.replacedAll, { meal: mealById.get(mealId)?.name ?? "", count: targets.length }),
+      undo: () => snapshot.forEach((x) => applyRef.current(x.dayId, x.slot, x.hasOriginal ? x.previous : null, { silent: true })),
+    });
+  };
+
   /* ---------------- Rendu ---------------- */
   const activeType = (dragging ?? placing)?.type ?? null;
 
@@ -255,7 +291,7 @@ export function MenuCalendar({
           }
           setPicker({ dayId: day.id, slot });
         }}
-        aria-label={`${dayLabel(date)}, ${t.slots[slot]} : ${meal?.name ?? t.empty}${modified ? ` (${t.modified})` : ""}`}
+        aria-label={`${dayLabel(date)}, ${t.slots[slot]} : ${meal?.name ?? t.empty}${modified ? ` (${t.modified})` : ""}${flagged(meal).length ? ` — ${fill(t.contains, { list: flagged(meal).map((a) => allergenLabel[a]).join(", ") })}` : ""}`}
         className={cn(
           "group/cell relative flex w-full flex-col justify-center rounded-[var(--radius-sm)] px-2.5 py-2 text-left ring-1 transition-[box-shadow,background-color,opacity,transform] duration-200",
           slotHeight(slot),
@@ -271,6 +307,12 @@ export function MenuCalendar({
         <span className={cn("leading-snug font-semibold text-charcoal", slot === "repas" ? "text-[0.9rem]" : "text-[0.8rem]")}>
           {meal?.name ?? t.empty}
         </span>
+        {flagged(meal).length > 0 && (
+          <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-charcoal px-1.5 py-0.5 text-[0.62rem] font-bold text-cream">
+            <AlertTriangle aria-hidden="true" className="size-3 text-saffron" />
+            {fill(t.contains, { list: flagged(meal).map((a) => allergenLabel[a].toLowerCase()).join(", ") })}
+          </span>
+        )}
         {modified && (
           <span className="absolute top-1 right-1 inline-flex items-center gap-1 rounded-full bg-olive px-1.5 py-0.5 text-[0.58rem] font-bold text-cream uppercase">
             {t.modified}
@@ -320,9 +362,38 @@ export function MenuCalendar({
         </div>
       </div>
 
+      {/* Allergies présentes dans les groupes de la garderie */}
+      {(canEditWatched || watched.length > 0) && (
+        <div className="mb-5 flex flex-col gap-2 rounded-[var(--radius-lg)] bg-paper px-4 py-3 ring-1 ring-line sm:flex-row sm:items-center sm:gap-4 print:hidden">
+          <p className="flex items-center gap-2 text-sm font-semibold">
+            <AlertTriangle aria-hidden="true" className="size-4 text-coral-ink" /> {t.watchTitle}
+          </p>
+          <div className="flex flex-wrap gap-2" role="group" aria-label={t.watchTitle}>
+            {(["lait", "oeufs", "poisson"] as Allergen[]).map((a) => (
+              <button
+                key={a}
+                type="button"
+                aria-pressed={watched.includes(a)}
+                disabled={!canEditWatched}
+                onClick={() => toggleWatched(a)}
+                className={cn(
+                  "rounded-full px-3 py-1.5 text-sm font-semibold ring-1 transition-colors disabled:cursor-default",
+                  watched.includes(a) ? "bg-charcoal text-cream ring-charcoal" : "bg-cream ring-line hover:ring-charcoal",
+                )}
+              >
+                {watched.includes(a) && <Check aria-hidden="true" className="mr-1 inline size-3.5" strokeWidth={3} />}
+                {allergenLabel[a]}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-ink-soft sm:ml-auto sm:max-w-xs">{t.watchHelp}</p>
+        </div>
+      )}
+
       {/* Bande « Nos plats » (glisser / toucher-placer) */}
       {editable && (
         <Palette
+          watched={watched}
           sticky={!demo}
           meals={meals}
           t={t}
@@ -395,6 +466,12 @@ export function MenuCalendar({
       {/* Liste de choix (toucher une case) */}
       {picker && pickerDay && (
         <Picker
+          watched={watched}
+          sameCount={
+            pickerDay.slots[picker.slot]
+              ? days.filter((d) => d.id !== pickerDay.id && d.slots[picker.slot] === pickerDay.slots[picker.slot]).length
+              : 0
+          }
           title={fill(t.pickTitle, { day: dayLabel(pickerDay.date), slot: t.slots[picker.slot] })}
           currentId={pickerDay.slots[picker.slot]}
           proposedId={picker.slot in pickerDay.originals ? (pickerDay.originals[picker.slot] ?? null) : undefined}
@@ -402,8 +479,12 @@ export function MenuCalendar({
           mealById={mealById}
           t={t}
           onClose={() => setPicker(null)}
-          onChoose={(id) => {
-            apply(pickerDay.id, picker.slot, id);
+          onChoose={(id, everywhere) => {
+            const current = pickerDay.slots[picker.slot];
+            if (everywhere && id && current) {
+              const targets = days.filter((d) => d.slots[picker.slot] === current).map((d) => ({ dayId: d.id, slot: picker.slot }));
+              applyMany(targets, id);
+            } else apply(pickerDay.id, picker.slot, id);
             setPicker(null);
           }}
         />
@@ -542,6 +623,7 @@ function WeekCarousel<W extends { monday: string }>({
 /* Bande « Nos plats »                                                  */
 /* ------------------------------------------------------------------ */
 function Palette({
+  watched,
   sticky,
   meals,
   t,
@@ -551,6 +633,7 @@ function Palette({
   onDragStart,
   onDragEnd,
 }: {
+  watched: Allergen[];
   sticky: boolean;
   meals: CalendarMeal[];
   t: Dictionary["calendar"];
@@ -621,6 +704,7 @@ function Palette({
               >
                 <span aria-hidden="true" className={cn("size-3 shrink-0 rounded-full ring-1", tone ? toneClass[tone] : "bg-cream-deep ring-line")} />
                 <span className="truncate">{m.name}</span>
+                {m.allergens.some((a) => watched.includes(a)) && <AlertTriangle aria-label="!" className="size-3.5 shrink-0 text-coral-ink" />}
               </button>
             </li>
           );
@@ -635,6 +719,8 @@ function Palette({
 /* Liste de choix d'une case                                            */
 /* ------------------------------------------------------------------ */
 function Picker({
+  watched,
+  sameCount,
   title,
   currentId,
   proposedId,
@@ -644,6 +730,8 @@ function Picker({
   onClose,
   onChoose,
 }: {
+  watched: Allergen[];
+  sameCount: number;
   title: string;
   currentId: string | null;
   proposedId: string | null | undefined;
@@ -651,9 +739,10 @@ function Picker({
   mealById: Map<string, CalendarMeal>;
   t: Dictionary["calendar"];
   onClose: () => void;
-  onChoose: (id: string | null) => void;
+  onChoose: (id: string | null, everywhere?: boolean) => void;
 }) {
   const [query, setQuery] = useState("");
+  const [everywhere, setEverywhere] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     inputRef.current?.focus();
@@ -699,6 +788,12 @@ function Picker({
             </span>
           </button>
         )}
+        {sameCount > 0 && currentId && (
+          <label className="mx-5 mt-4 flex cursor-pointer items-start gap-3 rounded-[var(--radius-md)] bg-saffron-soft px-4 py-3 text-sm font-semibold">
+            <input type="checkbox" checked={everywhere} onChange={(e) => setEverywhere(e.target.checked)} className="mt-0.5 size-4 accent-[var(--color-olive)]" />
+            {fill(t.replaceAll, { count: sameCount, meal: mealById.get(currentId)?.name ?? "" })}
+          </label>
+        )}
         <label className="relative mx-5 mt-4 block">
           <span className="sr-only">{t.search}</span>
           <Search aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-ink-soft" />
@@ -723,7 +818,7 @@ function Picker({
                     <li key={m.id}>
                       <button
                         type="button"
-                        onClick={() => onChoose(m.id)}
+                        onClick={() => onChoose(m.id, everywhere)}
                         disabled={current}
                         className={cn(
                           "flex w-full items-center gap-3 rounded-[var(--radius-md)] px-3 py-3 text-left text-sm font-semibold ring-1 transition-colors",
@@ -732,6 +827,7 @@ function Picker({
                       >
                         <span aria-hidden="true" className={cn("size-3 shrink-0 rounded-full ring-1", tone ? toneClass[tone] : "bg-cream-deep ring-line")} />
                         <span className="flex-1">{m.name}</span>
+                        {m.allergens.some((a) => watched.includes(a)) && <AlertTriangle aria-label="!" className="size-4 shrink-0 text-coral-ink" />}
                         {current && <Check aria-hidden="true" className="size-4 text-olive" strokeWidth={3} />}
                       </button>
                     </li>

@@ -12,9 +12,9 @@ import type { Locale } from "@/i18n/config";
  *     · URL Unsplash                      → photo d'illustration TEMPORAIRE
  *     · null                              → placeholder de marque « Photo à venir »
  *
- * ⚠️ Les photos Unsplash (licence Unsplash, usage commercial permis) sont des
- * illustrations temporaires de nourriture/ingrédients. Elles ne montrent PAS
- * les plats de Bon Traiteur et doivent être remplacées par de vraies photos.
+ * Photos Bon Traiteur : public/images (fournies par le client).
+ * ⚠️ Les URL Unsplash restantes (licence Unsplash, usage commercial permis) sont des
+ * illustrations temporaires de nourriture/ingrédients, à remplacer au fil des lots de photos.
  * Si une image distante ne se charge pas, le placeholder s'affiche.
  */
 
@@ -22,6 +22,8 @@ export type PhotoTone = "olive" | "saffron" | "coral" | "cream" | "charcoal";
 
 export interface PhotoSlot {
   alt: Record<Locale, string>;
+  /** Point d'intérêt du recadrage (CSS object-position), ex. "50% 30%". */
+  focus?: string;
   brief: string;
   src: string | null;
   tone: PhotoTone;
@@ -33,18 +35,19 @@ const unsplash = (id: string) => `https://images.unsplash.com/${id}`;
 export const media = {
   heroMain: {
     alt: {
-      fr: "Bol de repas coloré avec légumes frais et protéines",
-      en: "Colourful meal bowl with fresh vegetables and protein",
+      fr: "Une fillette savoure son repas de poulet, riz et légumes à la garderie",
+      en: "A little girl enjoys her chicken, rice and vegetable meal at daycare",
     },
     brief: "Éducatrice qui sert le repas, 3-4 enfants attablés, lumière naturelle, portions enfants",
-    src: unsplash("photo-1512621776951-a57141f2eefd"),
+    src: "/images/fillette-bol-rose.webp",
+    focus: "60% 40%",
     tone: "saffron",
     kind: "enfants",
   },
   heroMeal: {
-    alt: { fr: "Assiette de pâtes à la sauce tomate", en: "Plate of pasta with tomato sauce" },
+    alt: { fr: "Une fillette mange son repas dans un bol vert", en: "A little girl eating her meal from a green bowl" },
     brief: "Plat réel en portion enfant, vue plongée, contenant Bon Traiteur",
-    src: unsplash("photo-1473093295043-cdd812d0e601"),
+    src: "/images/fillette-bol-vert.jpg",
     tone: "olive",
     kind: "nourriture",
   },
@@ -77,23 +80,34 @@ export const media = {
     kind: "nourriture",
   },
   kitchenTeam: {
-    alt: { fr: "Préparation des repas en cuisine", en: "Preparing meals in the kitchen" },
+    alt: {
+      fr: "Préparation de repas en cuisine",
+      en: "Meals being prepared in the kitchen",
+    },
     brief: "Vraie équipe en cuisine, tabliers de marque, préparation en cours",
-    src: unsplash("photo-1556910103-1c02745aae4d"),
+    // Temporaire : sera remplacée par la photo de l'équipe qui portionne les repas
+    src: unsplash("photo-1556909114-f6e7ad7d3136"),
     tone: "olive",
     kind: "cuisine",
   },
   delivery: {
-    alt: { fr: "Ingrédients frais prêts à cuisiner", en: "Fresh ingredients ready to cook" },
+    alt: {
+      fr: "Repas équilibré fraîchement préparé",
+      en: "Freshly prepared balanced meal",
+    },
     brief: "Livreur Bon Traiteur remettant les bacs à une éducatrice, entrée de garderie",
-    src: unsplash("photo-1466637574441-749b8f19452f"),
+    // Temporaire : sera remplacée par une photo du lot 2
+    src: unsplash("photo-1512058564366-18510be2db19"),
     tone: "charcoal",
     kind: "livraison",
   },
   kidsEating: {
-    alt: { fr: "Bols de repas sains et colorés", en: "Healthy, colourful meal bowls" },
+    alt: {
+      fr: "Des enfants mangent leur dîner ensemble à la garderie",
+      en: "Children eating lunch together at daycare",
+    },
     brief: "Enfants qui mangent ensemble, rires, mains, vraies portions — éviter les poses",
-    src: unsplash("photo-1490645935967-10de6ba17061"),
+    src: "/images/enfants-repas-plateaux.webp",
     tone: "coral",
     kind: "enfants",
   },

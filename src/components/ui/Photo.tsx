@@ -33,7 +33,7 @@ export function Photo({
   priority?: boolean;
   showBrief?: boolean;
 }) {
-  const photo: { alt: Record<Locale, string>; brief: string; src: string | null; tone: PhotoTone } = media[slot];
+  const photo: { alt: Record<Locale, string>; brief: string; src: string | null; tone: PhotoTone; focus?: string } = media[slot];
   const t = getDictionary(locale).common;
   const tone = toneStyles[photo.tone];
 
@@ -60,7 +60,7 @@ export function Photo({
   return (
     <div className={cn("relative overflow-hidden", tone.bg, className)}>
       {photo.src ? (
-        <SmartImage src={photo.src} alt={photo.alt[locale]} sizes={sizes} priority={priority} fallback={placeholder} />
+        <SmartImage src={photo.src} alt={photo.alt[locale]} sizes={sizes} priority={priority} fallback={placeholder} focus={photo.focus} />
       ) : (
         placeholder
       )}

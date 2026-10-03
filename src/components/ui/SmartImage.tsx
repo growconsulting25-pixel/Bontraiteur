@@ -21,6 +21,7 @@ export function SmartImage({
   priority,
   className,
   fallback,
+  focus,
 }: {
   src: string;
   alt: string;
@@ -28,6 +29,8 @@ export function SmartImage({
   priority?: boolean;
   className?: string;
   fallback: ReactNode;
+  /** CSS object-position */
+  focus?: string;
 }) {
   const [failed, setFailed] = useState(false);
   if (failed) return <>{fallback}</>;
@@ -42,6 +45,7 @@ export function SmartImage({
       priority={priority}
       loader={isUnsplash ? unsplashLoader : undefined}
       onError={() => setFailed(true)}
+      style={focus ? { objectPosition: focus } : undefined}
       className={cn(
         "object-cover transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.04]",
         className,

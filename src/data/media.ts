@@ -34,28 +34,25 @@ const unsplash = (id: string) => `https://images.unsplash.com/${id}`;
 
 export const media = {
   heroMain: {
-    alt: {
-      fr: "Une fillette savoure son repas de poulet, riz et légumes à la garderie",
-      en: "A little girl enjoys her chicken, rice and vegetable meal at daycare",
-    },
+    alt: { fr: "Des enfants dînent ensemble à une petite table de garderie", en: "Children having lunch together at a small daycare table" },
     brief: "Éducatrice qui sert le repas, 3-4 enfants attablés, lumière naturelle, portions enfants",
-    src: "/images/fillette-bol-rose.webp",
-    focus: "60% 40%",
+    src: "/images/enfants-table-garderie.webp",
+    focus: "28% 50%",
     tone: "saffron",
     kind: "enfants",
   },
   heroMeal: {
-    alt: { fr: "Une fillette mange son repas dans un bol vert", en: "A little girl eating her meal from a green bowl" },
+    alt: { fr: "Riz aux légumes et poulet sauté dans des bacs de service", en: "Vegetable rice and sautéed chicken in serving pans" },
     brief: "Plat réel en portion enfant, vue plongée, contenant Bon Traiteur",
-    src: "/images/fillette-bol-vert.jpg",
+    src: "/images/riz-poulet-legumes.webp",
+    focus: "70% 60%",
     tone: "olive",
     kind: "nourriture",
   },
   situationsTable: {
-    alt: { fr: "Des enfants dînent ensemble à une petite table de garderie", en: "Children having lunch together at a small daycare table" },
+    alt: { fr: "Légumes frais disposés sur une table", en: "Fresh vegetables laid out on a table" },
     brief: "Table basse de garderie, petites chaises, assiettes servies, ambiance calme",
-    src: "/images/enfants-table-garderie.webp",
-    focus: "50% 40%",
+    src: unsplash("photo-1498837167922-ddd27525d352"),
     tone: "coral",
     kind: "enfants",
   },
@@ -104,12 +101,9 @@ export const media = {
     kind: "livraison",
   },
   kidsEating: {
-    alt: {
-      fr: "Des enfants mangent leur dîner ensemble à la garderie",
-      en: "Children eating lunch together at daycare",
-    },
+    alt: { fr: "Repas maison équilibré", en: "Balanced home-style meal" },
     brief: "Enfants qui mangent ensemble, rires, mains, vraies portions — éviter les poses",
-    src: "/images/enfants-repas-plateaux.webp",
+    src: unsplash("photo-1512621776951-a57141f2eefd"),
     tone: "coral",
     kind: "enfants",
   },

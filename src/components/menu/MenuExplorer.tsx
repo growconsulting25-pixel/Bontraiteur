@@ -5,10 +5,11 @@ import { Search } from "lucide-react";
 import type { Meal, RotationType } from "@/lib/types";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/fr";
-import { menuFilterOrder } from "@/data/menu";
+import { MENU_SHOW_PHOTOS, menuFilterOrder } from "@/data/menu";
 import { mealName } from "@/lib/meal-name";
 import { MealCard, type MealCardLabels } from "@/components/cards/MealCard";
 import { MenuFilters, type FilterValue } from "./MenuFilters";
+import { MealTextList } from "./MealTextList";
 import { cn } from "@/lib/cn";
 
 type RotationFilter = "toutes" | RotationType;
@@ -105,7 +106,11 @@ export function MenuExplorer({
         {results.length} {results.length > 1 ? t.countMany : t.countOne}
       </p>
 
-      {results.length > 0 ? (
+      {results.length > 0 && !MENU_SHOW_PHOTOS ? (
+        <div className="mt-4">
+          <MealTextList meals={results} locale={locale} t={t} />
+        </div>
+      ) : results.length > 0 ? (
         <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {results.map((meal) => (
             <li key={meal.id}>

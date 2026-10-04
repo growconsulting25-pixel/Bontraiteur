@@ -111,6 +111,12 @@ export const meals: Meal[] = seeds.map((seed) => {
   };
 });
 
+/**
+ * Page Menu : `false` = menu en texte (en attendant les photos de tous les plats).
+ * Passer à `true` pour revenir aux cartes avec photos.
+ */
+export const MENU_SHOW_PHOTOS = false;
+
 /* ------------------------------------------------------------------ */
 /* Filtres (les libellés sont dans les dictionnaires i18n)             */
 /* ------------------------------------------------------------------ */

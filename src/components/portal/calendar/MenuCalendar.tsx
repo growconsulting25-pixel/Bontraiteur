@@ -9,6 +9,7 @@ import type { Locale } from "@/i18n/config";
 import type { MenuSlot, MonthlyMenuStatus } from "@/lib/supabase/types";
 import type { Allergen } from "@/lib/types";
 import { cn } from "@/lib/cn";
+import { allergenTone, allergenToneClass, type AllergenTone } from "@/lib/allergen-tone";
 
 /**
  * CALENDRIER DE MENU INTERACTIF
@@ -43,22 +44,8 @@ const SLOT_ORDER: MenuSlot[] = ["collation_am", "repas", "dessert", "collation_p
 const slotType = (slot: MenuSlot): CalendarMealType => (slot === "repas" ? "repas" : slot === "dessert" ? "dessert" : "collation");
 const fill = (t: string, v: Record<string, string | number>) => t.replace(/\{(\w+)\}/g, (_, k: string) => String(v[k] ?? ""));
 
-type Tone = "milkEggs" | "milk" | "eggs" | "fish" | null;
-function allergenTone(allergens: Allergen[]): Tone {
-  const milk = allergens.includes("lait");
-  const eggs = allergens.includes("oeufs");
-  if (milk && eggs) return "milkEggs";
-  if (milk) return "milk";
-  if (eggs) return "eggs";
-  if (allergens.includes("poisson")) return "fish";
-  return null;
-}
-const toneClass: Record<Exclude<Tone, null>, string> = {
-  milkEggs: "bg-saffron/85 ring-saffron",
-  milk: "bg-coral/80 ring-coral",
-  eggs: "bg-saffron-soft ring-saffron",
-  fish: "bg-olive-soft ring-olive/50",
-};
+type Tone = AllergenTone;
+const toneClass = allergenToneClass;
 
 function mondayOf(date: string) {
   const d = new Date(`${date}T12:00:00Z`);

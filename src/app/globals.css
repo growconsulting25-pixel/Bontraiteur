@@ -116,6 +116,9 @@
 @utility px-gutter {
   padding-inline: var(--gutter);
 }
+@utility -mx-gutter {
+  margin-inline: calc(var(--gutter) * -1);
+}
 /* Accent serif éditorial dans les titres */
 @utility accent-serif {
   font-family: var(--font-serif);

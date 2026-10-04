@@ -1043,17 +1043,36 @@ function PrintSheet({
             {SLOT_ORDER.map((slot) => (
               <tr key={slot}>
                 <th className="border border-charcoal/30 p-1 text-left font-semibold">{t.slots[slot]}</th>
-                {w.days.map(({ date, day }) => (
-                  <td key={date} className="border border-charcoal/30 p-1 align-top">
-                    {name(day?.slots[slot])}
-                  </td>
-                ))}
+                {w.days.map(({ date, day }) => {
+                  const id = day?.slots[slot];
+                  const tone = id ? allergenTone(mealById.get(id)?.allergens ?? []) : null;
+                  return (
+                    <td key={date} className={cn("border border-charcoal/30 p-1 align-top", tone && toneClass[tone])}>
+                      {name(id)}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
         </table>
       ))}
-      <p className="text-[8pt]">{t.legendNote}</p>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[9pt]">
+        <span className="font-semibold">{t.legendTitle} :</span>
+        {(
+          [
+            ["milkEggs", t.legendMilkEggs],
+            ["milk", t.legendMilk],
+            ["eggs", t.legendEggs],
+            ["fish", t.legendFish],
+          ] as const
+        ).map(([k, label]) => (
+          <span key={k} className="inline-flex items-center gap-1.5">
+            <span className={cn("inline-block h-3 w-5 border border-charcoal/30", toneClass[k])} /> {label}
+          </span>
+        ))}
+      </div>
+      <p className="mt-1 text-[8pt]">{t.legendNote}</p>
     </div>,
     document.body,
   );

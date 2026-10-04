@@ -2,11 +2,13 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
-import { getDictionary, rich, type Locale } from "@/i18n";
+import { ButtonLink } from "@/components/ui/Button";
+import { getDictionary, href, rich, type Locale } from "@/i18n";
 
 /** « Conçu pour les garderies » — la réalité quotidienne d'une direction. */
 export function Situations({ locale }: { locale: Locale }) {
-  const t = getDictionary(locale).home.situations;
+  const d = getDictionary(locale);
+  const t = d.home.situations;
   return (
     <Section tone="cream-deep" labelledBy="situations-title">
       <Container>
@@ -41,6 +43,11 @@ export function Situations({ locale }: { locale: Locale }) {
               <span aria-hidden="true" className="h-px flex-1 bg-charcoal/15" />
               <p className="accent-serif text-[clamp(2rem,1.5rem+2vw,3.2rem)] text-olive">{t.closing}</p>
             </Reveal>
+            <div className="mt-8 flex justify-end">
+              <ButtonLink href={href("quote", locale)} arrow>
+                {d.nav.quote}
+              </ButtonLink>
+            </div>
           </div>
         </div>
       </Container>

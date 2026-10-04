@@ -190,4 +190,10 @@
     display: block !important;
     width: 100%;
   }
+  /* Garde les couleurs d'allergènes à l'impression */
+  #menu-print,
+  #menu-print * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 }

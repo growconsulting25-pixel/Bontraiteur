@@ -65,9 +65,9 @@ export const media = {
     kind: "nourriture",
   },
   formulaReady: {
-    alt: { fr: "Repas individuels variés en contenants, prêts à réchauffer", en: "A variety of individual meals in containers, ready to reheat" },
+    alt: { fr: "Portions individuelles de pâtes sauce bolognaise en contenants", en: "Individual portions of pasta with Bolognese sauce in containers" },
     brief: "Portions individuelles scellées, étiquetées",
-    src: "/images/pret-a-manger-portions.jpg",
+    src: "/images/pret-a-manger-pates.jpg",
     tone: "saffron",
     kind: "nourriture",
   },

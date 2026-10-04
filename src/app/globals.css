@@ -178,17 +178,16 @@
     size: landscape;
     margin: 12mm;
   }
-  /* Seulement sur les pages qui contiennent un menu imprimable */
-  body:has(#menu-print) * {
-    visibility: hidden;
+  /* Seulement sur les pages qui contiennent un menu imprimable :
+     la feuille est un enfant direct de <body>, tout le reste est retiré de la mise en page. */
+  body:has(> #menu-print) > *:not(#menu-print) {
+    display: none !important;
   }
-  #menu-print,
-  #menu-print * {
-    visibility: visible;
+  body:has(> #menu-print) {
+    background: #fff !important;
   }
   #menu-print {
-    position: absolute;
-    inset: 0 auto auto 0;
+    display: block !important;
     width: 100%;
   }
 }

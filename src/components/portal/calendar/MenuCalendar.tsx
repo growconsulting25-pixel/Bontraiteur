@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 import { AlertTriangle, Check, ChevronLeft, ChevronRight, Printer, RotateCcw, Search, X, Hand } from "lucide-react";
 import { confirmMenu, setMenuSlot, setWatchedAllergens } from "@/lib/actions/portal";
 import type { Dictionary } from "@/i18n/dictionaries/fr";
@@ -1019,7 +1020,11 @@ function PrintSheet({
   shortDate: (d: string) => string;
 }) {
   const name = (id: string | null | undefined) => (id ? (mealById.get(id)?.name ?? "") : "");
-  return (
+  // Rendue directement dans <body> : à l'impression, seule cette feuille reste affichée.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+  return createPortal(
     <div id="menu-print" className="hidden print:block">
       <p className="mb-4 font-display text-2xl font-extrabold">{title}</p>
       {weeks.map((w, wi) => (
@@ -1049,6 +1054,7 @@ function PrintSheet({
         </table>
       ))}
       <p className="text-[8pt]">{t.legendNote}</p>
-    </div>
+    </div>,
+    document.body,
   );
 }

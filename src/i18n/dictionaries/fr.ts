@@ -123,7 +123,7 @@ const fr = {
   },
 
   contact: {
-    hours: "Lundi au vendredi, 7 h à 16 h [À confirmer]",
+    hours: "Lundi au vendredi, 5 h à 17 h",
     serviceArea: "Grand Montréal et environs [À confirmer]",
   },
 
@@ -327,22 +327,25 @@ const fr = {
   /** PLACEHOLDERS — à remplacer par de vrais témoignages autorisés. */
   testimonials: [
     {
-      id: "placeholder-1",
-      quote: "[Exemple] Avant, je passais du temps chaque semaine à gérer les repas. Maintenant, je confirme le menu et c'est réglé.",
-      author: "Nom de la directrice",
-      role: "Directrice, CPE (à confirmer)",
+      id: "marie-pier-souligny",
+      quote: "Nous sommes tellement heureux d'avoir choisi Bon Traiteur pour nos services de restauration pour enfants. Merci Bon Traiteur pour votre excellent travail.",
+      author: "Marie-Pier Souligny",
+      role: "CPE Joyeux Enfants",
+      photo: "/images/avis/marie-pier-souligny.webp",
     },
     {
-      id: "placeholder-2",
-      quote: "[Exemple] Les enfants mangent bien et quand on a un imprévu, l'équipe trouve toujours une solution.",
-      author: "Nom de la responsable",
-      role: "Responsable alimentaire, garderie (à confirmer)",
+      id: "isabelle-sauve",
+      quote: "Nous avons essayé plusieurs traiteurs avant de découvrir Bon Traiteur et c'est définitivement le meilleur choix pour nos besoins en nourriture pour enfants.",
+      author: "Isabelle Sauvé",
+      role: "Garderie Les petits explorateurs",
+      photo: "/images/avis/isabelle-sauve.webp",
     },
     {
-      id: "placeholder-3",
-      quote: "[Exemple] On peut changer un repas sans échanger dix courriels. C'est exactement ce dont on avait besoin.",
-      author: "Nom de l'adjointe",
-      role: "Adjointe administrative, service de garde (à confirmer)",
+      id: "pierre-bergeron",
+      quote: "Nous avons été agréablement surpris par la qualité des plats proposés par Bon Traiteur pour notre garderie. Nous sommes très satisfaits du service offert par leur équipe.",
+      author: "Pierre Bergeron",
+      role: "Garderie Les petits génies",
+      photo: "/images/avis/pierre-bergeron.webp",
     },
   ],
 

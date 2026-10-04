@@ -4,11 +4,13 @@ export function TestimonialCard({
   quote,
   author,
   role,
+  photo,
   placeholderBadge,
 }: {
   quote: string;
   author: string;
   role: string;
+  photo?: string;
   /** Affiché tant que le témoignage est un exemple à remplacer. */
   placeholderBadge?: string;
 }) {
@@ -26,7 +28,12 @@ export function TestimonialCard({
         <p>{quote}</p>
       </blockquote>
       <figcaption className="mt-8 flex items-center gap-3 border-t border-line pt-5">
-        <span aria-hidden="true" className="size-11 shrink-0 rounded-full bg-cream-deep ring-2 ring-saffron" />
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element -- petite photo de profil
+          <img src={photo} alt="" width={56} height={56} loading="lazy" className="size-14 shrink-0 rounded-full object-cover ring-2 ring-saffron" />
+        ) : (
+          <span aria-hidden="true" className="size-14 shrink-0 rounded-full bg-cream-deep ring-2 ring-saffron" />
+        )}
         <span>
           <span className="block font-semibold">{author}</span>
           <span className="block text-sm text-ink-soft">{role}</span>

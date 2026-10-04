@@ -1,4 +1,4 @@
-import { Phone, Mail, Clock, MapPin } from "lucide-react";
+import { Phone, Mail, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/sections/PageHero";
@@ -15,7 +15,7 @@ export function ContactView({ locale }: { locale: Locale }) {
       <PageHero eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
       <Container className="pb-section">
         <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
-          <ul className="grid gap-4 sm:grid-cols-2">
+          <ul className="grid content-start gap-4 sm:grid-cols-2">
             <li className="rounded-[var(--radius-xl)] bg-paper p-7 ring-1 ring-line">
               <Phone aria-hidden="true" className="size-6 text-coral-ink" />
               <p className="eyebrow mt-6 text-ink-soft">{t.phones}</p>
@@ -32,15 +32,10 @@ export function ContactView({ locale }: { locale: Locale }) {
                 {site.contact.email}
               </a>
             </li>
-            <li className="rounded-[var(--radius-xl)] bg-paper p-7 ring-1 ring-line">
+            <li className="rounded-[var(--radius-xl)] bg-paper p-7 ring-1 ring-line sm:col-span-2">
               <Clock aria-hidden="true" className="size-6 text-coral-ink" />
               <p className="eyebrow mt-6 text-ink-soft">{t.hours}</p>
               <p className="mt-2 font-display text-xl font-bold">{d.contact.hours}</p>
-            </li>
-            <li className="rounded-[var(--radius-xl)] bg-paper p-7 ring-1 ring-line">
-              <MapPin aria-hidden="true" className="size-6 text-coral-ink" />
-              <p className="eyebrow mt-6 text-ink-soft">{t.area}</p>
-              <p className="mt-2 font-display text-xl font-bold">{d.contact.serviceArea}</p>
             </li>
           </ul>
           <div className="grid gap-6">

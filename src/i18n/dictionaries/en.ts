@@ -121,7 +121,7 @@ const en: Dictionary = {
   },
 
   contact: {
-    hours: "Monday to Friday, 7 a.m. to 4 p.m. [To be confirmed]",
+    hours: "Monday to Friday, 5 a.m. to 5 p.m.",
     serviceArea: "Greater Montreal area [To be confirmed]",
   },
 
@@ -324,22 +324,25 @@ const en: Dictionary = {
 
   testimonials: [
     {
-      id: "placeholder-1",
-      quote: "[Example] I used to spend time every week managing meals. Now I confirm the menu and that's it.",
-      author: "Director's name",
-      role: "Director, CPE (to be confirmed)",
+      id: "marie-pier-souligny",
+      quote: "We're so happy we chose Bon Traiteur for our children's meal service. Thank you, Bon Traiteur, for your excellent work.",
+      author: "Marie-Pier Souligny",
+      role: "CPE Joyeux Enfants",
+      photo: "/images/avis/marie-pier-souligny.webp",
     },
     {
-      id: "placeholder-2",
-      quote: "[Example] The kids eat well, and when something comes up, the team always finds a solution.",
-      author: "Coordinator's name",
-      role: "Food coordinator, daycare (to be confirmed)",
+      id: "isabelle-sauve",
+      quote: "We tried several caterers before discovering Bon Traiteur, and it's definitely the best choice for our children's food needs.",
+      author: "Isabelle Sauvé",
+      role: "Garderie Les petits explorateurs",
+      photo: "/images/avis/isabelle-sauve.webp",
     },
     {
-      id: "placeholder-3",
-      quote: "[Example] We can change a meal without trading ten emails. That's exactly what we needed.",
-      author: "Assistant's name",
-      role: "Administrative assistant, childcare service (to be confirmed)",
+      id: "pierre-bergeron",
+      quote: "We were pleasantly surprised by the quality of the dishes Bon Traiteur provides for our daycare. We're very satisfied with the service offered by their team.",
+      author: "Pierre Bergeron",
+      role: "Garderie Les petits génies",
+      photo: "/images/avis/pierre-bergeron.webp",
     },
   ],
 

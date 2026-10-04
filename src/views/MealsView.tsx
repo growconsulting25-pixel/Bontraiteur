@@ -31,7 +31,7 @@ export function MealsView({ locale }: { locale: Locale }) {
       <Section labelledBy="principles-title">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
-            <Photo slot="aboutKitchen" locale={locale} className="aspect-[4/3] rounded-[var(--radius-xl)]" />
+            <Photo slot="kidsSnack" locale={locale} showBrief={false} className="aspect-[4/3] rounded-[var(--radius-xl)]" sizes="(min-width: 1024px) 50vw, 100vw" />
             <div>
               <SectionHeading id="principles-title" eyebrow={t.approachEyebrow} title={t.approachTitle} />
               <dl className="mt-10 grid gap-6">

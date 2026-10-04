@@ -105,6 +105,14 @@ export const media = {
     tone: "cream",
     kind: "cuisine",
   },
+  kidsSnack: {
+    alt: { fr: "Une fillette savoure sa collation avec ses amis à la garderie", en: "A little girl enjoying her snack with friends at daycare" },
+    brief: "Enfants qui mangent à table, garderie",
+    src: "/images/enfants-collation.jpg",
+    focus: "35% 45%",
+    tone: "coral",
+    kind: "enfants",
+  },
   delivery: {
     alt: {
       fr: "Le camion réfrigéré Bon Traiteur stationné devant une garderie",

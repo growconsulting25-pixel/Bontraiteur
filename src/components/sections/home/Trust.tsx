@@ -3,7 +3,8 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
-import { getDictionary, type Locale } from "@/i18n";
+import { ButtonLink } from "@/components/ui/Button";
+import { getDictionary, href, type Locale } from "@/i18n";
 
 /** Équipe & confiance — photos de l'équipe et de la cuisine, engagements concrets. */
 export function Trust({ locale }: { locale: Locale }) {
@@ -18,7 +19,12 @@ export function Trust({ locale }: { locale: Locale }) {
         </div>
 
         <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-          <SectionHeading id="trust-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+          <div>
+            <SectionHeading id="trust-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+            <ButtonLink href={href("quote", locale)} arrow className="mt-8">
+              {d.nav.quote}
+            </ButtonLink>
+          </div>
           <dl className="grid gap-x-10 sm:grid-cols-2">
             {d.commitments.map((c, i) => (
               <Reveal key={c.title} delay={(i % 2) * 80} className="border-t border-line py-6">

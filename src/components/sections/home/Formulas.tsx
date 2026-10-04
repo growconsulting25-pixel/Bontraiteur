@@ -4,7 +4,8 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { FormatCard } from "@/components/cards/FormatCard";
-import { getDictionary, type Locale } from "@/i18n";
+import { ButtonLink } from "@/components/ui/Button";
+import { getDictionary, href, type Locale } from "@/i18n";
 import { cn } from "@/lib/cn";
 
 /** Nos formules : 3 formats de repas × 3 façons de commander. */
@@ -39,6 +40,13 @@ export function Formulas({ locale, showHeading = true }: { locale: Locale; showH
               <p className={cn("mt-3", mode.highlight ? "text-charcoal/85" : "text-ink-soft")}>{mode.summary}</p>
             </Reveal>
           ))}
+        </div>
+
+        <div className="mt-10 flex flex-col gap-4 rounded-[var(--radius-xl)] bg-cream-deep p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <p className="max-w-xl font-display text-xl font-bold">{t.ctaNote}</p>
+          <ButtonLink href={href("quote", locale)} arrow className="shrink-0 self-start sm:self-auto">
+            {d.nav.quote}
+          </ButtonLink>
         </div>
       </Container>
     </Section>

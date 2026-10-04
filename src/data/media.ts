@@ -72,9 +72,9 @@ export const media = {
     kind: "nourriture",
   },
   formulaFrozen: {
-    alt: { fr: "Lasagne, pâtes gratinées et pâté au poulet congelés en grands contenants", en: "Frozen lasagna, baked pasta and chicken pie in large containers" },
+    alt: { fr: "Plats congelés en contenants : poulet, riz et légumes, pâtes gratinées, légumes en sauce", en: "Frozen meals in containers: chicken, rice and vegetables, baked pasta, vegetables in sauce" },
     brief: "Contenants congelés, étiquettes lisibles, rangement propre",
-    src: "/images/plats-familiaux-congeles.webp",
+    src: "/images/plats-congeles-contenants.webp",
     tone: "olive",
     kind: "nourriture",
   },

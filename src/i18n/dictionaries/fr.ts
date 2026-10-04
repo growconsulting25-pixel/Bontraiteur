@@ -190,6 +190,7 @@ const fr = {
       eyebrow: "Nos formules",
       title: "Choisissez ce qui fonctionne *pour votre garderie.*",
       lead: "Trois formats de repas, trois façons de commander. Vous pouvez les combiner. Aucun abonnement obligatoire.",
+      ctaNote: "Chaque garderie est différente. On vous propose une formule adaptée, sans engagement.",
       modesTitle: "Et vous commandez comme ça vous arrange.",
     },
     simplify: {

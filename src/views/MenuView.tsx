@@ -9,7 +9,8 @@ import { SampleWeeks } from "@/components/menu/SampleWeeks";
 import { mealCardLabels } from "@/components/cards/MealCard";
 import { getMeals } from "@/lib/menu-repository";
 import { sampleWeeks } from "@/lib/menu-sample";
-import { getDictionary, type Locale } from "@/i18n";
+import { ButtonLink } from "@/components/ui/Button";
+import { getDictionary, href, type Locale } from "@/i18n";
 
 export async function MenuView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -52,7 +53,12 @@ export async function MenuView({ locale }: { locale: Locale }) {
           <div className="mt-10">
             <SampleWeeks weeks={sampleWeeks(meals)} locale={locale} t={t} cal={d.calendar} />
           </div>
-          <p className="mt-6 max-w-3xl text-sm text-ink-soft">{t.sampleNote}</p>
+          <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-3xl text-sm text-ink-soft">{t.sampleNote}</p>
+            <ButtonLink href={href("quote", locale)} arrow className="shrink-0 self-start sm:self-auto">
+              {d.nav.quote}
+            </ButtonLink>
+          </div>
         </Container>
       </Section>
 

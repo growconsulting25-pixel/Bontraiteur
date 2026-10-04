@@ -3,7 +3,6 @@ import { Situations } from "@/components/sections/home/Situations";
 import { Formulas } from "@/components/sections/home/Formulas";
 import { SimplifyDaily } from "@/components/sections/home/SimplifyDaily";
 import { MenuTeaser } from "@/components/sections/home/MenuTeaser";
-import { Trust } from "@/components/sections/home/Trust";
 import { Testimonials } from "@/components/sections/home/Testimonials";
 import { CTASection } from "@/components/sections/CTASection";
 import type { Locale } from "@/i18n";
@@ -16,7 +15,6 @@ export function HomeView({ locale }: { locale: Locale }) {
       <Situations locale={locale} />
       <SimplifyDaily locale={locale} learnMore />
       <Formulas locale={locale} />
-      <Trust locale={locale} />
       <Testimonials locale={locale} />
       <CTASection locale={locale} />
     </>

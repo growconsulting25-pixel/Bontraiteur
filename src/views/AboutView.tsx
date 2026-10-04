@@ -6,6 +6,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Trust } from "@/components/sections/home/Trust";
 import { CTASection } from "@/components/sections/CTASection";
 import { getDictionary, type Locale } from "@/i18n";
+import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 
 export function AboutView({ locale }: { locale: Locale }) {
   const t = getDictionary(locale).aboutPage;
@@ -37,6 +38,7 @@ export function AboutView({ locale }: { locale: Locale }) {
 
       <Trust locale={locale} />
       <CTASection locale={locale} />
+      <JsonLd data={breadcrumbSchema("about", locale)} />
     </>
   );
 }

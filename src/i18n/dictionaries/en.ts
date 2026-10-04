@@ -9,51 +9,52 @@ import type { Dictionary } from "./fr";
 
 const en: Dictionary = {
   meta: {
-    siteTitle: "Bon Traiteur — Meals for CPEs and daycares in Quebec",
-    siteDescription:
-      "Meal service for CPEs, daycares and childcare services in Quebec. Flexible monthly menus, hot, ready-to-eat or frozen meals, regular, one-time or urgent deliveries.",
+    siteTitle: "Bon Traiteur | Caterer for Daycares and CPEs in Montreal",
+    siteDescription: "Bon Traiteur prepares and delivers meals for CPEs, daycares and childcare services in the Greater Montreal area: flexible monthly menu, hot, ready-to-eat or frozen meals.",
     home: {
-      title: "Bon Traiteur — Meals for CPEs, daycares and childcare services in Quebec",
+      title: "Bon Traiteur | Caterer for Daycares and CPEs in Montreal",
       description:
-        "Meals kids love, a service that makes your days easier. Flexible monthly menus, hot, ready-to-eat or frozen meals, regular or urgent delivery.",
+        "Bon Traiteur, a caterer for CPEs and daycares in the Greater Montreal area for 15 years: flexible monthly menu, hot, ready-to-eat or frozen meals, delivered.",
     },
     menu: {
-      title: "Full menu for CPEs and daycares",
+      title: "Daycare and CPE Menu",
       description:
-        "Browse the Bon Traiteur menu: poultry, beef, pasta, fish, vegetarian dishes, desserts and snacks. A flexible monthly menu for Quebec childcare centres.",
+        "Bon Traiteur's menu for CPEs and daycares: 40 dishes, desserts and snacks, declared allergens, a 2-week sample and the full menu as a PDF.",
     },
     meals: {
-      title: "Our meals and options for daycares",
+      title: "Hot and Frozen Meals for Daycares",
       description:
-        "Hot, ready-to-eat or frozen meals for CPEs and daycares. Regular delivery, one-time orders or urgent service based on availability. No subscription required.",
+        "Meals for daycares and CPEs: hot, ready-to-eat or frozen. Regular, occasional or urgent delivery within 48 h in the Greater Montreal area.",
     },
     daycares: {
-      title: "Meal service for daycares and CPEs",
+      title: "Meal Service for CPEs and Daycares",
       description:
-        "A meal service built for CPEs, subsidized and private daycares, and childcare services in Quebec. Flexible monthly menu, adjustable quantities, fast backup.",
+        "Meal service for CPEs, subsidized and private daycares and childcare services in Montreal: flexible menu, adjustable quantities, backup when needed.",
     },
     howItWorks: {
-      title: "How it works",
+      title: "How Our Meal Service Works",
       description:
-        "Quote, a monthly menu you keep or change, confirmation and delivery: here's how Bon Traiteur simplifies meals for your CPE or daycare.",
+        "Quote, monthly menu to keep or change, confirmation and delivery: how Bon Traiteur simplifies meals for your CPE or daycare, step by step.",
     },
     about: {
-      title: "About us",
-      description: "For more than 15 years, Bon Traiteur has been preparing and delivering meals for CPEs, daycares and childcare services in Quebec.",
+      title: "About Bon Traiteur, Daycare Caterer",
+      description:
+        "Bon Traiteur has been preparing and delivering meals for CPEs, daycares and childcare services in the Greater Montreal area for over 15 years.",
     },
     faq: {
-      title: "Frequently asked questions",
+      title: "FAQ: Meals for Daycares and CPEs",
       description:
-        "Monthly menu, changes, urgent deliveries, allergies, quotes: answers to the questions CPEs and daycares ask about Bon Traiteur.",
+        "Monthly menu, changes, urgent delivery, allergies, pricing and quotes: Bon Traiteur's answers to questions from CPEs and daycares.",
     },
     contact: {
-      title: "Contact us",
-      description: "Get in touch with the Bon Traiteur team about our meals and deliveries for CPEs and daycares.",
+      title: "Contact Bon Traiteur, Daycare Caterer",
+      description:
+        "Contact Bon Traiteur: +1 438-938-3035 or +1 438-470-2045, Monday to Friday, 5 a.m. to 5 p.m. Caterer for CPEs and daycares, Greater Montreal.",
     },
     quote: {
-      title: "Request a quote",
+      title: "Meal Quote for Daycares and CPEs",
       description:
-        "Get a quote for your CPE, daycare or childcare service's meals. A plan tailored to your number of children, frequency and needs.",
+        "Request a free, no-commitment quote from Bon Traiteur for your CPE, daycare or childcare service's meals. Quick reply.",
     },
     login: {
       title: "Client portal login",
@@ -223,7 +224,7 @@ const en: Dictionary = {
 
   home: {
     hero: {
-      eyebrow: "For CPEs, daycares and childcare services",
+      eyebrow: "Bon Traiteur · Caterer for CPEs and daycares",
       titleLine1: "Meals kids love.",
       titleLine2: "A service that makes your days easier.",
       lead: "Flexible menus and a delivery service designed for childcare centres. Hot, ready-to-eat or frozen meals. Regular, one-time or urgent orders.",
@@ -410,7 +411,7 @@ const en: Dictionary = {
   },
 
   menu: {
-    eyebrow: "Full menu",
+    eyebrow: "Daycare and CPE menu",
     title: "The menu. *And all your alternatives.*",
     lead: "Every month, we suggest a menu based on these dishes. Keep it, or replace any meal with an alternative from this list.",
     monthlyTitle: "Monthly rotation",
@@ -470,7 +471,7 @@ const en: Dictionary = {
   },
 
   mealsPage: {
-    eyebrow: "Our meals",
+    eyebrow: "Meals for daycares",
     title: "Simple, good meals, *suited to your daycare.*",
     lead: "Choose the format and frequency that work for you. You can combine them and change them along the way.",
     approachEyebrow: "Our approach",
@@ -483,7 +484,7 @@ const en: Dictionary = {
   },
 
   daycaresPage: {
-    eyebrow: "For daycares and CPEs",
+    eyebrow: "Meal service for CPEs and daycares",
     title: "The meal service that *adapts to your daycare.*",
     lead: "CPEs, subsidized or private daycares, childcare services: you have one thing in common. Children to feed every day, and already far too much to manage.",
     ctaHow: "How it works",
@@ -500,7 +501,7 @@ const en: Dictionary = {
   },
 
   howPage: {
-    eyebrow: "How it works",
+    eyebrow: "How our service works",
     title: "Four steps. *Then almost nothing to manage.*",
     lead: "Once your service is set up, the only thing to do each month is confirm your menu.",
     stepsTitle: "The steps",
@@ -522,7 +523,7 @@ const en: Dictionary = {
   },
 
   aboutPage: {
-    eyebrow: "About",
+    eyebrow: "About Bon Traiteur",
     title: "More than 15 years feeding *children in daycare.*",
     lead: "Bon Traiteur is a kitchen, a delivery team and people who understand the reality of childcare.",
     storyEyebrow: "Our story",
@@ -536,11 +537,12 @@ const en: Dictionary = {
   },
 
   faqPage: {
-    eyebrow: "FAQ",
+    eyebrow: "FAQ · Meals for daycares",
     title: "Your questions. *Our answers, simply.*",
     lead: "Can't find your answer? Call or write to us: a real person will reply.",
     contactCta: "Contact us",
     groups: {
+      general: "Bon Traiteur",
       menu: "The menu",
       commandes: "Orders and flexibility",
       livraison: "Delivery",
@@ -548,6 +550,8 @@ const en: Dictionary = {
       facturation: "Quotes and billing",
     },
     items: [
+      { group: "general", question: "What is Bon Traiteur?", answer: "Bon Traiteur is a caterer in the Greater Montreal area that prepares and delivers meals for CPEs, subsidized and private daycares and childcare services, for over 15 years. The menu changes every month and can be adjusted by the daycare." },
+      { group: "general", question: "What are Bon Traiteur's hours?", answer: "Our team answers Monday to Friday, 5 a.m. to 5 p.m., at +1 438-938-3035 or +1 438-470-2045." },
       { group: "menu", question: "How does the monthly menu work?", answer: "Every month, we prepare a menu from our rotation of dishes. You can keep it as is or replace some meals with alternatives from our full menu." },
       { group: "menu", question: "Until when can I change my menu?", answer: "Usually up to 2 weeks before the period in question. A later change is sometimes possible: get in touch and we'll see what can be done." },
       { group: "menu", question: "What is the occasional rotation?", answer: "In addition to the monthly cycle, more dishes are available in an occasional rotation. You can add them to your menu by letting us know at least 2 weeks in advance." },
@@ -564,7 +568,7 @@ const en: Dictionary = {
   },
 
   contactPage: {
-    eyebrow: "Contact",
+    eyebrow: "Contact Bon Traiteur",
     title: "A question? *Let's talk.*",
     lead: "A real person will answer. For a new daycare, a quote request is the fastest way to get started.",
     phones: "Phone",
@@ -579,7 +583,7 @@ const en: Dictionary = {
   },
 
   quotePage: {
-    eyebrow: "Quote",
+    eyebrow: "Daycare meal quote",
     title: "Tell us about *your daycare.*",
     lead: "A few questions so we can suggest a plan tailored to your number of children, frequency and needs. About 2 minutes.",
     nextTitle: "What's next?",

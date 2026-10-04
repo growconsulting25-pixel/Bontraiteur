@@ -12,12 +12,15 @@ export function Hero({ locale }: { locale: Locale }) {
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-16">
           <div>
-            <p className="eyebrow flex items-center gap-3 text-coral-ink">
-              <span aria-hidden="true" className="inline-block h-px w-8 bg-current" />
-              {t.eyebrow}
-            </p>
-            <h1 id="hero-title" className="mt-6 text-[clamp(2.4rem,1.5rem+3.6vw,4.6rem)] font-extrabold">
-              {t.titleLine1} <span className="accent-serif block pt-1 text-[1.04em] text-olive">{t.titleLine2}</span>
+            {/* « Bon Traiteur · Traiteur pour CPE et garderies » fait partie du H1 (marque + mot-clé). */}
+            <h1 id="hero-title">
+              <span className="eyebrow flex items-center gap-3 text-coral-ink">
+                <span aria-hidden="true" className="inline-block h-px w-8 bg-current" />
+                {t.eyebrow}
+              </span>
+              <span className="mt-6 block text-[clamp(2.4rem,1.5rem+3.6vw,4.6rem)] font-extrabold">
+                {t.titleLine1} <span className="accent-serif block pt-1 text-[1.04em] text-olive">{t.titleLine2}</span>
+              </span>
             </h1>
             <p className="text-lead mt-7 max-w-xl text-ink-soft">{t.lead}</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">

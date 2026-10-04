@@ -8,7 +8,7 @@ import { Formulas } from "@/components/sections/home/Formulas";
 import { MenuTeaser } from "@/components/sections/home/MenuTeaser";
 import { CTASection } from "@/components/sections/CTASection";
 import { getDictionary, href, type Locale } from "@/i18n";
-import { JsonLd, serviceSchema } from "@/lib/seo";
+import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/seo";
 
 export function MealsView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -50,6 +50,7 @@ export function MealsView({ locale }: { locale: Locale }) {
       <MenuTeaser locale={locale} />
       <CTASection locale={locale} />
       <JsonLd data={serviceSchema("meals", locale)} />
+      <JsonLd data={breadcrumbSchema("meals", locale)} />
     </>
   );
 }

@@ -10,7 +10,7 @@ import { SimplifyDaily } from "@/components/sections/home/SimplifyDaily";
 import { Testimonials } from "@/components/sections/home/Testimonials";
 import { CTASection } from "@/components/sections/CTASection";
 import { getDictionary, href, type Locale } from "@/i18n";
-import { JsonLd, serviceSchema } from "@/lib/seo";
+import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/seo";
 
 export function DaycaresView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -66,6 +66,7 @@ export function DaycaresView({ locale }: { locale: Locale }) {
       <Testimonials locale={locale} />
       <CTASection locale={locale} />
       <JsonLd data={serviceSchema("daycares", locale)} />
+      <JsonLd data={breadcrumbSchema("daycares", locale)} />
     </>
   );
 }

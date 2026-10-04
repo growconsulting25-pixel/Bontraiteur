@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/sections/PageHero";
 import { CTASection } from "@/components/sections/CTASection";
 import { getDictionary, href, type Locale } from "@/i18n";
-import { JsonLd, faqSchema } from "@/lib/seo";
+import { JsonLd, faqSchema, breadcrumbSchema } from "@/lib/seo";
 
 export function FaqView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -52,6 +52,7 @@ export function FaqView({ locale }: { locale: Locale }) {
 
       <CTASection locale={locale} />
       <JsonLd data={faqSchema(t.items)} />
+      <JsonLd data={breadcrumbSchema("faq", locale)} />
     </>
   );
 }

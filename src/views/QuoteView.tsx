@@ -3,6 +3,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { site } from "@/data/site";
 import { getDictionary, type Locale } from "@/i18n";
+import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 
 export function QuoteView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -38,6 +39,7 @@ export function QuoteView({ locale }: { locale: Locale }) {
           </aside>
         </div>
       </Container>
+      <JsonLd data={breadcrumbSchema("quote", locale)} />
     </>
   );
 }

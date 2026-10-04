@@ -9,8 +9,10 @@ import { SampleWeeks } from "@/components/menu/SampleWeeks";
 import { mealCardLabels } from "@/components/cards/MealCard";
 import { getMeals } from "@/lib/menu-repository";
 import { sampleWeeks } from "@/lib/menu-sample";
+import { menuFilterOrder } from "@/data/menu";
 import { ButtonLink } from "@/components/ui/Button";
 import { getDictionary, href, type Locale } from "@/i18n";
+import { JsonLd, breadcrumbSchema, menuSchema } from "@/lib/seo";
 
 export async function MenuView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -82,6 +84,8 @@ export async function MenuView({ locale }: { locale: Locale }) {
       </Section>
 
       <CTASection locale={locale} title={t.ctaTitle} />
+      <JsonLd data={breadcrumbSchema("menu", locale)} />
+      <JsonLd data={menuSchema(meals, locale, menuFilterOrder)} />
     </>
   );
 }

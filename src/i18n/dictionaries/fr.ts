@@ -11,51 +11,52 @@
 
 const fr = {
   meta: {
-    siteTitle: "Bon Traiteur — Repas pour CPE et garderies au Québec",
-    siteDescription:
-      "Service de repas pour CPE, garderies et services de garde au Québec. Menus mensuels flexibles, repas chauds, prêts-à-manger ou congelés, livraisons régulières, ponctuelles ou urgentes.",
+    siteTitle: "Bon Traiteur | Traiteur pour CPE et garderies à Montréal",
+    siteDescription: "Bon Traiteur prépare et livre des repas pour les CPE, garderies et services de garde de la grande région de Montréal : menu mensuel flexible, repas chauds, prêts-à-manger ou congelés.",
     home: {
-      title: "Bon Traiteur — Repas pour CPE, garderies et services de garde au Québec",
+      title: "Bon Traiteur | Traiteur pour CPE et garderies à Montréal",
       description:
-        "Des repas qui plaisent aux enfants, un service qui simplifie vos journées. Menus mensuels flexibles, repas chauds, prêts-à-manger ou congelés, livraison régulière ou urgente.",
+        "Bon Traiteur, traiteur pour CPE et garderies de la grande région de Montréal depuis 15 ans : menu mensuel flexible, repas chauds, prêts-à-manger ou congelés.",
     },
     menu: {
-      title: "Menu complet pour CPE et garderies",
+      title: "Menu pour garderies et CPE",
       description:
-        "Consultez le menu Bon Traiteur : volaille, bœuf, pâtes, poisson, plats végétariens, desserts et collations. Menu mensuel flexible pour les milieux de garde du Québec.",
+        "Le menu Bon Traiteur pour CPE et garderies : 40 plats, desserts et collations, allergènes déclarés, exemple de 2 semaines et menu complet en PDF.",
     },
     meals: {
-      title: "Nos repas et formules pour garderies",
+      title: "Repas chauds et congelés pour garderies",
       description:
-        "Repas chauds, prêts-à-manger ou congelés pour CPE et garderies. Livraison régulière, commande ponctuelle ou service urgent selon disponibilité. Sans abonnement obligatoire.",
+        "Repas pour garderies et CPE : chauds, prêts-à-manger ou congelés. Livraison régulière, ponctuelle ou urgente sous 48 h dans la grande région de Montréal.",
     },
     daycares: {
-      title: "Service de repas pour garderies et CPE",
+      title: "Service de repas pour CPE et garderies",
       description:
-        "Service de repas conçu pour les CPE, garderies subventionnées, garderies privées et services de garde du Québec. Menu mensuel flexible, quantités ajustables, dépannage rapide.",
+        "Service de repas pour CPE, garderies subventionnées, garderies privées et services de garde à Montréal : menu flexible, quantités ajustables, dépannage.",
     },
     howItWorks: {
-      title: "Comment ça fonctionne",
+      title: "Comment fonctionne notre service de repas",
       description:
-        "Soumission, menu mensuel à garder ou modifier, confirmation et livraison : voici comment Bon Traiteur simplifie les repas de votre CPE ou garderie.",
+        "Soumission, menu du mois à garder ou modifier, confirmation et livraison : comment Bon Traiteur simplifie les repas de votre CPE ou garderie, étape par étape.",
     },
     about: {
-      title: "À propos",
-      description: "Depuis plus de 15 ans, Bon Traiteur prépare et livre des repas pour les CPE, garderies et services de garde du Québec.",
+      title: "À propos de Bon Traiteur, traiteur pour garderies",
+      description:
+        "Bon Traiteur prépare et livre des repas pour les CPE, garderies et services de garde de la grande région de Montréal depuis plus de 15 ans.",
     },
     faq: {
-      title: "Questions fréquentes",
+      title: "FAQ : repas pour garderies et CPE",
       description:
-        "Menu mensuel, modifications, livraisons urgentes, allergies, soumission : les réponses aux questions des CPE et garderies sur le service Bon Traiteur.",
+        "Menu mensuel, modifications, livraison urgente, allergies, prix et soumission : les réponses de Bon Traiteur aux questions des CPE et garderies.",
     },
     contact: {
-      title: "Nous joindre",
-      description: "Communiquez avec l'équipe Bon Traiteur pour toute question sur nos repas et nos livraisons pour CPE et garderies.",
+      title: "Joindre Bon Traiteur, traiteur pour garderies",
+      description:
+        "Joindre Bon Traiteur : +1 438-938-3035 ou +1 438-470-2045, du lundi au vendredi de 5 h à 17 h. Traiteur pour CPE et garderies, grande région de Montréal.",
     },
     quote: {
-      title: "Demander une soumission",
+      title: "Soumission repas pour garderie et CPE",
       description:
-        "Obtenez une soumission pour les repas de votre CPE, garderie ou service de garde. Formule adaptée à votre nombre d'enfants, votre fréquence et vos besoins.",
+        "Demandez une soumission gratuite et sans engagement à Bon Traiteur pour les repas de votre CPE, garderie ou service de garde. Réponse rapide.",
     },
     login: {
       title: "Connexion au portail client",
@@ -225,7 +226,7 @@ const fr = {
 
   home: {
     hero: {
-      eyebrow: "Pour les CPE, garderies et services de garde",
+      eyebrow: "Bon Traiteur · Traiteur pour CPE et garderies",
       titleLine1: "Des repas qui plaisent aux enfants.",
       titleLine2: "Un service qui simplifie vos journées.",
       lead: "Menus flexibles et service de livraison conçus pour les milieux de garde. Repas chauds, prêts-à-manger ou congelés. Commandes régulières, ponctuelles ou urgentes.",
@@ -413,7 +414,7 @@ const fr = {
   },
 
   menu: {
-    eyebrow: "Menu complet",
+    eyebrow: "Menu pour garderies et CPE",
     title: "Le menu. *Et toutes vos alternatives.*",
     lead: "Chaque mois, on vous propose un menu à partir de ces plats. Vous pouvez le garder, ou remplacer n'importe quel repas par une alternative de cette liste.",
     monthlyTitle: "Rotation mensuelle",
@@ -473,7 +474,7 @@ const fr = {
   },
 
   mealsPage: {
-    eyebrow: "Nos repas",
+    eyebrow: "Repas pour garderies",
     title: "Des repas simples, bons, *et adaptés à votre garderie.*",
     lead: "Choisissez le format et la fréquence qui fonctionnent pour vous. Vous pouvez les combiner et les changer en cours de route.",
     approachEyebrow: "Notre approche",
@@ -486,7 +487,7 @@ const fr = {
   },
 
   daycaresPage: {
-    eyebrow: "Pour les garderies et CPE",
+    eyebrow: "Service de repas pour CPE et garderies",
     title: "Le service de repas qui *s'adapte à votre garderie.*",
     lead: "CPE, garderies subventionnées ou privées, services de garde : vous avez un point en commun. Des enfants à nourrir tous les jours, et déjà beaucoup trop de choses à gérer.",
     ctaHow: "Comment ça fonctionne",
@@ -503,7 +504,7 @@ const fr = {
   },
 
   howPage: {
-    eyebrow: "Comment ça fonctionne",
+    eyebrow: "Comment fonctionne notre service",
     title: "Quatre étapes. *Puis, presque rien à gérer.*",
     lead: "Une fois votre service en place, la seule chose à faire chaque mois, c'est confirmer votre menu.",
     stepsTitle: "Les étapes",
@@ -525,7 +526,7 @@ const fr = {
   },
 
   aboutPage: {
-    eyebrow: "À propos",
+    eyebrow: "À propos de Bon Traiteur",
     title: "Plus de 15 ans à nourrir *des enfants en garderie.*",
     lead: "Bon Traiteur, c'est une cuisine, une équipe de livraison et des gens qui comprennent la réalité des milieux de garde.",
     storyEyebrow: "Notre histoire",
@@ -539,11 +540,12 @@ const fr = {
   },
 
   faqPage: {
-    eyebrow: "FAQ",
+    eyebrow: "FAQ · Repas pour garderies",
     title: "Vos questions. *Nos réponses, simplement.*",
     lead: "Vous ne trouvez pas votre réponse? Appelez-nous ou écrivez-nous : une vraie personne vous répondra.",
     contactCta: "Nous joindre",
     groups: {
+      general: "Bon Traiteur",
       menu: "Le menu",
       commandes: "Commandes et flexibilité",
       livraison: "Livraison",
@@ -551,6 +553,8 @@ const fr = {
       facturation: "Soumission et facturation",
     },
     items: [
+      { group: "general", question: "Qu'est-ce que Bon Traiteur?", answer: "Bon Traiteur est un traiteur de la grande région de Montréal qui prépare et livre des repas pour les CPE, les garderies subventionnées ou privées et les services de garde, depuis plus de 15 ans. Le menu change chaque mois et peut être modifié par la garderie." },
+      { group: "general", question: "Quelles sont les heures de Bon Traiteur?", answer: "Notre équipe répond du lundi au vendredi, de 5 h à 17 h, au +1 438-938-3035 ou au +1 438-470-2045." },
       { group: "menu", question: "Comment fonctionne le menu mensuel?", answer: "Chaque mois, nous préparons un menu à partir de notre rotation de plats. Vous pouvez le garder tel quel ou remplacer certains repas par des alternatives de notre menu complet." },
       { group: "menu", question: "Jusqu'à quand puis-je modifier mon menu?", answer: "Normalement jusqu'à 2 semaines avant la période concernée. Une modification plus tardive est parfois possible : communiquez avec nous et nous regarderons ce qui peut être fait." },
       { group: "menu", question: "Qu'est-ce que la rotation ponctuelle?", answer: "En plus du cycle mensuel, d'autres plats sont disponibles en rotation ponctuelle. Vous pouvez les intégrer à votre menu en nous en informant au moins 2 semaines à l'avance." },
@@ -567,7 +571,7 @@ const fr = {
   },
 
   contactPage: {
-    eyebrow: "Contact",
+    eyebrow: "Joindre Bon Traiteur",
     title: "Une question? *Parlons-en.*",
     lead: "Une vraie personne vous répond. Pour une nouvelle garderie, la demande de soumission est le chemin le plus rapide.",
     phones: "Téléphone",
@@ -582,7 +586,7 @@ const fr = {
   },
 
   quotePage: {
-    eyebrow: "Soumission",
+    eyebrow: "Soumission repas pour garderie",
     title: "Parlez-nous de *votre garderie.*",
     lead: "Quelques questions pour vous proposer une formule adaptée à votre nombre d'enfants, votre fréquence et vos besoins. Environ 2 minutes.",
     nextTitle: "Et ensuite?",

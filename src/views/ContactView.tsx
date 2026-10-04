@@ -5,6 +5,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { site } from "@/data/site";
 import { OpenAssistantButton } from "@/components/assistant/OpenAssistantButton";
 import { getDictionary, href, type Locale } from "@/i18n";
+import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 
 export function ContactView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -61,6 +62,7 @@ export function ContactView({ locale }: { locale: Locale }) {
           </div>
         </div>
       </Container>
+      <JsonLd data={breadcrumbSchema("contact", locale)} />
     </>
   );
 }

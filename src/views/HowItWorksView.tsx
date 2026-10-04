@@ -8,6 +8,7 @@ import { YourMenu } from "@/components/sections/home/YourMenu";
 import { SimplifyDaily } from "@/components/sections/home/SimplifyDaily";
 import { CTASection } from "@/components/sections/CTASection";
 import { getDictionary, type Locale } from "@/i18n";
+import { JsonLd, breadcrumbSchema, howToSchema } from "@/lib/seo";
 
 export function HowItWorksView({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
@@ -53,6 +54,8 @@ export function HowItWorksView({ locale }: { locale: Locale }) {
 
       <SimplifyDaily locale={locale} />
       <CTASection locale={locale} />
+      <JsonLd data={breadcrumbSchema("howItWorks", locale)} />
+      <JsonLd data={howToSchema(locale)} />
     </>
   );
 }

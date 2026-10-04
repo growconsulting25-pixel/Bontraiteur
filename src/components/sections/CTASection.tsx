@@ -9,7 +9,7 @@ import { getDictionary, href, rich, type Locale } from "@/i18n";
 export function CTASection({ locale, title, text }: { locale: Locale; title?: string; text?: string }) {
   const t = getDictionary(locale);
   return (
-    <section aria-labelledby="cta-final" className="py-section">
+    <section aria-labelledby="cta-final" className="pt-4 pb-section sm:pt-6">
       <Container>
         <Reveal className="grid overflow-hidden rounded-[var(--radius-2xl)] bg-olive text-cream lg:grid-cols-[1.15fr_1fr]">
           <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-16">

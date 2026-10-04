@@ -23,7 +23,7 @@ export async function MenuTeaser({ locale }: { locale: Locale }) {
   const labels = mealCardLabels(d);
 
   return (
-    <Section labelledBy="menu-teaser-title" className="pt-4! sm:pt-6!">
+    <Section labelledBy="menu-teaser-title" className="pt-4! pb-14! sm:pt-6! sm:pb-16!">
       <Container>
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <SectionHeading id="menu-teaser-title" eyebrow={t.eyebrow} title={t.title} lead={format(t.lead, { count: mainCount })} />

@@ -166,6 +166,7 @@ export function MenuCalendar({
 
   const changesCount = days.reduce((n, d) => n + Object.keys(d.originals).length, 0);
   const confirmed = menuStatus === "confirme" || menuStatus === "modifie";
+  const showConfirmBar = mode === "client" && editable && !confirmed && changesCount > 0;
 
   /* ---------------- Changer une case (optimiste + annuler) ---------------- */
   const applyRef = useRef<(dayId: string, slot: MenuSlot, mealId: string | null, opts?: { silent?: boolean }) => void>(() => {});
@@ -253,6 +254,10 @@ export function MenuCalendar({
     const meal = mealId ? mealById.get(mealId) : undefined;
     const tone = meal ? allergenTone(meal.allergens) : null;
     const modified = slot in day.originals;
+    // Changé mais pas encore confirmé : couleur bien différente, et on voit le plat d'avant
+    const awaiting = modified && mode === "client" && !confirmed;
+    const before = modified ? day.originals[slot] : undefined;
+    const beforeName = before ? (mealById.get(before)?.name ?? t.empty) : t.empty;
     const cell = `${day.id}:${slot}`;
     const pending = pendingCells.has(cell);
     const compatible = activeType === slotType(slot);
@@ -291,11 +296,12 @@ export function MenuCalendar({
           }
           setPicker({ dayId: day.id, slot });
         }}
-        aria-label={`${dayLabel(date)}, ${t.slots[slot]} : ${meal?.name ?? t.empty}${modified ? ` (${t.modified})` : ""}${flagged(meal).length ? ` — ${fill(t.contains, { list: flagged(meal).map((a) => allergenLabel[a]).join(", ") })}` : ""}`}
+        aria-label={`${dayLabel(date)}, ${t.slots[slot]} : ${meal?.name ?? t.empty}${modified ? ` (${awaiting ? t.pendingTag : t.modified} — ${fill(t.before, { meal: beforeName })})` : ""}${flagged(meal).length ? ` — ${fill(t.contains, { list: flagged(meal).map((a) => allergenLabel[a]).join(", ") })}` : ""}`}
         className={cn(
           "group/cell relative flex w-full flex-col justify-center rounded-[var(--radius-sm)] px-2.5 py-2 text-left ring-1 transition-[box-shadow,background-color,opacity,transform] duration-200",
           slotHeight(slot),
-          tone ? toneClass[tone] : "bg-paper ring-line",
+          awaiting ? "bg-charcoal ring-2 ring-saffron" : tone ? toneClass[tone] : "bg-paper ring-line",
+          modified && !awaiting && "ring-2 ring-olive",
           editable && !activeType && "hover:-translate-y-px hover:shadow-[var(--shadow-soft)] hover:ring-charcoal/40",
           activeType && (canDrop ? "ring-2 ring-olive ring-offset-2 ring-offset-cream" : "opacity-40"),
           placing && canDrop && "animate-[pulse_1.6s_ease-in-out_infinite]",
@@ -304,18 +310,29 @@ export function MenuCalendar({
         )}
       >
         {compact && <span className="mb-0.5 text-[0.62rem] font-bold tracking-[0.08em] text-charcoal/60 uppercase">{t.slots[slot]}</span>}
-        <span className={cn("leading-snug font-semibold text-charcoal", slot === "repas" ? "text-[0.9rem]" : "text-[0.8rem]")}>
+        <span className={cn("leading-snug font-semibold", awaiting ? "text-cream" : "text-charcoal", slot === "repas" ? "text-[0.9rem]" : "text-[0.8rem]", modified && "pr-14")}>
           {meal?.name ?? t.empty}
         </span>
+        {awaiting && slot === "repas" && (
+          <span className="mt-0.5 line-clamp-1 text-[0.68rem] text-cream/70">
+            {fill(t.before, { meal: "" })}
+            <s>{beforeName}</s>
+          </span>
+        )}
         {flagged(meal).length > 0 && (
-          <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-charcoal px-1.5 py-0.5 text-[0.62rem] font-bold text-cream">
+          <span className={cn("mt-1 inline-flex w-fit items-center gap-1 rounded-full px-1.5 py-0.5 text-[0.62rem] font-bold", awaiting ? "bg-cream text-charcoal" : "bg-charcoal text-cream")}>
             <AlertTriangle aria-hidden="true" className="size-3 text-saffron" />
             {fill(t.contains, { list: flagged(meal).map((a) => allergenLabel[a].toLowerCase()).join(", ") })}
           </span>
         )}
         {modified && (
-          <span className="absolute top-1 right-1 inline-flex items-center gap-1 rounded-full bg-olive px-1.5 py-0.5 text-[0.58rem] font-bold text-cream uppercase">
-            {t.modified}
+          <span
+            className={cn(
+              "absolute top-1 right-1 inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[0.58rem] font-bold uppercase",
+              awaiting ? "bg-saffron text-charcoal" : "bg-olive text-cream",
+            )}
+          >
+            {awaiting ? t.pendingTag : t.modified}
           </span>
         )}
       </button>
@@ -461,7 +478,33 @@ export function MenuCalendar({
         )}
       />
 
-      <Legend meals={meals} days={days} t={t} />
+      {/* Barre de confirmation : visible tant que des changements attendent */}
+      {showConfirmBar && (
+        <div
+          role="status"
+          className="sticky bottom-24 z-30 mt-5 flex flex-col gap-3 rounded-[var(--radius-lg)] bg-charcoal p-4 text-cream shadow-[var(--shadow-lift)] ring-2 ring-saffron sm:flex-row sm:items-center sm:justify-between print:hidden"
+        >
+          <div className="flex items-start gap-3">
+            <span aria-hidden="true" className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-saffron font-display font-extrabold text-charcoal">
+              {changesCount}
+            </span>
+            <div>
+              <p className="font-display font-bold">{fill(t.pendingTitle, { count: changesCount, plural: changesCount > 1 ? "s" : "" })}</p>
+              <p className="text-sm text-cream/75">{t.pendingHelp}</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={confirming || pendingCells.size > 0}
+            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-saffron px-5 text-sm font-bold text-charcoal hover:bg-saffron/90 disabled:opacity-60"
+          >
+            <Check aria-hidden="true" className="size-4" strokeWidth={2.5} /> {t.confirmPending}
+          </button>
+        </div>
+      )}
+
+      <Legend meals={meals} days={days} t={t} showChanges={mode === "client"} />
 
       {/* Liste de choix (toucher une case) */}
       {picker && pickerDay && (
@@ -495,7 +538,9 @@ export function MenuCalendar({
         <div
           role={toast.error ? "alert" : "status"}
           className={cn(
-            "fixed inset-x-4 bottom-24 z-50 mx-auto flex max-w-md items-center justify-between gap-4 rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-[var(--shadow-lift)] sm:bottom-8 print:hidden",
+            "fixed inset-x-4 z-50 mx-auto flex max-w-md items-center justify-between gap-4 rounded-[var(--radius-md)] px-4 py-3 text-sm shadow-[var(--shadow-lift)] print:hidden",
+            // au-dessus de la barre « à confirmer » quand elle est affichée
+            showConfirmBar ? "bottom-[18.5rem] sm:bottom-48" : "bottom-24 sm:bottom-8",
             toast.error ? "bg-coral-soft text-coral-ink" : "bg-charcoal text-cream",
           )}
         >
@@ -931,7 +976,7 @@ function Picker({
 /* ------------------------------------------------------------------ */
 /* Légende des allergènes (seulement ceux présents)                    */
 /* ------------------------------------------------------------------ */
-function Legend({ meals, days, t }: { meals: CalendarMeal[]; days: CalendarDay[]; t: Dictionary["calendar"] }) {
+function Legend({ meals, days, t, showChanges }: { meals: CalendarMeal[]; days: CalendarDay[]; t: Dictionary["calendar"]; showChanges: boolean }) {
   const byId = new Map(meals.map((m) => [m.id, m]));
   const present = new Set<Exclude<Tone, null>>();
   for (const d of days)
@@ -955,6 +1000,16 @@ function Legend({ meals, days, t }: { meals: CalendarMeal[]; days: CalendarDay[]
             <span aria-hidden="true" className={cn("h-3.5 w-6 rounded-sm ring-1", toneClass[k])} /> {label}
           </span>
         ))}
+      {showChanges && (
+        <>
+          <span className="inline-flex items-center gap-2">
+            <span aria-hidden="true" className="h-3.5 w-6 rounded-sm bg-charcoal ring-2 ring-saffron" /> {t.legendPending}
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <span aria-hidden="true" className="h-3.5 w-6 rounded-sm bg-paper ring-2 ring-olive" /> {t.legendModified}
+          </span>
+        </>
+      )}
       <span className="basis-full text-xs text-ink-soft">{t.legendNote}</span>
     </div>
   );

@@ -14,11 +14,11 @@ export function HomeView({ locale }: { locale: Locale }) {
   return (
     <>
       <Hero locale={locale} />
+      <MenuTeaser locale={locale} />
       <Situations locale={locale} />
       <YourMenu locale={locale} />
       <Formulas locale={locale} />
       <SimplifyDaily locale={locale} />
-      <MenuTeaser locale={locale} />
       <Audience locale={locale} />
       <Trust locale={locale} />
       <Testimonials locale={locale} />

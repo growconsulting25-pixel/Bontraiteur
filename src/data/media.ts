@@ -148,4 +148,6 @@ export const categoryIllustrations: Record<MealCategory, string> = {
 export const mealIllustrations: Partial<Record<string, string>> = {
   "poulet-au-pesto-sur-riz-et-legumes": "/images/riz-poulet-legumes.webp",
   "poulet-barbecue-sur-riz-aux-legumes": "/images/riz-poulet-legumes.webp",
+  "macaroni-sauce-bolognaise": "/images/macaroni-bolognaise.webp",
+  "pate-au-saumon-primavera": "/images/saumon-primavera.webp",
 };

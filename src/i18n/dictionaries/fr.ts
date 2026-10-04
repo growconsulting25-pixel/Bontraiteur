@@ -124,7 +124,7 @@ const fr = {
 
   contact: {
     hours: "Lundi au vendredi, 5 h à 17 h",
-    serviceArea: "Grand Montréal et environs [À confirmer]",
+    serviceArea: "Grande région de Montréal",
   },
 
   common: {
@@ -558,7 +558,7 @@ const fr = {
       { group: "commandes", question: "Puis-je ajuster les quantités d'une semaine à l'autre?", answer: "Oui. Un enfant de plus, un groupe absent : dites-le-nous et nous ajustons les portions. [À confirmer : délai minimal de modification des quantités]" },
       { group: "commandes", question: "Que se passe-t-il lors d'une journée pédagogique ou d'une fermeture?", answer: "Vous pouvez suspendre la livraison prévue. Avisez-nous à l'avance et nous ajustons votre commande." },
       { group: "livraison", question: "Offrez-vous des livraisons urgentes?", answer: "Oui. Une livraison urgente peut être organisée sous 48 h, selon les disponibilités et votre zone de livraison. Appelez-nous pour valider rapidement." },
-      { group: "livraison", question: "Quelles régions desservez-vous?", answer: "[À confirmer : zones de livraison exactes] Écrivez-nous avec l'adresse de votre garderie et nous vous confirmerons rapidement." },
+      { group: "livraison", question: "Quelles régions desservez-vous?", answer: "Nous desservons la grande région de Montréal. Votre garderie est un peu plus loin? Écrivez-nous avec son adresse et nous vous confirmerons rapidement." },
       { group: "livraison", question: "Sous quelle forme les repas sont-ils livrés?", answer: "Selon vos besoins : repas chauds prêts à servir, repas prêts-à-manger ou repas congelés. Plusieurs garderies combinent les formats." },
       { group: "allergies", question: "Comment gérez-vous les allergies?", answer: "Les allergènes connus sont indiqués dans notre menu à titre informatif. Ces informations doivent être confirmées avec notre équipe selon les besoins particuliers de vos enfants. Parlez-nous de vos restrictions dès la soumission." },
       { group: "facturation", question: "Combien coûtent vos repas?", answer: "Le prix dépend du nombre d'enfants, de la fréquence de livraison et des formats choisis. Demandez une soumission : nous vous proposons une formule adaptée à votre garderie." },

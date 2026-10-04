@@ -44,7 +44,7 @@ export function organizationSchema(locale: Locale) {
     url: site.url,
     description: t.siteDescription,
     telephone: site.contact.phones.map((p) => p.href.replace("tel:", "")),
-    areaServed: { "@type": "AdministrativeArea", name: "Québec" },
+    areaServed: { "@type": "AdministrativeArea", name: "Grande région de Montréal, Québec" },
     knowsLanguage: ["fr-CA", "en-CA"],
   };
 }
@@ -59,7 +59,7 @@ export function serviceSchema(key: "meals" | "daycares", locale: Locale) {
     url: `${site.url}${routes[key][locale]}`,
     serviceType: t.serviceType,
     provider: { "@id": `${site.url}/#organisation` },
-    areaServed: { "@type": "AdministrativeArea", name: "Québec" },
+    areaServed: { "@type": "AdministrativeArea", name: "Grande région de Montréal, Québec" },
     audience: { "@type": "Audience", audienceType: t.audienceType },
     inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
   };

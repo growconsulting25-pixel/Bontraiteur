@@ -122,7 +122,7 @@ const en: Dictionary = {
 
   contact: {
     hours: "Monday to Friday, 5 a.m. to 5 p.m.",
-    serviceArea: "Greater Montreal area [To be confirmed]",
+    serviceArea: "Greater Montreal area",
   },
 
   common: {
@@ -555,7 +555,7 @@ const en: Dictionary = {
       { group: "commandes", question: "Can I adjust quantities from week to week?", answer: "Yes. One more child, a group away: tell us and we'll adjust the portions. [To be confirmed: minimum notice for quantity changes]" },
       { group: "commandes", question: "What happens on a pedagogical day or closure?", answer: "You can pause the scheduled delivery. Let us know in advance and we'll adjust your order." },
       { group: "livraison", question: "Do you offer urgent deliveries?", answer: "Yes. An urgent delivery can be arranged within 48 hours, depending on availability and your delivery area. Call us to confirm quickly." },
-      { group: "livraison", question: "Which areas do you serve?", answer: "[To be confirmed: exact delivery areas] Send us your daycare's address and we'll confirm quickly." },
+      { group: "livraison", question: "Which areas do you serve?", answer: "We serve the Greater Montreal area. Is your daycare a bit farther? Send us its address and we'll confirm quickly." },
       { group: "livraison", question: "How are the meals delivered?", answer: "Depending on your needs: hot meals ready to serve, ready-to-eat meals or frozen meals. Many daycares combine formats." },
       { group: "allergies", question: "How do you handle allergies?", answer: "Known allergens are listed in our menu for reference only. This information must be confirmed with our team based on your children's specific needs. Tell us about your restrictions when you request a quote." },
       { group: "facturation", question: "How much do your meals cost?", answer: "The price depends on the number of children, delivery frequency and formats chosen. Request a quote and we'll suggest a plan tailored to your daycare." },

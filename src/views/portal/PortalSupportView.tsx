@@ -5,6 +5,7 @@ import { getSupportRequests } from "@/lib/portal/data";
 import { formatDate } from "@/lib/format";
 import { supportTone } from "@/lib/portal/status";
 import { site } from "@/data/site";
+import { OpenAssistantButton } from "@/components/assistant/OpenAssistantButton";
 import { getDictionary, type Locale } from "@/i18n";
 
 export async function PortalSupportView({ locale }: { locale: Locale }) {
@@ -20,17 +21,24 @@ export async function PortalSupportView({ locale }: { locale: Locale }) {
         <Card>
           <SupportForm locale={locale} establishmentId={ctx.establishment.id} t={t} errorText={d.auth.genericError} />
         </Card>
-        <Card className="bg-olive text-cream ring-0">
-          <p className="font-semibold">{t.callUs}</p>
-          {site.contact.phones.map((p) => (
-            <a key={p.href} href={p.href} className="mt-2 block font-display text-2xl font-bold hover:text-saffron">
-              {p.display}
+        <div className="grid content-start gap-6">
+          <div className="rounded-[var(--radius-lg)] bg-saffron-soft p-5 sm:p-6">
+            <p className="font-display text-lg font-bold">{t.chatTitle}</p>
+            <p className="mt-1 text-sm text-ink-soft">{t.chatText}</p>
+            <OpenAssistantButton label={t.chatButton} dark className="mt-4" />
+          </div>
+          <div className="rounded-[var(--radius-lg)] bg-olive p-5 text-cream sm:p-6">
+            <p className="font-semibold">{t.callUs}</p>
+            {site.contact.phones.map((p) => (
+              <a key={p.href} href={p.href} className="mt-2 block font-display text-2xl font-bold hover:text-saffron">
+                {p.display}
+              </a>
+            ))}
+            <a href={`mailto:${site.contact.email}`} className="mt-4 block text-cream/80 hover:text-cream">
+              {site.contact.email}
             </a>
-          ))}
-          <a href={`mailto:${site.contact.email}`} className="mt-4 block text-cream/80 hover:text-cream">
-            {site.contact.email}
-          </a>
-        </Card>
+          </div>
+        </div>
       </div>
 
       <h2 className="mt-10 mb-3 text-xs font-bold tracking-[0.1em] text-ink-soft uppercase">{t.history}</h2>

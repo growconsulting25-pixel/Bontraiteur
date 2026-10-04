@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/sections/PageHero";
 import { site } from "@/data/site";
+import { OpenAssistantButton } from "@/components/assistant/OpenAssistantButton";
 import { getDictionary, href, type Locale } from "@/i18n";
 
 export function ContactView({ locale }: { locale: Locale }) {
@@ -42,6 +43,7 @@ export function ContactView({ locale }: { locale: Locale }) {
               <p className="mt-2 font-display text-xl font-bold">{d.contact.serviceArea}</p>
             </li>
           </ul>
+          <div className="grid gap-6">
           <div className="flex flex-col justify-between rounded-[var(--radius-xl)] bg-olive p-8 text-cream sm:p-10">
             <div>
               <p className="font-display text-h3 font-bold">{t.newTitle}</p>
@@ -50,6 +52,12 @@ export function ContactView({ locale }: { locale: Locale }) {
             <ButtonLink href={href("quote", locale)} variant="accent" size="lg" arrow className="mt-10 self-start">
               {d.nav.quote}
             </ButtonLink>
+          </div>
+          <div className="rounded-[var(--radius-xl)] bg-saffron-soft p-8 sm:p-10">
+            <p className="font-display text-h3 font-bold">{t.chatTitle}</p>
+            <p className="mt-3 text-ink-soft">{t.chatText}</p>
+            <OpenAssistantButton label={t.chatButton} dark className="mt-6" />
+          </div>
           </div>
         </div>
       </Container>

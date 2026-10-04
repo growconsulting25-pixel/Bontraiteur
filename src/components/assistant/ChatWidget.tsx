@@ -9,6 +9,7 @@ import type { Dictionary } from "@/i18n/dictionaries/fr";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { RichText } from "./RichText";
+import { OPEN_ASSISTANT_EVENT } from "./OpenAssistantButton";
 import { answerText, humanMessage, resetGuideCache, runStep, startChips, type GuideContext, type GuideResult } from "./guide";
 import type { ActionState, Chip, Entry, PortalGuideData, ProposedAction, SiteGuideData } from "./guide-types";
 
@@ -94,6 +95,15 @@ export function ChatWidget({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+  // Bouton « Discuter avec l'assistant » ailleurs sur la page
+  useEffect(() => {
+    const onOpen = () => {
+      setOpen(true);
+      setTimeout(() => inputRef.current?.focus(), 50);
+    };
+    window.addEventListener(OPEN_ASSISTANT_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_ASSISTANT_EVENT, onOpen);
+  }, []);
   useEffect(() => {
     if (awaitHuman && open) inputRef.current?.focus();
   }, [awaitHuman, open]);

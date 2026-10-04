@@ -8,7 +8,7 @@ import { getDictionary, href, type Locale } from "@/i18n";
 export function Hero({ locale }: { locale: Locale }) {
   const t = getDictionary(locale).home.hero;
   return (
-    <section aria-labelledby="hero-title" className="relative overflow-hidden pt-8 pb-10 sm:pt-12 lg:pt-16 lg:pb-12">
+    <section aria-labelledby="hero-title" className="relative overflow-hidden pt-8 pb-12 sm:pt-12 lg:pt-16 lg:pb-14">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-16">
           <div>
@@ -63,15 +63,6 @@ export function Hero({ locale }: { locale: Locale }) {
             </div>
           </div>
         </div>
-
-        <ul className="mt-20 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-8 sm:mt-24 lg:grid-cols-4">
-          {t.trust.map((item) => (
-            <li key={item} className="flex items-center gap-2.5 font-semibold">
-              <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-coral" />
-              {item}
-            </li>
-          ))}
-        </ul>
       </Container>
     </section>
   );

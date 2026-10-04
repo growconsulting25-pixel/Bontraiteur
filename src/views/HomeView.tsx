@@ -4,7 +4,6 @@ import { YourMenu } from "@/components/sections/home/YourMenu";
 import { Formulas } from "@/components/sections/home/Formulas";
 import { SimplifyDaily } from "@/components/sections/home/SimplifyDaily";
 import { MenuTeaser } from "@/components/sections/home/MenuTeaser";
-import { Audience } from "@/components/sections/home/Audience";
 import { Trust } from "@/components/sections/home/Trust";
 import { Testimonials } from "@/components/sections/home/Testimonials";
 import { CTASection } from "@/components/sections/CTASection";
@@ -19,7 +18,6 @@ export function HomeView({ locale }: { locale: Locale }) {
       <YourMenu locale={locale} />
       <Formulas locale={locale} />
       <SimplifyDaily locale={locale} />
-      <Audience locale={locale} />
       <Trust locale={locale} />
       <Testimonials locale={locale} />
       <CTASection locale={locale} />

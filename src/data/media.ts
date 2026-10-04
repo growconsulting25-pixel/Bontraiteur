@@ -65,10 +65,9 @@ export const media = {
     kind: "nourriture",
   },
   formulaReady: {
-    alt: { fr: "Portion individuelle de repas équilibré", en: "Individual portion of a balanced meal" },
+    alt: { fr: "Repas individuels variés en contenants, prêts à réchauffer", en: "A variety of individual meals in containers, ready to reheat" },
     brief: "Portions individuelles scellées, étiquetées",
-    // Temporaire : sera remplacée par la photo des portions de pâtes bolognaise
-    src: unsplash("photo-1546069901-ba9599a7e63c"),
+    src: "/images/pret-a-manger-portions.jpg",
     tone: "saffron",
     kind: "nourriture",
   },
@@ -132,9 +131,9 @@ export const media = {
     kind: "cuisine",
   },
   ctaFinal: {
-    alt: { fr: "Repas maison fraîchement préparé", en: "Freshly prepared home-style meal" },
+    alt: { fr: "Une lasagne gratinée tout juste sortie du four", en: "A golden baked lasagna fresh out of the oven" },
     brief: "Directrice et éducatrice qui regardent une tablette/feuille de menu, sourire, bureau de CPE",
-    src: unsplash("photo-1543339308-43e59d6b73a6"),
+    src: "/images/lasagne.webp",
     tone: "saffron",
     kind: "enfants",
   },
@@ -166,4 +165,5 @@ export const mealIllustrations: Partial<Record<string, string>> = {
   "poulet-barbecue-sur-riz-aux-legumes": "/images/riz-poulet-legumes.webp",
   "macaroni-sauce-bolognaise": "/images/macaroni-bolognaise.webp",
   "pate-au-saumon-primavera": "/images/saumon-primavera.webp",
+  "tofu-general-tao-sur-riz-aux-legumes": "/images/tofu-general-tao.webp",
 };

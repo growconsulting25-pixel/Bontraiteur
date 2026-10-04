@@ -1,4 +1,4 @@
-import { Phone, Mail, Clock } from "lucide-react";
+import { Phone, Mail, Clock, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/sections/PageHero";
@@ -32,10 +32,15 @@ export function ContactView({ locale }: { locale: Locale }) {
                 {site.contact.email}
               </a>
             </li>
-            <li className="rounded-[var(--radius-xl)] bg-paper p-7 ring-1 ring-line sm:col-span-2">
+            <li className="rounded-[var(--radius-xl)] bg-paper p-7 ring-1 ring-line">
               <Clock aria-hidden="true" className="size-6 text-coral-ink" />
               <p className="eyebrow mt-6 text-ink-soft">{t.hours}</p>
               <p className="mt-2 font-display text-xl font-bold">{d.contact.hours}</p>
+            </li>
+            <li className="rounded-[var(--radius-xl)] bg-paper p-7 ring-1 ring-line">
+              <MapPin aria-hidden="true" className="size-6 text-coral-ink" />
+              <p className="eyebrow mt-6 text-ink-soft">{t.area}</p>
+              <p className="mt-2 font-display text-xl font-bold">{d.contact.serviceArea}</p>
             </li>
           </ul>
           <div className="grid gap-6">

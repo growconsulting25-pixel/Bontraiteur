@@ -37,6 +37,10 @@ export function Footer({ locale }: { locale: Locale }) {
                 <dt className="sr-only">{f.hoursLabel}</dt>
                 <dd className="text-cream/70">{t.contact.hours}</dd>
               </div>
+              <div>
+                <dt className="sr-only">{t.contactPage.area}</dt>
+                <dd className="text-cream/70">{t.contact.serviceArea}</dd>
+              </div>
             </dl>
           </div>
 

@@ -90,6 +90,22 @@ export const media = {
     tone: "olive",
     kind: "cuisine",
   },
+  teamPrep: {
+    alt: { fr: "Deux cuisiniers préparent des repas colorés dans des contenants individuels", en: "Two cooks preparing colourful meals in individual containers" },
+    brief: "Équipe qui portionne les repas, plan large",
+    src: "/images/equipe-repas-colores.webp",
+    focus: "50% 40%",
+    tone: "olive",
+    kind: "cuisine",
+  },
+  kitchenSpace: {
+    alt: { fr: "La cuisine commerciale, propre et lumineuse", en: "The clean, bright commercial kitchen" },
+    brief: "La cuisine, vue d'ensemble",
+    src: "/images/cuisine-bon-traiteur.webp",
+    focus: "60% 50%",
+    tone: "cream",
+    kind: "cuisine",
+  },
   delivery: {
     alt: {
       fr: "Le camion réfrigéré Bon Traiteur stationné devant une garderie",

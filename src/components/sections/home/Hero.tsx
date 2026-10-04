@@ -8,7 +8,7 @@ import { getDictionary, href, type Locale } from "@/i18n";
 export function Hero({ locale }: { locale: Locale }) {
   const t = getDictionary(locale).home.hero;
   return (
-    <section aria-labelledby="hero-title" className="relative overflow-hidden pt-8 pb-16 sm:pt-12 lg:pt-16 lg:pb-24">
+    <section aria-labelledby="hero-title" className="relative overflow-hidden pt-8 pb-10 sm:pt-12 lg:pt-16 lg:pb-12">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-16">
           <div>

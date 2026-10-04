@@ -90,14 +90,6 @@ export const media = {
     tone: "olive",
     kind: "cuisine",
   },
-  kitchenBanner: {
-    alt: { fr: "Une lasagne gratinée tout juste sortie du four, en cuisine", en: "A golden baked lasagna fresh out of the oven, in the kitchen" },
-    brief: "Plat qui sort du four en cuisine, plan large",
-    src: "/images/lasagne.webp",
-    focus: "50% 45%",
-    tone: "olive",
-    kind: "cuisine",
-  },
   delivery: {
     alt: {
       fr: "Le camion réfrigéré Bon Traiteur stationné devant une garderie",

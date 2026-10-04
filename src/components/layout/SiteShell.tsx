@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { SupportWidget } from "@/components/support/SupportWidget";
+import { ChatWidget } from "@/components/assistant/ChatWidget";
 import { getDictionary, href, type Locale } from "@/i18n";
 import { JsonLd, organizationSchema } from "@/lib/seo";
 
@@ -19,7 +19,7 @@ export function SiteShell({ locale, children }: { locale: Locale; children: Reac
       <Navbar locale={locale} t={t.nav} />
       <main id="contenu">{children}</main>
       <Footer locale={locale} />
-      <SupportWidget t={t.support} hours={t.contact.hours} quoteHref={href("quote", locale)} />
+      <ChatWidget mode="site" locale={locale} t={t.assistant} supportHref={href("contact", locale)} />
       <JsonLd data={organizationSchema(locale)} />
     </>
   );

@@ -71,7 +71,27 @@ export async function GET(request: NextRequest) {
           ]
     ).join("\n");
 
+    // Notification dans le portail (cloche) pour chaque direction
+    if (members?.length)
+      await admin.from("notifications").insert(
+        members.map((m) => ({
+          user_id: m.user_id,
+          organization_id: est.organization_id,
+          kind: "menu_reminder",
+          payload: { month: menu.month, deadline: menu.change_deadline },
+          link: "menu",
+        })),
+      );
+    // Courriel seulement pour les personnes qui n'ont pas désactivé les rappels
+    const { data: optedOut } = await admin
+      .from("profiles")
+      .select("user_id")
+      .in("user_id", (members ?? []).map((m) => m.user_id))
+      .eq("email_reminders", false);
+    const skip = new Set((optedOut ?? []).map((p) => p.user_id));
+
     for (const m of members ?? []) {
+      if (skip.has(m.user_id)) continue;
       const { data: u } = await admin.auth.admin.getUserById(m.user_id);
       if (!u.user?.email) continue;
       const res = await sendEmail({ to: u.user.email, subject, text });

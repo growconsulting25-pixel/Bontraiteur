@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { LogOut } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { PortalNav } from "./PortalNav";
 import { EstablishmentSwitcher } from "./EstablishmentSwitcher";
-import { PortalLanguageLink } from "./PortalLanguageLink";
 import { Assistant } from "@/components/assistant/Assistant";
-import { signOut } from "@/lib/actions/auth";
+import { PortalTopBar } from "@/components/portal/topbar/PortalTopBar";
 import { getDictionary, href, type Locale } from "@/i18n";
 import { portalHref } from "@/i18n/portal-routes";
 import type { Account } from "@/lib/auth";
@@ -36,25 +34,9 @@ export function PortalShell({
           options={account.establishments.map((e) => ({ id: e.id, name: e.name }))}
         />
       )}
-      <div className="grid gap-1">
-        <p className="truncate font-semibold" title={account.user.email}>
-          {account.user.email}
-        </p>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-ink-soft">
-          <PortalLanguageLink locale={locale} label={d.nav.switchLanguage} />
-          {account.isStaff && (
-            <Link href="/admin" className="font-semibold hover:text-charcoal">
-              Back-office
-            </Link>
-          )}
-        </div>
-      </div>
-      <form action={signOut}>
-        <input type="hidden" name="locale" value={locale} />
-        <button type="submit" className="inline-flex items-center gap-2 font-semibold text-ink-soft hover:text-charcoal">
-          <LogOut aria-hidden="true" className="size-4" /> {d.auth.signOut}
-        </button>
-      </form>
+      <Link href={href("home", locale)} className="font-semibold text-ink-soft hover:text-charcoal">
+        {t.backToSite}
+      </Link>
     </div>
   );
 
@@ -71,15 +53,7 @@ export function PortalShell({
       </aside>
 
       <div className="min-w-0">
-        {establishment && (
-          <div className="border-b border-line bg-paper/60 px-4 py-3 text-sm sm:px-8">
-            <span className="text-ink-soft">{t.establishment} : </span>
-            <span className="font-semibold">{establishment.name}</span>
-            <Link href={href("home", locale)} className="float-right text-ink-soft hover:text-charcoal">
-              {t.backToSite}
-            </Link>
-          </div>
-        )}
+        <PortalTopBar locale={locale} account={account} establishment={establishment} />
         <main id="contenu" className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-8 sm:py-10">
           {children}
         </main>

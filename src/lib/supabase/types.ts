@@ -140,4 +140,37 @@ export interface SupportRequestRow {
   message: string;
   status: SupportStatus;
   created_at: string;
+  last_message_at?: string;
+  client_unread?: boolean;
+  staff_unread?: boolean;
+}
+
+export interface SupportMessageRow {
+  id: string;
+  request_id: string;
+  author_id: string | null;
+  from_staff: boolean;
+  author_name: string | null;
+  body: string;
+  created_at: string;
+}
+
+export interface NotificationRow {
+  id: string;
+  user_id: string;
+  organization_id: string | null;
+  kind: string;
+  payload: Record<string, unknown>;
+  link: string | null;
+  created_at: string;
+  read_at: string | null;
+}
+
+export interface ProfileRow {
+  user_id: string;
+  full_name: string | null;
+  phone: string | null;
+  avatar_path: string | null;
+  email_reminders: boolean;
+  updated_at: string;
 }

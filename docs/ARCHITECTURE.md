@@ -220,3 +220,23 @@ son sujet et devient trouvable par la recherche.
 
 Évolution possible (désactivée) : `src/lib/assistant/anthropic.ts`, `run.ts` et `knowledge.ts`
 contiennent un moteur conversationnel IA (Anthropic, payant à l'usage) qui peut être rebranché plus tard.
+
+## Notifications, messages et profils (portail)
+
+Migration `20261004000000_notifications_messages_profiles.sql` :
+
+- **`notifications`** (une ligne par personne, texte rendu dans la langue du portail par
+  `src/lib/portal/notification-text.ts`). Créées automatiquement par des déclencheurs :
+  menu publié, commande confirmée/livrée/annulée par l'équipe, livraison planifiée/en route/livrée/annulée,
+  facture à payer/en retard (direction et comptabilité seulement), réponse de l'équipe ; plus le rappel
+  quotidien `menu_reminder` (route cron). Aucune insertion directe par les clients.
+- **Messagerie** : chaque `support_requests` est une conversation ; `support_messages` contient les réponses
+  (client ou équipe). Pastilles non lues des deux côtés (`client_unread`, `staff_unread`), RPC `mark_conversation_read`.
+  Portail : `/portail/support` (liste) et `/portail/support/[id]` (fil). Back-office : `/admin/support/[id]` pour répondre
+  (le client reçoit une notification et un courriel).
+- **`profiles`** : nom, téléphone, photo (bucket privé `avatars/<user_id>/`, 3 Mo, JPG/PNG/WebP), préférence
+  `email_reminders` (respectée par le rappel courriel).
+
+Barre du haut du portail (`src/components/portal/topbar`) : établissement, messages (pastille), cloche
+(15 dernières, « tout marquer comme lu », rafraîchie chaque minute), menu du profil (paramètres, langue,
+back-office, déconnexion).

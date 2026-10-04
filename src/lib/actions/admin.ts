@@ -408,4 +408,46 @@ export async function resolveSupport(fd: FormData) {
     .update({ status: resolved ? "resolue" : "ouverte", resolved_at: resolved ? new Date().toISOString() : null })
     .eq("id", str(fd, "id"));
   revalidatePath("/admin/support");
+  revalidatePath(`/admin/support/${str(fd, "id")}`);
+}
+
+/** Réponse de l'équipe dans une conversation : le client est avisé (cloche + courriel). */
+export async function staffReply(fd: FormData) {
+  const account = await requireStaff();
+  const supabase = await createSessionClient();
+  const requestId = str(fd, "requestId");
+  const body = str(fd, "body", 4000);
+  if (!requestId || !body) return;
+  const { data: profile } = await supabase.from("profiles").select("full_name").eq("user_id", account.user.id).maybeSingle();
+  const { error } = await supabase.from("support_messages").insert({
+    request_id: requestId,
+    author_id: account.user.id,
+    from_staff: true,
+    author_name: profile?.full_name || "Équipe Bon Traiteur",
+    body,
+  });
+  if (error) throw new Error(error.message);
+  await supabase.from("support_requests").update({ staff_unread: false }).eq("id", requestId);
+
+  // Courriel à la personne qui a ouvert la conversation
+  const admin = getAdminSupabase();
+  const { data: req } = await supabase.from("support_requests").select("user_id, subject, organizations(preferred_locale)").eq("id", requestId).maybeSingle();
+  if (admin && req) {
+    const { data: u } = await admin.auth.admin.getUserById(req.user_id);
+    const en = (req.organizations as unknown as { preferred_locale?: string } | null)?.preferred_locale === "en";
+    if (u.user?.email)
+      await sendEmail({
+        to: u.user.email,
+        subject: en ? `Bon Traiteur replied: ${req.subject}` : `Bon Traiteur vous a répondu : ${req.subject}`,
+        text: [body, "", `${siteUrl()}${en ? "/en/portal/support" : "/portail/support"}/${requestId}`, "", en ? "The Bon Traiteur team" : "L'équipe Bon Traiteur"].join("\n"),
+      });
+  }
+  revalidatePath(`/admin/support/${requestId}`);
+  revalidatePath("/admin/support");
+}
+
+export async function markStaffRead(requestId: string) {
+  await requireStaff();
+  const supabase = await createSessionClient();
+  await supabase.from("support_requests").update({ staff_unread: false }).eq("id", requestId);
 }

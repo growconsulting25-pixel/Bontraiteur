@@ -731,7 +731,7 @@ const en: Dictionary = {
   },
 
   portal: {
-    topbar: { notifications: "Notifications", markAllRead: "Mark all as read", noNotifications: "No notifications yet.", inbox: "Messages", profileMenu: "My profile", settings: "Settings", staff: "Back office", justNow: "just now" },
+    topbar: { notifications: "Notifications", markAllRead: "Mark all as read", noNotifications: "No notifications yet.", inbox: "Support", profileMenu: "My profile", settings: "Settings", staff: "Back office", justNow: "just now" },
     notif: {
       menu_published: "The {month} menu is ready: confirm it before {deadline}.",
       menu_reminder: "Reminder: confirm the {month} menu before {deadline}.",
@@ -751,7 +751,7 @@ const en: Dictionary = {
       deliveries: "Deliveries",
       invoices: "Invoices",
       documents: "Documents",
-      support: "Messages",
+      support: "Support",
       account: "Settings",
     },
     portalName: "Client portal",
@@ -857,7 +857,7 @@ const en: Dictionary = {
       open: "Open",
     },
     support: {
-      title: "Messages",
+      title: "Support",
       lead: "Write to the team: each request becomes a conversation. A real person answers.",
       subject: "Subject",
       message: "Message",

@@ -734,7 +734,7 @@ const fr = {
   },
 
   portal: {
-    topbar: { notifications: "Notifications", markAllRead: "Tout marquer comme lu", noNotifications: "Aucune notification pour le moment.", inbox: "Messages", profileMenu: "Mon profil", settings: "Paramètres", staff: "Back-office", justNow: "à l'instant" },
+    topbar: { notifications: "Notifications", markAllRead: "Tout marquer comme lu", noNotifications: "Aucune notification pour le moment.", inbox: "Support", profileMenu: "Mon profil", settings: "Paramètres", staff: "Back-office", justNow: "à l'instant" },
     notif: {
       menu_published: "Le menu de {month} est prêt : à confirmer avant le {deadline}.",
       menu_reminder: "Rappel : confirmez le menu de {month} avant le {deadline}.",
@@ -754,7 +754,7 @@ const fr = {
       deliveries: "Livraisons",
       invoices: "Factures",
       documents: "Documents",
-      support: "Messages",
+      support: "Support",
       account: "Paramètres",
     },
     portalName: "Portail client",
@@ -860,7 +860,7 @@ const fr = {
       open: "Ouvrir",
     },
     support: {
-      title: "Messages",
+      title: "Support",
       lead: "Écrivez à l'équipe : chaque demande devient une conversation. Une vraie personne vous répond.",
       subject: "Sujet",
       message: "Message",

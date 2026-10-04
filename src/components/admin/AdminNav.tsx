@@ -14,7 +14,7 @@ export const adminItems = [
   { href: "/admin/livraisons", label: "Livraisons", icon: Truck },
   { href: "/admin/factures", label: "Factures", icon: Receipt },
   { href: "/admin/repas", label: "Repas", icon: UtensilsCrossed },
-  { href: "/admin/support", label: "Messages", icon: LifeBuoy },
+  { href: "/admin/support", label: "Support", icon: LifeBuoy },
 ];
 
 export function AdminNav() {

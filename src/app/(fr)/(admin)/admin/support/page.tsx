@@ -6,7 +6,7 @@ import { resolveSupport } from "@/lib/actions/admin";
 import { formatDate } from "@/lib/format";
 import type { SupportRequestRow } from "@/lib/supabase/types";
 
-export const metadata = { title: "Messages" };
+export const metadata = { title: "Support" };
 
 export default async function AdminSupportPage() {
   const supabase = await createSessionClient();
@@ -19,7 +19,7 @@ export default async function AdminSupportPage() {
 
   return (
     <>
-      <PageTitle title="Messages" lead="Conversations avec les clients (portail et assistant). Ouvrez-en une pour répondre." />
+      <PageTitle title="Support" lead="Conversations avec les clients (portail et assistant). Ouvrez-en une pour répondre." />
       {requests.length === 0 ? (
         <EmptyState>Aucune demande.</EmptyState>
       ) : (

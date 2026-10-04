@@ -107,6 +107,12 @@
 @utility py-section {
   padding-block: var(--section-y);
 }
+@utility pt-section {
+  padding-top: var(--section-y);
+}
+@utility pb-section {
+  padding-bottom: var(--section-y);
+}
 @utility px-gutter {
   padding-inline: var(--gutter);
 }

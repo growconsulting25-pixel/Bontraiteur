@@ -196,6 +196,7 @@ const fr = {
       eyebrow: "Simplifiez votre quotidien",
       title: "Moins de courriels. Moins d'appels. *Moins de gestion.*",
       lead: "Gérez vos repas et vos livraisons à partir d'un seul endroit.",
+      learnMore: "En savoir plus sur le fonctionnement",
       badge: "Portail client · bientôt disponible",
       actions: [
         { label: "Confirmez votre menu", detail: "Vous gardez le menu? Un clic suffit." },

@@ -3,10 +3,11 @@ import { Section } from "@/components/ui/Section";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { DashboardPreview } from "@/components/portal/DashboardPreview";
-import { getDictionary, rich, type Locale } from "@/i18n";
+import { ButtonLink } from "@/components/ui/Button";
+import { getDictionary, href, rich, type Locale } from "@/i18n";
 
 /** Le différenciateur administratif : le futur portail client. */
-export function SimplifyDaily({ locale }: { locale: Locale }) {
+export function SimplifyDaily({ locale, learnMore = false }: { locale: Locale; learnMore?: boolean }) {
   const t = getDictionary(locale).home.simplify;
   return (
     <Section tone="olive" labelledBy="simplify-title" className="overflow-hidden">
@@ -30,6 +31,12 @@ export function SimplifyDaily({ locale }: { locale: Locale }) {
                 </li>
               ))}
             </ul>
+
+            {learnMore && (
+              <ButtonLink href={href("howItWorks", locale)} variant="light" arrow className="mt-10">
+                {t.learnMore}
+              </ButtonLink>
+            )}
           </div>
 
           <Reveal className="relative">

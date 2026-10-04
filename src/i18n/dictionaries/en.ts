@@ -194,6 +194,7 @@ const en: Dictionary = {
       eyebrow: "Make your days easier",
       title: "Fewer emails. Fewer calls. *Less to manage.*",
       lead: "Manage your meals and deliveries from one place.",
+      learnMore: "Learn more about how it works",
       badge: "Client portal · coming soon",
       actions: [
         { label: "Confirm your menu", detail: "Keeping the menu? One click is all it takes." },

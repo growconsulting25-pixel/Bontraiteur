@@ -1,6 +1,5 @@
 import { Hero } from "@/components/sections/home/Hero";
 import { Situations } from "@/components/sections/home/Situations";
-import { YourMenu } from "@/components/sections/home/YourMenu";
 import { Formulas } from "@/components/sections/home/Formulas";
 import { SimplifyDaily } from "@/components/sections/home/SimplifyDaily";
 import { MenuTeaser } from "@/components/sections/home/MenuTeaser";
@@ -15,9 +14,8 @@ export function HomeView({ locale }: { locale: Locale }) {
       <Hero locale={locale} />
       <MenuTeaser locale={locale} />
       <Situations locale={locale} />
-      <YourMenu locale={locale} />
+      <SimplifyDaily locale={locale} learnMore />
       <Formulas locale={locale} />
-      <SimplifyDaily locale={locale} />
       <Trust locale={locale} />
       <Testimonials locale={locale} />
       <CTASection locale={locale} />

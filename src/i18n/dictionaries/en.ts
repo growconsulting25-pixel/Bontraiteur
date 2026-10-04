@@ -264,6 +264,7 @@ const en: Dictionary = {
       title: "Choose what works *for your daycare.*",
       lead: "Three meal formats, three ways to order. Mix and match. No subscription required.",
       ctaNote: "Every daycare is different. We'll propose a plan that fits yours, with no commitment.",
+      modeCta: "Request a quote",
       modesTitle: "And you order the way that suits you.",
     },
     simplify: {

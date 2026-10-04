@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, type FormEvent } from "react";
+import { useEffect, useRef, useState, useTransition, type FormEvent } from "react";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ChoiceChip, Field, Input, Select, Textarea } from "./fields";
@@ -17,6 +17,14 @@ const fill = (template: string, vars: Record<string, string>) => template.replac
 export function QuoteForm({ locale, t, optional }: { locale: Locale; t: Dictionary["quotePage"]["form"]; optional: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [pending, startTransition] = useTransition();
+  const frequencyRef = useRef<HTMLSelectElement>(null);
+
+  // Arrivée depuis « Livraison régulière / Commande ponctuelle / Service urgent » : fréquence déjà choisie
+  useEffect(() => {
+    const type = new URLSearchParams(window.location.search).get("type");
+    const index = { reguliere: 0, ponctuelle: 2, urgente: 3 }[type ?? ""];
+    if (index !== undefined && frequencyRef.current) frequencyRef.current.value = t.frequencies[index];
+  }, [t.frequencies]);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -104,7 +112,7 @@ export function QuoteForm({ locale, t, optional }: { locale: Locale; t: Dictiona
       <fieldset className="grid gap-5">
         <legend className="mb-5 font-display text-xl font-bold">{t.step2}</legend>
         <Field label={t.frequency} required>
-          <Select name="frequency" required defaultValue="">
+          <Select ref={frequencyRef} name="frequency" required defaultValue="">
             <option value="" disabled>
               {t.choose}
             </option>

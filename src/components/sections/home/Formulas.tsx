@@ -1,10 +1,10 @@
-import { Zap } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { FormatCard } from "@/components/cards/FormatCard";
-import { ButtonLink } from "@/components/ui/Button";
+import Link from "next/link";
 import { getDictionary, href, type Locale } from "@/i18n";
 import { cn } from "@/lib/cn";
 
@@ -28,25 +28,26 @@ export function Formulas({ locale, showHeading = true }: { locale: Locale; showH
         <h3 className="mt-20 font-display text-h3 font-bold">{t.modesTitle}</h3>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {d.serviceModes.map((mode, i) => (
-            <Reveal
-              key={mode.id}
-              delay={i * 80}
-              className={cn("flex flex-col rounded-[var(--radius-xl)] p-7 sm:p-8", mode.highlight ? "bg-coral text-charcoal" : "bg-cream ring-1 ring-line")}
-            >
-              <div className="flex items-center justify-between">
-                <p className="font-display text-h3 font-bold">{mode.title}</p>
-                {mode.highlight && <Zap aria-hidden="true" className="size-6" strokeWidth={2.25} />}
-              </div>
-              <p className={cn("mt-3", mode.highlight ? "text-charcoal/85" : "text-ink-soft")}>{mode.summary}</p>
+            <Reveal key={mode.id} delay={i * 80}>
+              <Link
+                href={`${href("quote", locale)}?type=${mode.id}`}
+                className={cn(
+                  "group flex h-full flex-col rounded-[var(--radius-xl)] p-7 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] sm:p-8",
+                  mode.highlight ? "bg-coral text-charcoal" : "bg-cream ring-1 ring-line hover:ring-charcoal",
+                )}
+              >
+                <div className="flex items-center justify-between">
+                  <p className="font-display text-h3 font-bold">{mode.title}</p>
+                  {mode.highlight && <Zap aria-hidden="true" className="size-6" strokeWidth={2.25} />}
+                </div>
+                <p className={cn("mt-3 flex-1", mode.highlight ? "text-charcoal/85" : "text-ink-soft")}>{mode.summary}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">
+                  {t.modeCta}
+                  <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
             </Reveal>
           ))}
-        </div>
-
-        <div className="mt-10 flex flex-col gap-4 rounded-[var(--radius-xl)] bg-cream-deep p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-          <p className="max-w-xl font-display text-xl font-bold">{t.ctaNote}</p>
-          <ButtonLink href={href("quote", locale)} arrow className="shrink-0 self-start sm:self-auto">
-            {d.nav.quote}
-          </ButtonLink>
         </div>
       </Container>
     </Section>

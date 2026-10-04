@@ -65,9 +65,9 @@ export const media = {
     kind: "nourriture",
   },
   formulaReady: {
-    alt: { fr: "Portions individuelles de pâtes sauce bolognaise en contenants", en: "Individual portions of pasta with Bolognese sauce in containers" },
+    alt: { fr: "Portions individuelles variées : pâtes aux boulettes, riz au poulet et légumes", en: "Assorted individual portions: pasta with meatballs, chicken rice and vegetables" },
     brief: "Portions individuelles scellées, étiquetées",
-    src: "/images/pret-a-manger-pates.jpg",
+    src: "/images/pret-a-manger-portions-variees.webp",
     tone: "saffron",
     kind: "nourriture",
   },

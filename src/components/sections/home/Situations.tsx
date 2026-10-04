@@ -39,15 +39,13 @@ export function Situations({ locale }: { locale: Locale }) {
                 </Reveal>
               ))}
             </ol>
-            <Reveal className="mt-10 flex items-center gap-5">
-              <span aria-hidden="true" className="h-px flex-1 bg-charcoal/15" />
+            <Reveal className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <p className="accent-serif text-[clamp(2rem,1.5rem+2vw,3.2rem)] text-olive">{t.closing}</p>
-            </Reveal>
-            <div className="mt-8 flex justify-end">
+              <span aria-hidden="true" className="hidden h-px flex-1 bg-charcoal/15 sm:block" />
               <ButtonLink href={href("quote", locale)} arrow>
                 {d.nav.quote}
               </ButtonLink>
-            </div>
+            </Reveal>
           </div>
         </div>
       </Container>

@@ -4,7 +4,7 @@ import { Logo } from "@/components/ui/Logo";
 import { PortalNav } from "./PortalNav";
 import { EstablishmentSwitcher } from "./EstablishmentSwitcher";
 import { PortalLanguageLink } from "./PortalLanguageLink";
-import { ChatWidget } from "@/components/assistant/ChatWidget";
+import { Assistant } from "@/components/assistant/Assistant";
 import { signOut } from "@/lib/actions/auth";
 import { getDictionary, href, type Locale } from "@/i18n";
 import { portalHref } from "@/i18n/portal-routes";
@@ -84,7 +84,7 @@ export function PortalShell({
           {children}
         </main>
       </div>
-      {establishment && <ChatWidget mode="portal" locale={locale} t={d.assistant} supportHref={portalHref("support", locale)} establishmentId={establishment.id} />}
+      {establishment && <Assistant mode="portal" locale={locale} establishmentId={establishment.id} />}
     </div>
   );
 }

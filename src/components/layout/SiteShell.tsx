@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { ChatWidget } from "@/components/assistant/ChatWidget";
-import { getDictionary, href, type Locale } from "@/i18n";
+import { Assistant } from "@/components/assistant/Assistant";
+import { getDictionary, type Locale } from "@/i18n";
 import { JsonLd, organizationSchema } from "@/lib/seo";
 
 /** Habillage commun des pages publiques (FR et EN). */
@@ -19,7 +19,7 @@ export function SiteShell({ locale, children }: { locale: Locale; children: Reac
       <Navbar locale={locale} t={t.nav} />
       <main id="contenu">{children}</main>
       <Footer locale={locale} />
-      <ChatWidget mode="site" locale={locale} t={t.assistant} supportHref={href("contact", locale)} />
+      <Assistant mode="site" locale={locale} />
       <JsonLd data={organizationSchema(locale)} />
     </>
   );

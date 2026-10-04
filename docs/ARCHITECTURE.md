@@ -201,17 +201,22 @@ la facture « payée » (idempotent). Moneris reste possible plus tard au même 
 2. Génération automatique des factures à partir des livraisons.
 3. SMS (rappels de confirmation de menu).
 
-## Assistant virtuel
+## Assistant virtuel (guidé, sans IA)
 
-Deux assistants partagent le même widget (`src/components/assistant/ChatWidget.tsx`) :
+Un seul widget (`src/components/assistant/ChatWidget.tsx`), préparé côté serveur par `Assistant.tsx`.
+Aucun service d'IA : aucun coût à l'usage, aucune réponse inventée.
 
-- **Site public** (`POST /api/assistant/site`) : répond aux questions à partir du contenu réel du site
-  (dictionnaires + menu, `src/lib/assistant/knowledge.ts`) et guide vers les bonnes pages. Aucun outil, aucune donnée client.
-- **Portail** (`POST /api/assistant/portal`) : connecté au compte via la session (RLS). Outils de lecture
-  (menu, commandes, livraisons, factures selon le rôle) et outils `propose_*` qui **préparent** une action.
-  Le widget affiche une carte « Confirmer / Annuler » ; l'action n'est exécutée qu'au clic, par
-  `POST /api/assistant/portal/execute`, qui revérifie tout (rôle, appartenance, date limite via les RPC).
-  `propose_contact_team` crée une demande de support et avise l'équipe par courriel.
+- **Site public** : sujets → questions fréquentes (dictionnaire `faqPage`), recherche locale par mots
+  (`src/lib/assistant/search.ts` : accents, pluriels, synonymes FR/EN), fiche d'un plat avec allergènes
+  déclarés, liens vers les pages, numéros de téléphone.
+- **Portail** : parcours à boutons (`guide.ts`) — prochaine livraison, menu du mois (confirmer),
+  changer un plat (semaine → jour → case → plat), suspendre une livraison, annuler une commande,
+  factures, parler à l'équipe. Lectures : `POST /api/assistant/portal/data` (session + RLS).
+  Chaque changement est une carte « Confirmer / Annuler » ; exécution : `POST /api/assistant/portal/execute`,
+  qui revérifie rôle, appartenance et règles (RPC). « Parler à l'équipe » crée une demande de support + courriel.
 
-Variables : `ANTHROPIC_API_KEY` (sans clé : le widget propose les numéros de téléphone), `ASSISTANT_MODEL` (optionnelle).
-Garde-fous : historique borné, limite de débit par IP / utilisateur, liens limités aux pages du site, `tel:` et `mailto:`.
+Pour ajouter une réponse : ajouter une question dans `faqPage.items` (FR et EN) — elle apparaît dans
+son sujet et devient trouvable par la recherche.
+
+Évolution possible (désactivée) : `src/lib/assistant/anthropic.ts`, `run.ts` et `knowledge.ts`
+contiennent un moteur conversationnel IA (Anthropic, payant à l'usage) qui peut être rebranché plus tard.
